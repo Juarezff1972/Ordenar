@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Ordenar": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

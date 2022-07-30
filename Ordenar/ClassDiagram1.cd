@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Ordenar.Algoritmos">
+    <Position X="9.25" Y="0.5" Width="4.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="Ordenar.Algoritmos.ColorRGB">
+        <TypeIdentifier>
+          <NewMemberFileName>Algoritmos.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AwAAAAWI0EgA8QISogAAkkghQKARYwBjAEhYAAUQlAA=</HashCode>
+      <FileName>Algoritmos.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ArrayItem" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Ordenar.Form1">
+    <Position X="0.5" Y="0.5" Width="4.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAACAkAJQYAMCAEACDQAAYABACAGQAAQAIggI=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ArrayItem" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Ordenar.ArrayItem" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAgASkQAIAAAAEAAAAACCAAhoAAAAAAAA=</HashCode>
+      <FileName>ArrayItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.299" Collapsed="true" />
+  </Class>
+  <Class Name="Ordenar.Program">
+    <Position X="6.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.Form">
+    <Position X="0.5" Y="11" Width="5.75" />
+    <NestedTypes>
+      <Class Name="System.Windows.Forms.Form.ControlCollection" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
