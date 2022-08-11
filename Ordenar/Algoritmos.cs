@@ -1830,6 +1830,75 @@ namespace Ordenar
         }
 
         // //////////////////////////////////////////////////////
+        public void GravitySort()
+        {
+            int max = vetor.Max().Valor;
+            Array[] abacus;
+            int i;
+            int j;
+            int droppos;
+            int count;
+            int x;
+            int y;
+
+            ChecaSegmentos();
+            piv1.Visible = true;
+            piv1.Maximum = max;
+            piv2.Visible = true;
+            piv2.Maximum = vetor.Length;
+
+            abacus = new Array[vetor.Length];
+            for (i = 0; i < abacus.Length; i++)
+            {
+                abacus[i] = new int[max];
+            }
+            for (i = 0; i < vetor.Length; i++)
+            {
+                for (j = 0; j < vetor[i].Valor; j++)
+                {
+                    abacus[i].SetValue(1, abacus[0].Length - j - 1);
+                    piv1.Value = abacus[0].Length - j;
+                    externos++;
+                    Pausa();
+                }
+                piv2.Value = i + 1;
+            }
+            piv1.Maximum = abacus[0].Length;
+            for (i = 0; i < abacus[0].Length; i++)
+            {
+                for (j = 0; j < abacus.Length; j++)
+                {
+                    if ((int)abacus[j].GetValue(i) == 1)
+                    {
+                        droppos = j;
+                        while (droppos + 1 < abacus.Length && (int)abacus[droppos].GetValue(i) == 1)
+                        {
+                            droppos++;
+                        }
+                        if ((int)abacus[droppos].GetValue(i) == 0)
+                        {
+                            abacus[j].SetValue(0, i);
+                            abacus[droppos].SetValue(1, i);
+                            externos++;
+                        }
+                    }
+                }
+                count = 0;
+                for (x = 0; x < abacus.Length; x++)
+                {
+                    count = 0;
+                    for (y = 0; y < abacus[0].Length; y++)
+                    {
+                        count += (int)abacus[x].GetValue(y);
+                    }
+                    vetor[x].Valor = count;
+                }
+                ChecaSegmentos();
+                piv1.Value = i + 1;
+                Pausa();
+            }
+        }
+        // //////////////////////////////////////////////////////
         public override string ToString()
         {
             return vetor.ToString();

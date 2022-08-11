@@ -212,6 +212,10 @@ namespace Ordenar
                     algo.PancakeSort();
                     break;
 
+                case "GravitySort":
+                    algo.GravitySort();
+                    break;
+
                 default:
                     break;
             }
