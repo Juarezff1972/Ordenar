@@ -13,6 +13,8 @@ namespace Ordenar
         private int indice;
         private bool mudou;
         private byte[] myWaveData;
+        private WBuf Buf;
+        public int waveSize;
 
         public ArrayItem()
         {
@@ -24,6 +26,18 @@ namespace Ordenar
 
         public event EscritaEventHandler Escreveu;
         public event MudarEventHandler Mudar;
+
+        public WBuf MyBuf
+        {
+            get
+            {
+                return Buf;
+            }
+            set
+            {
+                Buf = value;
+            }
+        }
 
         public byte[] WaveData
         {

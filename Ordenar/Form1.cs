@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MultiMedia;
+using System;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Media;
 using System.Windows.Forms;
+using WindowsMediaLib.Defs;
 
 
 namespace Ordenar
@@ -24,9 +23,13 @@ namespace Ordenar
         private byte ordem;
         private ArrayItem[] vetor;
         private UserControl[] barras;
-        private static byte[] myWaveData;
+        //private static byte[] myWaveData;
 
-        SoundPlayer[] myAudio;// = new();
+        private WaveFormatEx m_Format;
+        IntPtr[] m_pWave;
+        WBuf[] m_Buff;
+
+        //SoundPlayer[] myAudio;// = new();
 
         // Sample rate (Or number of samples in one second)
         private const int SAMPLE_FREQUENCY = 44100;
@@ -37,6 +40,15 @@ namespace Ordenar
         {
             InitializeComponent();
             ordem = 1;
+            m_Format = new WaveFormatEx();
+
+            m_Format.wFormatTag = 1; // PCM
+            m_Format.nChannels = 2; // Stereo
+            m_Format.nSamplesPerSec = SAMPLE_FREQUENCY;
+            m_Format.wBitsPerSample = 8;
+            m_Format.nBlockAlign = (short)(m_Format.nChannels * (m_Format.wBitsPerSample / 8));
+            m_Format.nAvgBytesPerSec = m_Format.nSamplesPerSec * m_Format.nBlockAlign;
+            m_Format.cbSize = 0;
         }
 
         /*public ArrayItem ArrayItem
@@ -47,7 +59,7 @@ namespace Ordenar
             }
         }*/
 
-        private byte[] createWave(double freq)
+        /*private byte[] createWave(double freq)
         {
             List<Byte> tempBytes = new List<byte>();
 
@@ -71,7 +83,7 @@ namespace Ordenar
             //File.WriteAllBytes("teste"+freq.ToString()+".wav", myWaveData);
 
             return myWaveData;
-        }
+        }*/
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -223,6 +235,12 @@ namespace Ordenar
 
             button1.Enabled = true;
             button2.Enabled = true;
+            int iRet;
+            for (int i = 0; i < m_array.Length; i++)
+            {
+                iRet = waveOut.Close(m_pWave[i]);
+                Console.WriteLine(iRet);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -313,14 +331,19 @@ namespace Ordenar
         {
             double freq;
             freq = 55.0 * Math.Pow(2.0, (100.0 * e.valor / (m_array.Length - 1.0)) / 12.0);
+            vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
+            int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
+            vetor[e.indice].waveSize = iSize;
 
-            vetor[e.indice].WaveData = createWave(freq);
+            //vetor[e.indice].WaveData = createWave(freq);
+
             ContaEscrita();
         }
 
         public virtual void OnMudar(object sender, VetorEventArgs e)
         {
             //Console.Out.WriteLine(e.ToString());
+            int iRet;
 
             if (barras == null) return;
             decimal ratio = (decimal)(panel1.Height - 1) / (decimal)maximo;
@@ -344,9 +367,10 @@ namespace Ordenar
                     {
                         //Stream s = new MemoryStream(vetor[i].WaveData);
                         //SoundPlayer sp = new();
-                        myAudio[i].Stream = new MemoryStream(vetor[i].WaveData);
-                        myAudio[i].Play();
-
+                        //myAudio[i].Stream = new MemoryStream(vetor[i].WaveData);
+                        //myAudio[i].Play();
+                        iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
+                        //waveOut.ThrowExceptionForError(iRet);
                         //myAudio[i].Play(vetor[i].WaveData, AudioPlayMode.Background);
                     }
                 }
@@ -387,7 +411,10 @@ namespace Ordenar
             vetor = new ArrayItem[m_array.Length];
             vetor.Initialize();
 
-            myAudio = new SoundPlayer[m_array.Length];
+            //myAudio = new SoundPlayer[m_array.Length];
+            m_Buff = new WBuf[m_array.Length];
+            m_pWave = new IntPtr[m_array.Length];
+
 
             if (barras != null)
             {
@@ -402,10 +429,14 @@ namespace Ordenar
 
             decimal ratio = (decimal)(panel1.Height - 1) / (decimal)maximo;
             int tam;
+            int iRet;
 
             for (i = 0; i < vetor.Length; i++)
             {
-                myAudio[i] = new();
+                //myAudio[i] = new();
+                m_pWave[i] = new();
+                iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
+
                 EscritaEventHandler d1 = new EscritaEventHandler(OnEscreveu);
                 MudarEventHandler d2 = new MudarEventHandler(OnMudar);
 
@@ -421,8 +452,19 @@ namespace Ordenar
                 vetor[i].SetColorIDX(0);
                 double freq;
                 freq = 55.0 * Math.Pow(2.0, (100.0 * m_array[i] / (m_array.Length - 1.0)) / 12.0);
-                vetor[i].WaveData = createWave(freq); //m_array[i] * 50
+                //vetor[i].WaveData = createWave(freq); //m_array[i] * 50
                 //Console.Beep((int)(55 * Math.Pow(2, m_array[i] / 12)), 500);
+
+                vetor[i].MyBuf = new WBuf(m_pWave[i], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
+                int iSize = vetor[i].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
+                vetor[i].waveSize = iSize;
+
+                while (!vetor[i].MyBuf.IsBufferFree())
+                {
+                    System.Threading.Thread.Sleep(1);
+                }
+                //iRet = waveOut.Write(m_pWave[i], m_Buff[i].GetPtr(), iSize);
+
                 tam = (int)Math.Round(ratio * m_array[i]);
                 barras[i] = new UserControl
                 {
@@ -447,7 +489,7 @@ namespace Ordenar
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            AUDIO_LENGTH_IN_SECONDS = 0.1f * (float)numericUpDown1.Value;
+            AUDIO_LENGTH_IN_SECONDS = (float)numericUpDown1.Value / 2;
         }
     }
 }
