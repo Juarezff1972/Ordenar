@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Ordenar
@@ -290,11 +289,12 @@ namespace Ordenar
                     painel.Refresh();
                     break;
                 default:
-                    for (int i = 0; i < delay; i++)
+                    System.Threading.Thread.Sleep(delay);
+                    /*for (int i = 0; i < delay; i++)
                     {
                         Thread.Sleep(1);
                         Application.DoEvents();
-                    }
+                    }*/
                     painel.Refresh();
                     ChecaSegmentos();
                     break;
@@ -303,8 +303,11 @@ namespace Ordenar
 
         private static int PrevPowerOfTwo(int x)
         {
-            x |= x >> 1; x |= x >> 2; x |= x >> 4;
-            x |= x >> 8; x |= x >> 16;
+            x |= x >> 1;
+            x |= x >> 2;
+            x |= x >> 4;
+            x |= x >> 8;
+            x |= x >> 16;
             return x - (x >> 1);
         }
 
@@ -382,6 +385,7 @@ namespace Ordenar
                 vetor[m].SetColor2(cc);
                 vetor[m].Indice = m;
                 vetor[m].Mudou = true;
+                System.Threading.Thread.Sleep(20);
             }
         }
 
@@ -416,7 +420,7 @@ namespace Ordenar
             logText = t;
             logText.Text = "Log";
         }*/
-
+        #region Algoritmos de Ordenação
         // //////////////////////////////////////////////////////
         public void BinaryInsertionSort()
         {
@@ -1899,6 +1903,7 @@ namespace Ordenar
             }
         }
         // //////////////////////////////////////////////////////
+        #endregion
         public override string ToString()
         {
             return vetor.ToString();
