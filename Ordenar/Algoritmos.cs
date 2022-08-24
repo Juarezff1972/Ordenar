@@ -848,6 +848,128 @@ namespace Ordenar
             ChecaSegmentos();
         }
         // //////////////////////////////////////////////////////
+        public void FlashSort(int length)
+        {
+
+            int m = (int)((0.2 * length) + 2);
+            int min, max, maxIndex;
+            min = max = vetor[0].Valor;
+            maxIndex = 0;
+
+            ChecaSegmentos();
+            piv1.Visible = true;
+            piv2.Visible = true;
+            piv1.Maximum = length + 1;
+            piv2.Maximum = length + 1;
+            piv1.Value = 1;
+            piv2.Value = 1;
+
+            for (int i = 1; i < length - 1; i += 2)
+            {
+                int small;
+                int big;
+                int bigIndex;
+
+                if (vetor[i].Valor < vetor[i + 1].Valor)
+                {
+                    small = vetor[i].Valor;
+                    big = vetor[i + 1].Valor;
+                    bigIndex = i + 1;
+                }
+                else
+                {
+                    big = vetor[i].Valor;
+                    bigIndex = i;
+                    small = vetor[i + 1].Valor;
+                }
+
+                if (big > max)
+                {
+                    max = big;
+                    maxIndex = bigIndex;
+                }
+
+                if (small < min)
+                {
+                    min = small;
+                }
+                piv1.Value = min + 1;
+                piv2.Value = max + 1;
+                Pausa();
+            }
+            if (vetor[length - 1].Valor < min)
+            {
+                min = vetor[length - 1].Valor;
+            }
+            else if (vetor[length - 1].Valor > max)
+            {
+                max = vetor[length - 1].Valor;
+                maxIndex = length - 1;
+            }
+            piv1.Value = min + 1;
+            piv2.Value = max + 1;
+            Pausa();
+
+            if (max == min)
+            {
+                return;
+            }
+
+            int[] L = new int[m + 1];
+
+            for (int t = 1; t <= m; t++)
+            {
+                L[t] = 0;
+            }
+            double c = (m - 1.0) / (max - min);
+            int K;
+            for (int h = 0; h < length; h++)
+            {
+                K = ((int)((vetor[h].Valor - min) * c)) + 1;
+                L[K] += 1;
+                externos++;
+            }
+            for (K = 2; K <= m; K++)
+            {
+                L[K] = L[K] + L[K - 1];
+                externos++;
+            }
+            Swap(maxIndex, 0);
+            Pausa();
+            ChecaSegmentos();
+            int j = 0;
+            K = m;
+            int numMoves = 0;
+            while (numMoves < length)
+            {
+                while (j >= L[K])
+                {
+                    j++;
+                    K = ((int)((vetor[j].Valor - min) * c)) + 1;
+                }
+                int evicted = vetor[j].Valor;
+                while (j < L[K])
+                {
+                    K = ((int)((evicted - min) * c)) + 1;
+                    int location = L[K] - 1;
+                    (evicted, vetor[location].Valor) = (vetor[location].Valor, evicted);
+                    L[K] -= 1;
+                    externos++;
+                    numMoves++;
+                    Pausa();
+                    ChecaSegmentos();
+                }
+            }
+            InsertSort();
+        }
+
+        public void FlashSort()
+        {
+
+            FlashSort(vetor.Length);
+
+        }
+        // //////////////////////////////////////////////////////
         public void GnomeSort()
         {
             ChecaSegmentos();
@@ -880,7 +1002,6 @@ namespace Ordenar
 
             ChecaSegmentos();
 
-            // mark heap levels with different colors
             for (int j = i; j < n; ++j)
             {
                 cores = Math.Log(PrevPowerOfTwo(j + 1)) / Math.Log(2) + 4;
@@ -892,14 +1013,10 @@ namespace Ordenar
             {
                 if (i > 0)
                 {
-                    // build heap, sift A[i] down the heap
                     i--;
                 }
                 else
                 {
-
-                    // pop largest element from heap: swap front to back, and sift
-                    // front A[0] down the heap
                     n--;
                     if (n == 0)
                     {
@@ -921,7 +1038,6 @@ namespace Ordenar
                 int parent = i;
                 int child = i * 2 + 1;
 
-                // sift operation - push the value of A[i] down the heap
                 while (child < n)
                 {
                     ContaComparacao();
@@ -1079,6 +1195,62 @@ namespace Ordenar
         {
             ChecaSegmentos();
             PancakeSort(vetor.Length);
+        }
+        // //////////////////////////////////////////////////////
+        public void pigeonholeSort()
+        {
+            int min = vetor[0].Valor;
+            int max = vetor[0].Valor;
+            int range, i, j, index;
+            int n = vetor.Length;
+
+            piv1.Visible = true;
+            piv2.Visible = true;
+            piv1.Maximum = n + 1;
+            piv2.Maximum = n + 1;
+            piv1.Value = 1;
+            piv2.Value = 1;
+
+            ChecaSegmentos();
+
+            for (int a = 0; a < n; a++)
+            {
+                if (vetor[a].Valor > max)
+                {
+                    max = vetor[a].Valor;
+                }
+                if (vetor[a].Valor < min)
+                {
+                    min = vetor[a].Valor;
+                }
+                piv1.Value = min + 1;
+                piv2.Value = max + 1;
+                Pausa();
+            }
+
+            range = max - min + 1;
+            int[] pigeonHoles = new int[range];
+
+            for (i = 0; i < n; i++)
+            {
+                pigeonHoles[vetor[i].Valor - min]++;
+                externos++;
+                Pausa();
+            }
+
+            index = 0;
+
+            for (j = 0; j < range; j++)
+            {
+                while (pigeonHoles[j]-- > 0)
+                {
+                    externos++;
+                    vetor[index++].Valor = j + min;
+                    ChecaSegmentos();
+                    Pausa();
+                }
+            }
+            return;
         }
         // //////////////////////////////////////////////////////
         public void SetQuickSortPivot(string q)

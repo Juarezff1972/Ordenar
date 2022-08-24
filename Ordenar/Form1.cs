@@ -228,6 +228,14 @@ namespace Ordenar
                     algo.GravitySort();
                     break;
 
+                case "FlashSort":
+                    algo.FlashSort();
+                    break;
+
+                case "PigeonHoleSort":
+                    algo.pigeonholeSort();
+                    break;
+
                 default:
                     break;
             }

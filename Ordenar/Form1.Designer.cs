@@ -93,7 +93,9 @@
             resources.GetString("comboBox1.Items22"),
             resources.GetString("comboBox1.Items23"),
             resources.GetString("comboBox1.Items24"),
-            resources.GetString("comboBox1.Items25")});
+            resources.GetString("comboBox1.Items25"),
+            resources.GetString("comboBox1.Items26"),
+            resources.GetString("comboBox1.Items27")});
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Sorted = true;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);

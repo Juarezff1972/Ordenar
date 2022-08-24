@@ -89,54 +89,60 @@
     <value>CycleSort</value>
   </data>
   <data name="comboBox1.Items9" xml:space="preserve">
-    <value>GnomeSort</value>
+    <value>FlashSort</value>
   </data>
   <data name="comboBox1.Items10" xml:space="preserve">
-    <value>GravitySort</value>
+    <value>GnomeSort</value>
   </data>
   <data name="comboBox1.Items11" xml:space="preserve">
-    <value>HeapSort</value>
+    <value>GravitySort</value>
   </data>
   <data name="comboBox1.Items12" xml:space="preserve">
-    <value>InsertSort</value>
+    <value>HeapSort</value>
   </data>
   <data name="comboBox1.Items13" xml:space="preserve">
-    <value>InsertSort2</value>
+    <value>InsertSort</value>
   </data>
   <data name="comboBox1.Items14" xml:space="preserve">
-    <value>MergeSort</value>
+    <value>InsertSort2</value>
   </data>
   <data name="comboBox1.Items15" xml:space="preserve">
-    <value>OddEvenSort</value>
+    <value>MergeSort</value>
   </data>
   <data name="comboBox1.Items16" xml:space="preserve">
-    <value>PancakeSort</value>
+    <value>OddEvenSort</value>
   </data>
   <data name="comboBox1.Items17" xml:space="preserve">
-    <value>QuickSortDualPivot</value>
+    <value>PancakeSort</value>
   </data>
   <data name="comboBox1.Items18" xml:space="preserve">
-    <value>QuickSortLL</value>
+    <value>PigeonHoleSort</value>
   </data>
   <data name="comboBox1.Items19" xml:space="preserve">
-    <value>QuickSortLR</value>
+    <value>QuickSortDualPivot</value>
   </data>
   <data name="comboBox1.Items20" xml:space="preserve">
-    <value>QuickSortTernaryLR</value>
+    <value>QuickSortLL</value>
   </data>
   <data name="comboBox1.Items21" xml:space="preserve">
-    <value>RadixSortLSD</value>
+    <value>QuickSortLR</value>
   </data>
   <data name="comboBox1.Items22" xml:space="preserve">
-    <value>RadixSortMSD</value>
+    <value>QuickSortTernaryLR</value>
   </data>
   <data name="comboBox1.Items23" xml:space="preserve">
-    <value>SelectionSort</value>
+    <value>RadixSortLSD</value>
   </data>
   <data name="comboBox1.Items24" xml:space="preserve">
-    <value>ShellSort</value>
+    <value>RadixSortMSD</value>
   </data>
   <data name="comboBox1.Items25" xml:space="preserve">
+    <value>SelectionSort</value>
+  </data>
+  <data name="comboBox1.Items26" xml:space="preserve">
+    <value>ShellSort</value>
+  </data>
+  <data name="comboBox1.Items27" xml:space="preserve">
     <value>SlowSort</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
