@@ -14,6 +14,35 @@ namespace Ordenar
 
     public partial class Form1 : Form
     {
+        const string BINARYINSERTIONSORT = "BinaryInsertionSort";
+        const string BITONICSORT = "BitonicSort";
+        const string BUBBLESORT = "BubbleSort";
+        const string BUBBLESORT2 = "BubbleSort2";
+        const string BUBBLESORT3 = "BubbleSort3";
+        const string COCKTAILSHAKERSORT = "CocktailShakerSort";
+        const string COMBSORT = "CombSort";
+        const string COUNTINGSORT = "CountingSort";
+        const string CYCLESORT = "CycleSort";
+        const string FLASHSORT = "FlashSort";
+        const string GNOMESORT = "GnomeSort";
+        const string GRAVITYSORT = "GravitySort";
+        const string HEAPSORT = "HeapSort";
+        const string INSERTSORT = "InsertSort";
+        const string INSERTSORT2 = "InsertSort2";
+        const string MERGESORT = "MergeSort";
+        const string ODDEVENSORT = "OddEvenSort";
+        const string PANCAKESORT = "PancakeSort";
+        const string PIGEONHOLESORT = "PigeonHoleSort";
+        const string QUICKSORTDUALPIVOT = "QuickSortDualPivot";
+        const string QUICKSORTLL = "QuickSortLL";
+        const string QUICKSORTLR = "QuickSortLR";
+        const string QUICKSORTTERNARYLR = "QuickSortTernaryLR";
+        const string RADIXSORTLSD = "RadixSortLSD";
+        const string RADIXSORTMSD = "RadixSortMSD";
+        const string SELECTIONSORT = "SelectionSort";
+        const string SHELLSORT = "ShellSort";
+        const string SLOWSORT = "SlowSort";
+
         private int escritas;
 
         //private Graphics graph;
@@ -124,115 +153,115 @@ namespace Ordenar
             Form1.ActiveForm.Text = x;
             switch (x)
             {
-                case "InsertSort":
+                case INSERTSORT:
                     algo.InsertSort();
                     break;
 
-                case "SelectionSort":
+                case SELECTIONSORT:
                     algo.SelectionSort();
                     break;
 
-                case "InsertSort2":
+                case INSERTSORT2:
                     algo.InsertSort2();
                     break;
 
-                case "BinaryInsertionSort":
+                case BINARYINSERTIONSORT:
                     algo.BinaryInsertionSort();
                     break;
 
-                case "MergeSort":
+                case MERGESORT:
                     algo.MergeSort();
                     break;
 
-                case "BubbleSort":
+                case BUBBLESORT:
                     algo.BubbleSort();
                     break;
 
-                case "BubbleSort2":
+                case BUBBLESORT2:
                     algo.BubbleSort2();
                     break;
 
-                case "BubbleSort3":
+                case BUBBLESORT3:
                     algo.BubbleSort3();
                     break;
 
-                case "CocktailShakerSort":
+                case COCKTAILSHAKERSORT:
                     algo.CocktailShakerSort();
                     break;
 
-                case "GnomeSort":
+                case GNOMESORT:
                     algo.GnomeSort();
                     break;
 
-                case "CombSort":
+                case COMBSORT:
                     algo.CombSort();
                     break;
 
-                case "OddEvenSort":
+                case ODDEVENSORT:
                     algo.OddEvenSort();
                     break;
 
-                case "ShellSort":
+                case SHELLSORT:
                     algo.ShellSort();
                     break;
 
-                case "QuickSortLR":
+                case QUICKSORTLR:
                     algo.QuickSortLR();
                     break;
 
-                case "QuickSortLL":
+                case QUICKSORTLL:
                     algo.QuickSortLL();
                     break;
 
-                case "QuickSortTernaryLR":
+                case QUICKSORTTERNARYLR:
                     algo.QuickSortTernaryLR();
                     break;
 
-                case "QuickSortDualPivot":
+                case QUICKSORTDUALPIVOT:
                     algo.QuickSortDualPivot();
                     break;
 
-                case "HeapSort":
+                case HEAPSORT:
                     algo.HeapSort();
                     break;
 
-                case "RadixSortMSD":
+                case RADIXSORTMSD:
                     algo.RadixSortMSD();
                     break;
 
-                case "RadixSortLSD":
+                case RADIXSORTLSD:
                     algo.RadixSortLSD();
                     break;
 
-                case "CountingSort":
+                case COUNTINGSORT:
                     algo.CountingSort();
                     break;
 
-                case "BitonicSort":
+                case BITONICSORT:
                     algo.BitonicSort();
                     break;
 
-                case "SlowSort":
+                case SLOWSORT:
                     algo.SlowSort();
                     break;
 
-                case "CycleSort":
+                case CYCLESORT:
                     algo.CycleSort();
                     break;
 
-                case "PancakeSort":
+                case PANCAKESORT:
                     algo.PancakeSort();
                     break;
 
-                case "GravitySort":
+                case GRAVITYSORT:
                     algo.GravitySort();
                     break;
 
-                case "FlashSort":
+                case FLASHSORT:
                     algo.FlashSort();
                     break;
 
-                case "PigeonHoleSort":
+                case PIGEONHOLESORT:
                     algo.pigeonholeSort();
                     break;
 
@@ -279,6 +308,37 @@ namespace Ordenar
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.comboBox1.Items.Clear();
+            this.comboBox1.Items.Add(BINARYINSERTIONSORT);
+            this.comboBox1.Items.Add(BITONICSORT);
+            this.comboBox1.Items.Add(BUBBLESORT);
+            this.comboBox1.Items.Add(BUBBLESORT2);
+            this.comboBox1.Items.Add(BUBBLESORT3);
+            this.comboBox1.Items.Add(COCKTAILSHAKERSORT);
+            this.comboBox1.Items.Add(COMBSORT);
+            this.comboBox1.Items.Add(COUNTINGSORT);
+            this.comboBox1.Items.Add(CYCLESORT);
+            this.comboBox1.Items.Add(FLASHSORT);
+            this.comboBox1.Items.Add(GNOMESORT);
+            this.comboBox1.Items.Add(GRAVITYSORT);
+            this.comboBox1.Items.Add(HEAPSORT);
+            this.comboBox1.Items.Add(INSERTSORT);
+            this.comboBox1.Items.Add(INSERTSORT2);
+            this.comboBox1.Items.Add(MERGESORT);
+            this.comboBox1.Items.Add(ODDEVENSORT);
+            this.comboBox1.Items.Add(PANCAKESORT);
+            this.comboBox1.Items.Add(PIGEONHOLESORT);
+            this.comboBox1.Items.Add(QUICKSORTDUALPIVOT);
+            this.comboBox1.Items.Add(QUICKSORTLL);
+            this.comboBox1.Items.Add(QUICKSORTLR);
+            this.comboBox1.Items.Add(QUICKSORTTERNARYLR);
+            this.comboBox1.Items.Add(RADIXSORTLSD);
+            this.comboBox1.Items.Add(RADIXSORTMSD);
+            this.comboBox1.Items.Add(SELECTIONSORT);
+            this.comboBox1.Items.Add(SHELLSORT);
+            this.comboBox1.Items.Add(SLOWSORT);
+            this.comboBox1.Sorted = true;
+
             this.FormBorderStyle = FormBorderStyle.Sizable;
             Resetar();
 
