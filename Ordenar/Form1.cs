@@ -51,7 +51,7 @@ namespace Ordenar
         private int maximo;
         private byte ordem;
         private ArrayItem[] vetor;
-        private UserControl[] barras;
+        private VisualControl[] barras;
         //private static byte[] myWaveData;
 
         private WaveFormatEx m_Format;
@@ -428,6 +428,7 @@ namespace Ordenar
                 barras[i].Width = (int)itens;
                 barras[i].BackColor = vetor[i].GetColor(1);
                 barras[i].ForeColor = vetor[i].GetColor(2);
+                barras[i].txt = vetor[i].Valor.ToString();
                 barras[i].Refresh();
                 if (checkBox1.Checked)
                 {
@@ -492,7 +493,7 @@ namespace Ordenar
                 }
             }
 
-            barras = new UserControl[m_array.Length];
+            barras = new VisualControl[m_array.Length];
             float itens = panel1.Width / (float)m_array.Length;
 
             decimal ratio = (decimal)(panel1.Height - 1) / (decimal)maximo;
@@ -534,7 +535,7 @@ namespace Ordenar
                 //iRet = waveOut.Write(m_pWave[i], m_Buff[i].GetPtr(), iSize);
 
                 tam = (int)Math.Round(ratio * m_array[i]);
-                barras[i] = new UserControl
+                barras[i] = new VisualControl
                 {
                     Left = (int)(i * itens),
                     Width = (int)itens,
@@ -542,7 +543,8 @@ namespace Ordenar
                     Height = tam,
                     BackColor = Color.Blue,
                     BorderStyle = BorderStyle.FixedSingle,
-                    ForeColor = Color.Red
+                    ForeColor = Color.Red,
+                    txt = m_array[i].ToString()
                 };
                 panel1.Controls.Add(barras[i]);
             }
