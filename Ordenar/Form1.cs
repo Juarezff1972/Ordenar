@@ -423,11 +423,11 @@ namespace Ordenar
                 //Audio myAudio = new();
                 tam = (int)Math.Round(ratio * vetor[i].Valor);
                 barras[i].Top = panel1.Height - tam;
-                barras[i].Height = tam;
+                barras[i].Altura = tam;
                 barras[i].Left = (int)(i * itens);
-                barras[i].Width = (int)itens;
-                barras[i].BackColor = vetor[i].GetColor(1);
-                barras[i].ForeColor = vetor[i].GetColor(2);
+                barras[i].Largura = (int)itens;
+                barras[i].CorFundo = vetor[i].GetColor(1);
+                barras[i].CorFrente = vetor[i].GetColor(2);
                 barras[i].txt = vetor[i].Valor.ToString();
                 barras[i].Refresh();
                 if (checkBox1.Checked)
@@ -535,15 +535,18 @@ namespace Ordenar
                 //iRet = waveOut.Write(m_pWave[i], m_Buff[i].GetPtr(), iSize);
 
                 tam = (int)Math.Round(ratio * m_array[i]);
+                byte m = 0;
+                if (tipoVisual.Text == "Barras") m = VisualControl.BARRA;
+                if (tipoVisual.Text == "Bolas") m = VisualControl.BOLA;
                 barras[i] = new VisualControl
                 {
                     Left = (int)(i * itens),
-                    Width = (int)itens,
+                    Largura = (int)itens,
                     Top = panel1.Height - tam,
-                    Height = tam,
-                    BackColor = Color.Blue,
-                    BorderStyle = BorderStyle.FixedSingle,
-                    ForeColor = Color.Red,
+                    Altura = tam,
+                    modo = m,
+                    CorFundo = Color.Blue,
+                    CorFrente = Color.Red,
                     txt = m_array[i].ToString()
                 };
                 panel1.Controls.Add(barras[i]);

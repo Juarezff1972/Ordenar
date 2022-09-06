@@ -54,6 +54,7 @@
             this.pivot2 = new System.Windows.Forms.TrackBar();
             this.label10 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.tipoVisual = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -297,11 +298,22 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // tipoVisual
+            // 
+            resources.ApplyResources(this.tipoVisual, "tipoVisual");
+            this.tipoVisual.CausesValidation = false;
+            this.tipoVisual.FormattingEnabled = true;
+            this.tipoVisual.Items.AddRange(new object[] {
+            resources.GetString("tipoVisual.Items"),
+            resources.GetString("tipoVisual.Items1")});
+            this.tipoVisual.Name = "tipoVisual";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.tipoVisual);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.pivot2);
@@ -366,6 +378,7 @@
         private System.Windows.Forms.TrackBar pivot2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ComboBox tipoVisual;
     }
 }
 
