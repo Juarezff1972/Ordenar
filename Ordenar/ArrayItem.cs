@@ -14,7 +14,7 @@ namespace Ordenar
         private bool mudou;
         private byte[] myWaveData;
         private WBuf Buf;
-        public int waveSize;
+        public int waveSize = 0;
 
         public ArrayItem()
         {

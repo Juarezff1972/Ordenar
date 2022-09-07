@@ -397,11 +397,14 @@ namespace Ordenar
 
         public virtual void OnEscreveu(object sender, VetorEventArgs e)
         {
-            double freq;
-            freq = 55.0 * Math.Pow(2.0, (100.0 * e.valor / (m_array.Length - 1.0)) / 12.0);
-            vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
-            int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
-            vetor[e.indice].waveSize = iSize;
+            if (checkBox1.Checked)
+            {
+                double freq;
+                freq = 55.0 * Math.Pow(2.0, (100.0 * e.valor / (m_array.Length - 1.0)) / 12.0);
+                if (vetor[e.indice].MyBuf==null) vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
+                int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
+                vetor[e.indice].waveSize = iSize;
+            }
 
             //vetor[e.indice].WaveData = createWave(freq);
 
