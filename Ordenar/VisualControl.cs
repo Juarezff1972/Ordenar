@@ -7,6 +7,7 @@ namespace Ordenar
     {
         public static byte BARRA { get { return 0; } }
         public static byte BOLA { get { return 1; } }
+        public static byte LINHA { get { return 2; } }
 
         private string _txt;
         private Font f;
@@ -134,6 +135,12 @@ namespace Ordenar
                 _pen2 = new Pen(_brush1);
                 e.Graphics.DrawEllipse(_pen1, 0, 0, _width - 2, _width - 2);
                 e.Graphics.FillEllipse(_brush2, 0, 0, _width - 2, _width - 2);
+            }
+            if (_modo==LINHA)
+            {
+                _brush1 = new SolidBrush(CorFrente);
+                _pen1 = new Pen(_brush1);
+                e.Graphics.DrawLine(_pen1, _width / 2, 0, _width / 2, _height);
             }
         }
     }

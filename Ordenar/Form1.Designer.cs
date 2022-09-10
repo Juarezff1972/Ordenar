@@ -305,7 +305,8 @@
             this.tipoVisual.FormattingEnabled = true;
             this.tipoVisual.Items.AddRange(new object[] {
             resources.GetString("tipoVisual.Items"),
-            resources.GetString("tipoVisual.Items1")});
+            resources.GetString("tipoVisual.Items1"),
+            resources.GetString("tipoVisual.Items2")});
             this.tipoVisual.Name = "tipoVisual";
             // 
             // Form1

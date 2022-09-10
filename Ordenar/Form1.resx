@@ -907,6 +907,9 @@
   <data name="tipoVisual.Items1" xml:space="preserve">
     <value>Bolas</value>
   </data>
+  <data name="tipoVisual.Items2" xml:space="preserve">
+    <value>Linhas</value>
+  </data>
   <data name="tipoVisual.Location" type="System.Drawing.Point, System.Drawing">
     <value>653, 317</value>
   </data>

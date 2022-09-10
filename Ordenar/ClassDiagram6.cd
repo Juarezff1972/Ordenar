@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MultiMedia.WaveOutCaps" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIgAAAAAAAAAAAAAAgAgAAQAAAAAAAACAAgAAAAEA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.WaveInCaps" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIgAAAAAAAAAAAAAAAAgAAQAAAAAAAACAAgAAAAEA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MMTIME" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJABAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.WAVEHDR" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAACgAAAhAAAAECAAAAAAAAAAgAQAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MultiMedia.MMCKINFO" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAgAAAAAAAAAAAgACAAAQAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MMIOINFO" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEABAAABAAAAAAAAEAAFUACgAAIACECgAAAAEIEAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MixerCaps" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAABAAAAAAAAAAAgAAAAAAAAAAAAACAAgAAAAEg=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MixerControlDetails" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAABAAIAAQAAAAAAAAABAAAIAAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MCDUnion" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MixerLineControls" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgABAAAAAAAAAAAEACAAAAACAAAAAAEAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MixerControlDetailsUnsigned" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MixerLine" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgAZAAAAABAwAAAIgCAAAAACABABACCACgAABAEA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MixerControl" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAACBAAABBAwQIAAAAABAAAAQAAAAAAAKAAAAAIA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MMIO" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACIAIAAAAIAAACCAAAAAgAAAABEAAAAQAgCGIgEA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.waveIn" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgCAAAACAAJAAAAAAggAAAAAgABAAAIAgAKACAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.waveOut" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAgCAAAACAAJEAAAAAggAAAAAgADADAAAgEKQGAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.Mixer" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACQAAAAAAIBAAAAAAgAAAQAAABAAAAAgAMCGAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiMedia.MLCMarshaler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAACAAAAAAAAAAAIBAAQAAAQAIAAAAAIAAQ=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Struct Name="MultiMedia.MixerControlDetailsSigned" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MultiMedia.MixerControlDetailsBoolean" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MultiMedia.MixerControlDetailsListText" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAACAAACAAQAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="MultiMedia.WaveOpenFlags" Collapsed="true">
+    <Position X="4" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAQAAAAAACAAAAAIQAgAAAAEAAAIACAEAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.SupportedFormats" Collapsed="true">
+    <Position X="0.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAABAAAAAAACAAAAAFAAAAUEAAAAAAAIACAAAAKAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MOWM" Collapsed="true">
+    <Position X="4" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIWM" Collapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAQAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.WaveCapsFlags" Collapsed="true">
+    <Position X="2.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAJEAAEAAIA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.RiffChunkFlags" Collapsed="true">
+    <Position X="5.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAgAAAAEACAEAAAI=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MMIOCloseFlags" Collapsed="true">
+    <Position X="2.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAg=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MMIOFlushFlags" Collapsed="true">
+    <Position X="7.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MMIOSeekFlags" Collapsed="true">
+    <Position X="0.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.RWMode" Collapsed="true">
+    <Position X="7.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAgAAAAAAAAEAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MMIOError" Collapsed="true">
+    <Position X="4" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAIBAAIAogEAAAAUBAAAYgAEAAAIAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MMIOFlags" Collapsed="true">
+    <Position X="5.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAgCgAAAAABAADAAAAAAAAgAAEAAkAAAAAAAAEACAQ=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXER_GETLINEINFOF" Collapsed="true">
+    <Position X="5.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBAAAAAAAgAQAAAASAAACUABQAgAABIEAAAAgAAAABA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXER_SETCONTROLDETAILSF" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBIAAAAgAAAAAAAASAAACUABQAAAABIAAAAgAAAAABA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXER_GETLINECONTROLSF" Collapsed="true">
+    <Position X="4" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBIAAAAAAAgAAAAASAAADUABQAAAABIAAIAAAAAAABA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXER_OBJECTF" Collapsed="true">
+    <Position X="7.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBACAAAAAAAAAAAASAAACUABQAAAABKAAAAABAAAABA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXERCONTROL_CONTROLF" Collapsed="true">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEACAAAAAAAAAAAAAAAAAAAEAAgA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXERCONTROL_CONTROLTYPE" Collapsed="true">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAUAAAAAgBAgAAAAIAAQAEAAAEAAAAAAAAIAEAAAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.ControlType" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CkeKRAggARIAiwgAKEAQgGCAACIAEADADFIQXAAgFAg=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXERLINE_TARGETTYPE" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAQAAAAUAAAAAAAAAAAAAAAAAAADA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXERLINE_COMPONENTTYPE" Collapsed="true">
+    <Position X="5.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAgCAAAMIAACAAASAgABAAkGAAAAAGgACAAAKoAAoA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MIXERLINE_LINEF" Collapsed="true">
+    <Position X="7.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAAgEAAAA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MultiMedia.MMSYSERR" Collapsed="true">
+    <Position X="2.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgBAEAAAAAUAIQIAAIApACAACAAAAIUgKEBCAAQA=</HashCode>
+      <FileName>MMIO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

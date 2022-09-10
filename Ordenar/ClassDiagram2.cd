@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WindowsMediaLib.WMUtils">
+    <Position X="16.75" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>DQCEACQAQAAAAAAAQAAAAAEAAADAgAAAIAAAwAAAAAA=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.COMBase">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAwQAAAAAABAAAACAAAAAICAQAAAAAAAxAADAAAAIA=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.NSResults">
+    <Position X="9.5" Y="0.5" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>3///P////+3/9/93////3//////7//////v///////8=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.WMError">
+    <Position X="7" Y="3.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="WindowsMediaLib.WMError.LoadLibraryExFlags">
+        <TypeIdentifier>
+          <NewMemberFileName>WMUtils.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="WindowsMediaLib.WMError.FormatMessageFlags">
+        <TypeIdentifier>
+          <NewMemberFileName>WMUtils.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQAAAgAAAAAAAAAAQAAAAAACAAAAAAAEAAAACAAAAAA=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.UnmanagedNameAttribute">
+    <Position X="14.25" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.Constants">
+    <Position X="3" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>t9Z5j6K0sa59uG2mdv1r0Ks9d0X20qWv+/X5/z/N148=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.WmShort">
+    <Position X="16.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAQAAAAAAAAEAAAAAAAAAAQAAIAAAAAAAAIAEAg=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.WmInt">
+    <Position X="14.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAQAAAgAAAAEAAAAAAAAAAQAAIAAAABAIAAAAAA=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.FourCC">
+    <Position X="0.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAKAgAAAAAAAAAAEgAAAAAAAACABAIIABAAAIAAAAiA=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsMediaLib.MTMarshaler" BaseTypeListCollapsed="true">
+    <Position X="7" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIBAAUAAAAAIAIAAAIAAQ=</HashCode>
+      <FileName>WMUtils.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

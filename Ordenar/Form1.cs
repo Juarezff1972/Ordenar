@@ -541,6 +541,7 @@ namespace Ordenar
                 byte m = 0;
                 if (tipoVisual.Text == "Barras") m = VisualControl.BARRA;
                 if (tipoVisual.Text == "Bolas") m = VisualControl.BOLA;
+                if (tipoVisual.Text == "Linhas") m = VisualControl.LINHA;
                 barras[i] = new VisualControl
                 {
                     Left = (int)(i * itens),
