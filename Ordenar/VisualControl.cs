@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Ordenar
@@ -22,6 +23,8 @@ namespace Ordenar
         private Brush _brush2;
 
         private Label info;
+
+        private GraphicsState gr;
 
         public byte modo
         {
@@ -87,13 +90,14 @@ namespace Ordenar
             set
             {
                 _txt = value;
-                if (Width > 10 && modo == BARRA)
+                if (Width > 10 && (modo == BARRA || modo == BOLA))
                 {
                     info.Text = _txt;
                     f = info.Font;
                     info.Font = new Font(f.Name, Width / 3);
                     info.ForeColor = Color.White;
                     info.Height = (int)f.SizeInPoints * f.Height;
+                    info.BackColor = Color.Transparent;
                 }
                 else
                 {
@@ -127,6 +131,7 @@ namespace Ordenar
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (gr != null) e.Graphics.Restore(gr);
             if (_modo == BOLA)
             {
                 _brush1 = new SolidBrush(CorFrente);
@@ -135,12 +140,14 @@ namespace Ordenar
                 _pen2 = new Pen(_brush1);
                 e.Graphics.DrawEllipse(_pen1, 0, 0, _width - 2, _width - 2);
                 e.Graphics.FillEllipse(_brush2, 0, 0, _width - 2, _width - 2);
+                gr = e.Graphics.Save();
             }
             if (_modo==LINHA)
             {
                 _brush1 = new SolidBrush(CorFrente);
                 _pen1 = new Pen(_brush1);
                 e.Graphics.DrawLine(_pen1, _width / 2, 0, _width / 2, _height);
+                gr = e.Graphics.Save();
             }
         }
     }

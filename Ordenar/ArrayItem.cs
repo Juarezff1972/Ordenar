@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms.Design;
 
 namespace Ordenar
 {
@@ -182,7 +183,7 @@ namespace Ordenar
             switch (idx)
             {
                 case 1:
-                    SetColor1(Color.Yellow);
+                    SetColor1(Color.FromArgb(255,192,192,0));
                     SetColor2(Color.Orange);
                     break;
 
