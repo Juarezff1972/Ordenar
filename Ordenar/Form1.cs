@@ -42,6 +42,9 @@ namespace Ordenar
         const string SELECTIONSORT = "SelectionSort";
         const string SHELLSORT = "ShellSort";
         const string SLOWSORT = "SlowSort";
+        const string TOURNAMENTSORT = "TournamentSort";
+        const string AMERICANSORT = "AmericanSort";
+        const string SIMPLISTICGRAVITYSORT = "SimplisticGravitySort";
 
         private int escritas;
 
@@ -88,7 +91,6 @@ namespace Ordenar
             }
         }*/
 
-        /*private byte[] createWave(double freq)
         {
             List<Byte> tempBytes = new List<byte>();
 
@@ -265,6 +267,18 @@ namespace Ordenar
                     algo.pigeonholeSort();
                     break;
 
+                case TOURNAMENTSORT:
+                    algo.tournamentSort();
+                    break;
+
+                case AMERICANSORT:
+                    algo.AmericanSort();
+                    break;
+
+                case SIMPLISTICGRAVITYSORT:
+                    algo.SimplisticGravitySort();
+                    break;
+
                 default:
                     break;
             }
@@ -337,6 +351,9 @@ namespace Ordenar
             this.comboBox1.Items.Add(SELECTIONSORT);
             this.comboBox1.Items.Add(SHELLSORT);
             this.comboBox1.Items.Add(SLOWSORT);
+            this.comboBox1.Items.Add(TOURNAMENTSORT);
+            this.comboBox1.Items.Add(AMERICANSORT);
+            this.comboBox1.Items.Add(SIMPLISTICGRAVITYSORT);
             this.comboBox1.Sorted = true;
 
             this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -401,7 +418,7 @@ namespace Ordenar
             {
                 double freq;
                 freq = 55.0 * Math.Pow(2.0, (100.0 * e.valor / (m_array.Length - 1.0)) / 12.0);
-                if (vetor[e.indice].MyBuf==null) vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
+                if (vetor[e.indice].MyBuf == null) vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
                 int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
                 vetor[e.indice].waveSize = iSize;
             }
@@ -523,7 +540,7 @@ namespace Ordenar
                 vetor[i].Valor = m_array[i];
                 vetor[i].SetColorIDX(0);
                 double freq;
-                freq = 55.0 * Math.Pow(2.0, (100.0 * m_array[i] / (m_array.Length - 1.0)) / 12.0);
+                freq = 55.0 * Math.Pow(2.0, (100.0 * (m_array[i] / 2) / (m_array.Length - 1.0)) / 12.0);
                 //vetor[i].WaveData = createWave(freq); //m_array[i] * 50
                 //Console.Beep((int)(55 * Math.Pow(2, m_array[i] / 12)), 500);
 

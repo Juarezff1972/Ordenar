@@ -2075,6 +2075,208 @@ namespace Ordenar
             }
         }
         // //////////////////////////////////////////////////////
+        private int[] tmp;
+
+        private int vencedor(int pos1, int pos2)
+        {
+            int u = pos1 >= vetor.Length ? pos1 : tmp[pos1];
+            int v = pos2 >= vetor.Length ? pos2 : tmp[pos2];
+            if (tmp[u] <= tmp[v]) return u;
+            return v;
+        }
+
+        private void criaArvore(ref int valor)
+        {
+            for (int i = 0; i < vetor.Length; i++) tmp[vetor.Length + i] = vetor[i].Valor;
+            for (int i = 2 * vetor.Length - 1; i > 1; i -= 2)
+            {
+                int k = i / 2;
+                int j = i - 1;
+                tmp[k] = vencedor(i, j);
+                externos++;
+                piv2.Value = tmp[k];
+                Pausa();
+            }
+            valor = tmp[tmp[1]];
+            tmp[tmp[1]] = int.MaxValue;
+        }
+
+        private void recriar(ref int valor)
+        {
+            int i = tmp[1];
+            while (i > 1)
+            {
+                int j, k = i / 2;
+                if (i % 2 == 0 && i < 2 * vetor.Length - 1)
+                    j = i + 1;
+                else
+                    j = i - 1;
+                tmp[k] = vencedor(i, j);
+                externos++;
+                i = k;
+                piv2.Value = tmp[k];
+                Pausa();
+            }
+            valor = tmp[tmp[1]];
+            tmp[tmp[1]] = int.MaxValue;
+        }
+
+        public void tournamentSort()
+        {
+            int valor = 0;
+            int max = vetor.Length;
+
+            ChecaSegmentos();
+            piv1.Visible = true;
+            piv1.Maximum = max;
+            piv2.Visible = true;
+            piv2.Maximum = 2 * vetor.Length - 1;
+
+            tmp = new int[vetor.Length << 1];
+            criaArvore(ref valor);
+            for (int i = 0; i < vetor.Length; i++)
+            {
+                vetor[i].Valor = valor;
+                recriar(ref valor);
+                ChecaSegmentos();
+                piv1.Value = i + 1;
+                Pausa();
+            }
+        }
+
+        // //////////////////////////////////////////////////////
+        const int NUMBER_OF_BUCKETS = 128;
+
+        private int MaximoDigitos()
+        {
+            int max = int.MinValue;
+            int temp = 0;
+            for (int i = 0; i < vetor.Length; i++)
+            {
+                temp = (int)(Math.Log(vetor[i].Valor) / Math.Log(NUMBER_OF_BUCKETS)) + 1;
+                if (temp > max)
+                    max = temp;
+            }
+            return max;
+        }
+
+        private int Digitos(int i, int d)
+        {
+            return (i / d) % NUMBER_OF_BUCKETS;
+        }
+
+        private void AmericanSort(int inicio, int tam, int divisor)
+        {
+            int[] contagem = new int[NUMBER_OF_BUCKETS];
+            int[] offset = new int[NUMBER_OF_BUCKETS];
+            int digitos = 0;
+            //passo 1
+            piv1.Value = 1;
+            piv1.Maximum = tam;
+            for (int i = inicio; i < tam; i++)
+            {
+                int d = vetor[i].Valor;
+                digitos = Digitos(d, divisor);
+                contagem[digitos]++;
+                externos++;
+                piv1.Value = i + 1;
+            }
+            offset[0] = inicio;
+            piv2.Value = 1;
+            piv2.Maximum = NUMBER_OF_BUCKETS;
+            for (int i = 1; i < NUMBER_OF_BUCKETS; i++)
+            {
+                offset[i] = contagem[i - 1] + offset[i - 1];
+                externos++;
+                piv2.Value = i;
+            }
+            ChecaSegmentos();
+            //passo 2
+            for (int b = 0; b < NUMBER_OF_BUCKETS; b++)
+            {
+                while (contagem[b] > 0)
+                {
+                    int origem = offset[b];
+                    int fonte = origem;
+                    int num = vetor[fonte].Valor;
+                    do
+                    {
+                        digitos = Digitos(num, divisor);
+                        int destino = offset[digitos];
+                        offset[digitos]++;
+                        contagem[digitos]--;
+                        int temp = vetor[destino].Valor;
+                        vetor[destino].Valor = num;
+                        num = temp;
+                        fonte = destino;
+                        Pausa();
+                        ChecaSegmentos();
+                    } while (fonte != origem);
+                }
+                piv2.Value = b + 1;
+            }
+            if (divisor > 1)
+            {
+                for (int i = 0; i < NUMBER_OF_BUCKETS; i++)
+                {
+                    int comeco = (i > 0) ? offset[i - 1] : inicio;
+                    int final = offset[i];
+                    if (final - comeco > 1)
+                        AmericanSort(comeco, final, divisor / NUMBER_OF_BUCKETS);
+                }
+            }
+        }
+        public void AmericanSort()
+        {
+            piv1.Visible = true;
+            piv2.Visible = true;
+            int digitos = MaximoDigitos();
+            int max = 1;
+            for (int i = 0; i < digitos - 1; i++)
+            {
+                max *= NUMBER_OF_BUCKETS;
+            }
+            AmericanSort(0, vetor.Length, max);
+        }
+        // //////////////////////////////////////////////////////
+        public void SimplisticGravitySort()
+        {
+            int[] aux;
+            int min = vetor[0].Valor;
+            int max = min;
+            int pointer;
+            int index;
+            int fator = vetor.Length / 10;
+            for (int mainPointer = 1; mainPointer < vetor.Length; mainPointer++)
+            {
+                min = Math.Min(vetor[mainPointer].Valor, min);
+                max = Math.Max(vetor[mainPointer].Valor, max);
+            }
+            aux = new int[max - min];
+            for (int mainPointer = 0; mainPointer < vetor.Length; mainPointer++)
+            {
+                index = mainPointer;
+                for (pointer = 0; vetor[index].Valor > min; pointer++)
+                {
+                    vetor[index].Valor = --vetor[index].Valor;
+                    aux[pointer] = ++aux[pointer];
+                    externos++;
+                    if ((pointer % fator) == 0) Pausa();
+                }
+            }
+            for (int mainPointer = vetor.Length - 1; mainPointer >= 0; mainPointer--)
+            {
+                index = mainPointer;
+                for (pointer = 0; pointer < aux.Length && aux[pointer] != 0; pointer++)
+                {
+                    vetor[index].Valor = ++vetor[index].Valor;
+                    aux[pointer] = --aux[pointer];
+                    externos++;
+                    if ((pointer % fator) == 0) Pausa();
+                }
+            }
+        }
+        // //////////////////////////////////////////////////////
         #endregion
         public override string ToString()
         {
