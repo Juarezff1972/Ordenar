@@ -43,7 +43,7 @@ namespace Ordenar
         const string SHELLSORT = "ShellSort";
         const string SLOWSORT = "SlowSort";
         const string TOURNAMENTSORT = "TournamentSort";
-        const string AMERICANSORT = "AmericanSort";
+        const string AMERICANSORT = "AmericanFlagSort";
         const string SIMPLISTICGRAVITYSORT = "SimplisticGravitySort";
 
         private int escritas;
@@ -91,6 +91,7 @@ namespace Ordenar
             }
         }*/
 
+        /*private byte[] createWave(double freq)
         {
             List<Byte> tempBytes = new List<byte>();
 
