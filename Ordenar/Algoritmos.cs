@@ -2035,7 +2035,7 @@ namespace Ordenar
                     abacus[i].SetValue(1, abacus[0].Length - j - 1);
                     piv1.Value = abacus[0].Length - j;
                     externos++;
-                    Pausa();
+                    //Pausa();
                 }
                 piv2.Value = i + 1;
             }
@@ -2170,6 +2170,7 @@ namespace Ordenar
             int[] contagem = new int[NUMBER_OF_BUCKETS];
             int[] offset = new int[NUMBER_OF_BUCKETS];
             int digitos = 0;
+            AdRecursao();
             //passo 1
             piv1.Value = 1;
             piv1.Maximum = tam;
@@ -2225,6 +2226,7 @@ namespace Ordenar
                         AmericanSort(comeco, final, divisor / NUMBER_OF_BUCKETS);
                 }
             }
+            RmRecursao();
         }
         public void AmericanSort()
         {
@@ -2273,6 +2275,63 @@ namespace Ordenar
                     aux[pointer] = --aux[pointer];
                     externos++;
                     if ((pointer % fator) == 0) Pausa();
+                }
+            }
+        }
+        // //////////////////////////////////////////////////////
+        public void SandpaperSort()
+        {
+            for (int i = 0; i < vetor.Length - 1; i++)
+            {
+                for (int j = i + 1; j < vetor.Length; j++)
+                {
+                    if (vetor[i].Valor > vetor[j].Valor)
+                    {
+                        Swap(i, j);
+                        Pausa();
+                    }
+                }
+            }
+        }
+        // //////////////////////////////////////////////////////
+
+        public void DiamondSort()
+        {
+            int n = 1;
+            for (; n < vetor.Length; n *= 2) ;
+
+            int m = 4;
+            for (; m <= n; m *= 2)
+            {
+                for (int k = 0; k < m / 2; k++)
+                {
+                    int cnt = k <= m / 4 ? k : m / 2 - k;
+                    for (int j = 0; j < vetor.Length; j += m)
+                    {
+                        if (j + cnt + 1 < vetor.Length)
+                        {
+                            for (int i = j + cnt; i + 1 < Math.Min(vetor.Length, j + m - cnt); i += 2)
+                            {
+                                if (vetor[i].Valor > vetor[i + 1].Valor)
+                                {
+                                    Swap(i, i + 1);
+                                    Pausa();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            m /= 2;
+            for (int k = 0; k <= m / 2; k++)
+            {
+                for (int i = k; i + 1 < Math.Min(vetor.Length, m - k); i += 2)
+                {
+                    if (vetor[i].Valor > vetor[i + 1].Valor)
+                    {
+                        Swap(i, i + 1);
+                        Pausa();
+                    }
                 }
             }
         }

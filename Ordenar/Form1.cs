@@ -45,6 +45,8 @@ namespace Ordenar
         const string TOURNAMENTSORT = "TournamentSort";
         const string AMERICANSORT = "AmericanFlagSort";
         const string SIMPLISTICGRAVITYSORT = "SimplisticGravitySort";
+        const string SANDPAPERSORT = "SandpaperSort";
+        const string DIAMONDSORT = "DiamondSort";
 
         private int escritas;
 
@@ -280,6 +282,14 @@ namespace Ordenar
                     algo.SimplisticGravitySort();
                     break;
 
+                case SANDPAPERSORT:
+                    algo.SandpaperSort();
+                    break;
+
+                case DIAMONDSORT:
+                    algo.DiamondSort();
+                    break;
+
                 default:
                     break;
             }
@@ -355,6 +365,8 @@ namespace Ordenar
             this.comboBox1.Items.Add(TOURNAMENTSORT);
             this.comboBox1.Items.Add(AMERICANSORT);
             this.comboBox1.Items.Add(SIMPLISTICGRAVITYSORT);
+            this.comboBox1.Items.Add(SANDPAPERSORT);
+            this.comboBox1.Items.Add(DIAMONDSORT);
             this.comboBox1.Sorted = true;
 
             this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -411,6 +423,18 @@ namespace Ordenar
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             ordem = 4;
+        }
+
+
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            ordem = 5;
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            ordem = 6;
         }
 
         public virtual void OnEscreveu(object sender, VetorEventArgs e)
@@ -471,6 +495,9 @@ namespace Ordenar
         {
             int nums = (int)numericUpDown2.Value;
             int i;
+            int j;
+            int k;
+            int max;
 
             escritas = 0;
             label6.Text = "Escritas: " + escritas.ToString();
@@ -488,13 +515,39 @@ namespace Ordenar
             }
             if (ordem == 4)
             {
-                int max = m_array.Max();
+                max = m_array.Max();
                 double ang;
                 for (i = 0; i < m_array.Length; i++)
                 {
                     ang = ((float)m_array[i] / max) * Math.PI * 2;
                     m_array[i] = (int)Math.Round((Math.Sin(ang) * max / 2) + (max / 2));
                 }
+            }
+            if (ordem == 5)
+            {
+                max = m_array.Max();
+                double ang;
+                for (i = 0; i < m_array.Length; i++)
+                {
+                    ang = ((float)m_array[i] / max) * Math.PI * 2;
+                    m_array[i] = (int)Math.Round((Math.Cos(ang) * max / 2) + (max / 2));
+                }
+            }
+            if (ordem == 6)
+            {
+                max = m_array.Max();
+                i = 0;
+                j = m_array.Length - 1;
+                k = max;
+                while (i < j)
+                {
+                    m_array[i] = max - k + 1;
+                    m_array[j] = (max - k) + 2;
+                    i++;
+                    j--;
+                    k -= 2;
+                }
+
             }
             maximo = m_array.Max();
 
