@@ -48,7 +48,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label9 = new System.Windows.Forms.Label();
@@ -57,11 +56,14 @@
             this.label10 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tipoVisual = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.PictureBox();
+            this.tipoVisual2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pivot1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panel1)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -152,6 +154,7 @@
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Name = "label1";
             // 
             // numericUpDown2
@@ -260,14 +263,6 @@
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
             // 
-            // panel1
-            // 
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.panel1.Name = "panel1";
-            // 
             // label8
             // 
             resources.ApplyResources(this.label8, "label8");
@@ -313,8 +308,6 @@
             // checkBox1
             // 
             resources.ApplyResources(this.checkBox1, "checkBox1");
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
@@ -329,11 +322,32 @@
             resources.GetString("tipoVisual.Items2")});
             this.tipoVisual.Name = "tipoVisual";
             // 
+            // panel1
+            // 
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Name = "panel1";
+            this.panel1.TabStop = false;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
+            // 
+            // tipoVisual2
+            // 
+            resources.ApplyResources(this.tipoVisual2, "tipoVisual2");
+            this.tipoVisual2.FormattingEnabled = true;
+            this.tipoVisual2.Items.AddRange(new object[] {
+            resources.GetString("tipoVisual2.Items"),
+            resources.GetString("tipoVisual2.Items1"),
+            resources.GetString("tipoVisual2.Items2")});
+            this.tipoVisual2.Name = "tipoVisual2";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.tipoVisual2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tipoVisual);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label10);
@@ -342,7 +356,6 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -356,6 +369,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox1);
+            this.DoubleBuffered = true;
             this.Name = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -367,6 +381,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pivot1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panel1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -391,7 +406,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label9;
@@ -402,6 +416,8 @@
         private System.Windows.Forms.ComboBox tipoVisual;
         private System.Windows.Forms.RadioButton radioButton5;
         private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.PictureBox panel1;
+        private System.Windows.Forms.ComboBox tipoVisual2;
     }
 }
 

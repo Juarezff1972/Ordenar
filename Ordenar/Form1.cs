@@ -50,7 +50,10 @@ namespace Ordenar
 
         private int escritas;
 
-        //private Graphics graph;
+        private Graphics graph;
+        private PointF[] points;
+        private PictureBox pb;
+
 
         private int[] m_array;
         private int maximo;
@@ -425,8 +428,6 @@ namespace Ordenar
             ordem = 4;
         }
 
-
-
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
             ordem = 5;
@@ -475,6 +476,7 @@ namespace Ordenar
                 barras[i].CorFrente = vetor[i].GetColor(2);
                 barras[i].txt = vetor[i].Valor.ToString();
                 barras[i].Refresh();
+                points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
                 if (checkBox1.Checked)
                 {
                     if (AUDIO_LENGTH_IN_SECONDS > 0)
@@ -574,6 +576,21 @@ namespace Ordenar
             int tam;
             int iRet;
 
+            int l1;
+            l1 = vetor.Length;
+
+            /*if ((l1 - 1) % 3 != 0)
+            {
+                while ((l1 - 1) % 3 != 0)
+                {
+                    l1++;
+                }
+
+            }*/
+
+            points = new PointF[l1];
+            //if (graph != null) graph.Clear(Color.Transparent);
+
             for (i = 0; i < vetor.Length; i++)
             {
                 //myAudio[i] = new();
@@ -612,7 +629,7 @@ namespace Ordenar
                 byte m = 0;
                 if (tipoVisual.Text == "Barras") m = VisualControl.BARRA;
                 if (tipoVisual.Text == "Bolas") m = VisualControl.BOLA;
-                if (tipoVisual.Text == "Linhas") m = VisualControl.LINHA;
+                if (tipoVisual.Text == "Linhas Verticais") m = VisualControl.LINHA;
                 barras[i] = new VisualControl
                 {
                     Left = (int)(i * itens),
@@ -622,10 +639,29 @@ namespace Ordenar
                     modo = m,
                     CorFundo = Color.Blue,
                     CorFrente = Color.Red,
-                    txt = m_array[i].ToString()
+                    txt = m_array[i].ToString(),
+                    Visible = true
                 };
+                //if (tipoVisual.Text == "Gráfico de Linha") barras[i].Visible = false;
+                /*var pos = this.PointToScreen(barras[i].Location);
+                barras[i].Parent = panel1;
+                barras[i].Location = panel1.PointToClient(pos);*/
+
+
                 panel1.Controls.Add(barras[i]);
+                points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
             }
+
+            /*if (points.Length > vetor.Length)
+            {
+                PointF p1=points[vetor.Length-1];
+                l1=points.Length-vetor.Length;
+                while(l1 > 0)
+                {
+                    points[vetor.Length + l1 - 1] = p1;
+                    l1--;
+                }
+            }*/
 
             ArrayItem zzz = vetor.Max();
         }
@@ -638,6 +674,28 @@ namespace Ordenar
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             AUDIO_LENGTH_IN_SECONDS = (float)numericUpDown1.Value / 2;
+        }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+            if (tipoVisual2.Text == "Gráfico de Linha")
+            {
+                Pen pen = new(Color.White)
+                {
+                    Width = 3
+                };
+
+                if (points != null) e.Graphics.DrawLines(pen, points);
+            }
+            if (tipoVisual2.Text == "Gráfico de Curva")
+            {
+                Pen pen = new(Color.White)
+                {
+                    Width = 3
+                };
+
+                if (points != null) e.Graphics.DrawCurve(pen, points);
+            }
         }
     }
 }

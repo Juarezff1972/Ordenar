@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
@@ -9,6 +10,7 @@ namespace Ordenar
         public static byte BARRA { get { return 0; } }
         public static byte BOLA { get { return 1; } }
         public static byte LINHA { get { return 2; } }
+        public static byte GRAFICO1 { get { return 3; } }
 
         private string _txt;
         private Font f;
@@ -35,6 +37,7 @@ namespace Ordenar
                 if (_modo != BARRA)
                 {
                     BorderStyle = BorderStyle.None;
+                    BackColor = Color.Transparent;
                 }
                 else
                 {
@@ -59,7 +62,10 @@ namespace Ordenar
             set
             {
                 _CorFundo = value;
-                if (modo == BARRA) this.BackColor = _CorFundo;
+                if (modo == BARRA)
+                    this.BackColor = Color.FromArgb(127, _CorFundo);
+                else
+                    this.BackColor = Color.Transparent;
             }
         }
 
@@ -96,8 +102,11 @@ namespace Ordenar
                     f = info.Font;
                     info.Font = new Font(f.Name, Width / 3);
                     info.ForeColor = Color.White;
-                    info.Height = (int)f.SizeInPoints * f.Height;
+                    //info.Height = (int)f.SizeInPoints * f.Height;
                     info.BackColor = Color.Transparent;
+                    info.FlatStyle=FlatStyle.Flat;
+                    info.BorderStyle = BorderStyle.None;
+                    info.AutoSize = true;
                 }
                 else
                 {
@@ -108,6 +117,11 @@ namespace Ordenar
 
         public VisualControl()
         {
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.Opaque, false);
+            SetStyle(ControlStyles.ResizeRedraw, true);
+            this.BackColor = Color.Transparent;
+
             InitializeComponent();
         }
 
@@ -119,7 +133,7 @@ namespace Ordenar
             _CorFundo = this.BackColor;
             _width = this.Width;
             _height = this.Height;
-            _modo = 0;
+            _modo = BARRA;
 
             info.Location = new Point(1, 5);
 
@@ -129,26 +143,70 @@ namespace Ordenar
             });
         }
 
+        /*protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x20;
+                return cp;
+            }
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            base.OnPaintBackground(e);
+        }*/
+
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (gr != null) e.Graphics.Restore(gr);
-            if (_modo == BOLA)
+            //if (gr != null) e.Graphics.Restore(gr);
+            if (modo == BOLA)
             {
+                SetStyle(ControlStyles.Opaque, false);
                 _brush1 = new SolidBrush(CorFrente);
                 _pen1 = new Pen(_brush1);
                 _brush2 = new SolidBrush(CorFundo);
                 _pen2 = new Pen(_brush1);
                 e.Graphics.DrawEllipse(_pen1, 0, 0, _width - 2, _width - 2);
                 e.Graphics.FillEllipse(_brush2, 0, 0, _width - 2, _width - 2);
-                gr = e.Graphics.Save();
+                this.BackColor = Color.Transparent;
+                //gr = e.Graphics.Save();
             }
-            if (_modo==LINHA)
+            if (modo == LINHA)
             {
+                SetStyle(ControlStyles.Opaque, false);
                 _brush1 = new SolidBrush(CorFrente);
                 _pen1 = new Pen(_brush1);
                 e.Graphics.DrawLine(_pen1, _width / 2, 0, _width / 2, _height);
-                gr = e.Graphics.Save();
+                this.BackColor = Color.Transparent;
+                //gr = e.Graphics.Save();
             }
+            Draw(e.Graphics);
+            base.OnPaint(e);
+        }
+
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            if (_modo != BARRA)
+            {
+                if (this.Parent != null)
+                {
+                    Parent.Invalidate(this.Bounds, true);
+                }
+            }
+            base.OnBackColorChanged(e);
+        }
+
+        protected override void OnParentBackColorChanged(EventArgs e)
+        {
+            if (_modo != BARRA) this.Invalidate();
+            base.OnParentBackColorChanged(e);
+        }
+
+        protected virtual void Draw(Graphics g)
+        {
+
         }
     }
 }

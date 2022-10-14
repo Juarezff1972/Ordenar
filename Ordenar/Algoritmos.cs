@@ -27,7 +27,7 @@ namespace Ordenar
         private TrackBar piv1;
         private TrackBar piv2;
         //private System.Windows.Forms.PictureBox p;
-        private System.Windows.Forms.Panel painel;
+        private System.Windows.Forms.PictureBox painel;
         private int recursoes;
         private int trocas;
         private int segmentos;
@@ -44,7 +44,7 @@ namespace Ordenar
 
         }
 
-        public void SetPainel(Panel pn)
+        public void SetPainel(PictureBox pn)
         {
             painel = pn;
         }
