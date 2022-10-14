@@ -48,29 +48,24 @@ namespace Ordenar
         const string SANDPAPERSORT = "SandpaperSort";
         const string DIAMONDSORT = "DiamondSort";
 
+        const string GRAFICO_NENHUM = "Nenhum";
+        const string GRAFICO_LINHA = "Gráfico de Linha";
+        const string GRAFICO_CURVA = "Gráfico de Curva";
+
         private int escritas;
 
-        private Graphics graph;
         private PointF[] points;
-        private PictureBox pb;
-
 
         private int[] m_array;
         private int maximo;
         private byte ordem;
         private ArrayItem[] vetor;
         private VisualControl[] barras;
-        //private static byte[] myWaveData;
 
         private WaveFormatEx m_Format;
         IntPtr[] m_pWave;
-        WBuf[] m_Buff;
 
-        //SoundPlayer[] myAudio;// = new();
-
-        // Sample rate (Or number of samples in one second)
         private const int SAMPLE_FREQUENCY = 44100;
-        // 60 seconds or 1 minute of audio
         private float AUDIO_LENGTH_IN_SECONDS = 1.0f;
 
         public Form1()
@@ -86,47 +81,16 @@ namespace Ordenar
             m_Format.nBlockAlign = (short)(m_Format.nChannels * (m_Format.wBitsPerSample / 8));
             m_Format.nAvgBytesPerSec = m_Format.nSamplesPerSec * m_Format.nBlockAlign;
             m_Format.cbSize = 0;
+
+            tipoVisual2.Items.Clear();
+            tipoVisual2.Items.Add(GRAFICO_NENHUM);
+            tipoVisual2.Items.Add(GRAFICO_LINHA);
+            tipoVisual2.Items.Add(GRAFICO_CURVA);
         }
-
-        /*public ArrayItem ArrayItem
-        {
-            get => default;
-            set
-            {
-            }
-        }*/
-
-        /*private byte[] createWave(double freq)
-        {
-            List<Byte> tempBytes = new List<byte>();
-
-            WaveHeader header = new();
-            FormatChunk format = new FormatChunk();
-            DataChunk data = new DataChunk();
-
-
-            SineGenerator leftData = new(freq, SAMPLE_FREQUENCY, AUDIO_LENGTH_IN_SECONDS);
-            SineGenerator rightData = new(freq, SAMPLE_FREQUENCY, AUDIO_LENGTH_IN_SECONDS);
-            data.AddSampleData(leftData.Data, rightData.Data);
-
-            header.FileLength += format.Length() + data.Length();
-
-            tempBytes.AddRange(header.GetBytes());
-            tempBytes.AddRange(format.GetBytes());
-            tempBytes.AddRange(data.GetBytes());
-
-            myWaveData = tempBytes.ToArray();
-
-            //File.WriteAllBytes("teste"+freq.ToString()+".wav", myWaveData);
-
-            return myWaveData;
-        }*/
 
         private void button1_Click(object sender, EventArgs e)
         {
             string x;
-            //long t1;
-            //long t2;
 
             pivot1.Maximum = (int)numericUpDown2.Value;
             pivot2.Maximum = (int)numericUpDown2.Value;
@@ -134,7 +98,6 @@ namespace Ordenar
             pivot2.Visible = false;
 
             x = comboBox1.SelectedItem.ToString();
-            //pictureBox1.Refresh();
             Algoritmos algo;
             algo = new Algoritmos();
             algo.SetLabel(1, label3);
@@ -146,7 +109,7 @@ namespace Ordenar
             algo.SetQuickSortPivot(qsPivotSel1.Text);
             algo.LimpaTXT();
             algo.SetDelay((int)numericUpDown1.Value);
-            algo.SetPainel(panel1);
+            algo.SetPictureBox(area1);
             algo.SetProgress(progressBar1);
             algo.SetPivot(pivot1, 1);
             algo.SetPivot(pivot2, 2);
@@ -311,8 +274,7 @@ namespace Ordenar
         private void button2_Click(object sender, EventArgs e)
         {
             Resetar();
-            //pictureBox1.Refresh();
-            panel1.Refresh();
+            area1.Refresh();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -374,20 +336,16 @@ namespace Ordenar
 
             this.FormBorderStyle = FormBorderStyle.Sizable;
             Resetar();
-
-            //pictureBox1.Paint += new PaintEventHandler(pictureBox1_Paint);
             comboBox1.SelectedIndex = 0;
         }
 
         private void Form1_Resize(Object sender, EventArgs e)
         {
-            //pictureBox1.Refresh();
-            panel1.Refresh();
+            area1.Refresh();
         }
 
         private void Form1_ResizeEnd(object sender, System.EventArgs e)
         {
-            //pictureBox1.Refresh();
             int i;
             if (m_array != null)
             {
@@ -397,45 +355,16 @@ namespace Ordenar
                 }
             }
 
-            panel1.Refresh();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
+            area1.Refresh();
         }
 
         private void qsPivotSel1_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void ordemInicial_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ordem = 1;
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            ordem = 2;
-        }
-
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-            ordem = 3;
-        }
-
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-            ordem = 4;
-        }
-
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-            ordem = 5;
-        }
-
-        private void radioButton6_CheckedChanged(object sender, EventArgs e)
-        {
-            ordem = 6;
+            ordem = (byte)(ordemInicial.SelectedIndex + 1);
         }
 
         public virtual void OnEscreveu(object sender, VetorEventArgs e)
@@ -448,27 +377,22 @@ namespace Ordenar
                 int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
                 vetor[e.indice].waveSize = iSize;
             }
-
-            //vetor[e.indice].WaveData = createWave(freq);
-
             ContaEscrita();
         }
 
         public virtual void OnMudar(object sender, VetorEventArgs e)
         {
-            //Console.Out.WriteLine(e.ToString());
             int iRet;
 
             if (barras == null) return;
-            decimal ratio = (decimal)(panel1.Height - 1) / (decimal)maximo;
-            float itens = panel1.Width / (float)m_array.Length;
+            decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
+            float itens = area1.Width / (float)m_array.Length;
             int tam;
             int i = e.indice;
             if (barras[i] != null)
             {
-                //Audio myAudio = new();
                 tam = (int)Math.Round(ratio * vetor[i].Valor);
-                barras[i].Top = panel1.Height - tam;
+                barras[i].Top = area1.Height - tam;
                 barras[i].Altura = tam;
                 barras[i].Left = (int)(i * itens);
                 barras[i].Largura = (int)itens;
@@ -481,13 +405,7 @@ namespace Ordenar
                 {
                     if (AUDIO_LENGTH_IN_SECONDS > 0)
                     {
-                        //Stream s = new MemoryStream(vetor[i].WaveData);
-                        //SoundPlayer sp = new();
-                        //myAudio[i].Stream = new MemoryStream(vetor[i].WaveData);
-                        //myAudio[i].Play();
                         iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
-                        //waveOut.ThrowExceptionForError(iRet);
-                        //myAudio[i].Play(vetor[i].WaveData, AudioPlayMode.Background);
                     }
                 }
             }
@@ -556,8 +474,6 @@ namespace Ordenar
             vetor = new ArrayItem[m_array.Length];
             vetor.Initialize();
 
-            //myAudio = new SoundPlayer[m_array.Length];
-            m_Buff = new WBuf[m_array.Length];
             m_pWave = new IntPtr[m_array.Length];
 
 
@@ -565,35 +481,23 @@ namespace Ordenar
             {
                 for (i = 0; i < barras.Length; i++)
                 {
-                    panel1.Controls.Remove(barras[i]);
+                    area1.Controls.Remove(barras[i]);
                 }
             }
 
             barras = new VisualControl[m_array.Length];
-            float itens = panel1.Width / (float)m_array.Length;
+            float itens = area1.Width / (float)m_array.Length;
 
-            decimal ratio = (decimal)(panel1.Height - 1) / (decimal)maximo;
+            decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
             int tam;
             int iRet;
 
             int l1;
             l1 = vetor.Length;
 
-            /*if ((l1 - 1) % 3 != 0)
-            {
-                while ((l1 - 1) % 3 != 0)
-                {
-                    l1++;
-                }
-
-            }*/
-
             points = new PointF[l1];
-            //if (graph != null) graph.Clear(Color.Transparent);
-
             for (i = 0; i < vetor.Length; i++)
             {
-                //myAudio[i] = new();
                 m_pWave[i] = new();
                 iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
 
@@ -602,8 +506,6 @@ namespace Ordenar
 
                 vetor[i] = new ArrayItem
                 {
-                    //Marca = false,
-
                     Indice = i
                 };
                 vetor[i].Escreveu += d1;
@@ -612,8 +514,6 @@ namespace Ordenar
                 vetor[i].SetColorIDX(0);
                 double freq;
                 freq = 55.0 * Math.Pow(2.0, (100.0 * (m_array[i] / 2) / (m_array.Length - 1.0)) / 12.0);
-                //vetor[i].WaveData = createWave(freq); //m_array[i] * 50
-                //Console.Beep((int)(55 * Math.Pow(2, m_array[i] / 12)), 500);
 
                 vetor[i].MyBuf = new WBuf(m_pWave[i], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
                 int iSize = vetor[i].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
@@ -623,18 +523,18 @@ namespace Ordenar
                 {
                     System.Threading.Thread.Sleep(1);
                 }
-                //iRet = waveOut.Write(m_pWave[i], m_Buff[i].GetPtr(), iSize);
 
                 tam = (int)Math.Round(ratio * m_array[i]);
                 byte m = 0;
                 if (tipoVisual.Text == "Barras") m = VisualControl.BARRA;
                 if (tipoVisual.Text == "Bolas") m = VisualControl.BOLA;
                 if (tipoVisual.Text == "Linhas Verticais") m = VisualControl.LINHA;
+                if (tipoVisual.Text == "Triângulo") m = VisualControl.TRIANGULO;
                 barras[i] = new VisualControl
                 {
                     Left = (int)(i * itens),
                     Largura = (int)itens,
-                    Top = panel1.Height - tam,
+                    Top = area1.Height - tam,
                     Altura = tam,
                     modo = m,
                     CorFundo = Color.Blue,
@@ -642,26 +542,10 @@ namespace Ordenar
                     txt = m_array[i].ToString(),
                     Visible = true
                 };
-                //if (tipoVisual.Text == "Gráfico de Linha") barras[i].Visible = false;
-                /*var pos = this.PointToScreen(barras[i].Location);
-                barras[i].Parent = panel1;
-                barras[i].Location = panel1.PointToClient(pos);*/
 
-
-                panel1.Controls.Add(barras[i]);
+                area1.Controls.Add(barras[i]);
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
             }
-
-            /*if (points.Length > vetor.Length)
-            {
-                PointF p1=points[vetor.Length-1];
-                l1=points.Length-vetor.Length;
-                while(l1 > 0)
-                {
-                    points[vetor.Length + l1 - 1] = p1;
-                    l1--;
-                }
-            }*/
 
             ArrayItem zzz = vetor.Max();
         }
@@ -676,26 +560,35 @@ namespace Ordenar
             AUDIO_LENGTH_IN_SECONDS = (float)numericUpDown1.Value / 2;
         }
 
-        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        private void area1_Paint(object sender, PaintEventArgs e)
         {
-            if (tipoVisual2.Text == "Gráfico de Linha")
+            Pen pen;
+            switch (tipoVisual2.Text)
             {
-                Pen pen = new(Color.White)
-                {
-                    Width = 3
-                };
+                case GRAFICO_LINHA:
+                    pen = new(Color.White)
+                    {
+                        Width = 1
+                    };
 
-                if (points != null) e.Graphics.DrawLines(pen, points);
-            }
-            if (tipoVisual2.Text == "Gráfico de Curva")
-            {
-                Pen pen = new(Color.White)
-                {
-                    Width = 3
-                };
+                    if (points != null) e.Graphics.DrawLines(pen, points);
 
-                if (points != null) e.Graphics.DrawCurve(pen, points);
+                    break;
+                case GRAFICO_CURVA:
+                    pen = new(Color.White)
+                    {
+                        Width = 1
+                    };
+
+                    if (points != null) e.Graphics.DrawCurve(pen, points);
+
+                    break;
+                default:
+                    //e.Graphics.Clear(Color.Black);
+                    break;
             }
         }
+
+
     }
 }

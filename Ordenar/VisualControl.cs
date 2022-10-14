@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Ordenar
@@ -10,7 +9,7 @@ namespace Ordenar
         public static byte BARRA { get { return 0; } }
         public static byte BOLA { get { return 1; } }
         public static byte LINHA { get { return 2; } }
-        public static byte GRAFICO1 { get { return 3; } }
+        public static byte TRIANGULO { get { return 3; } }
 
         private string _txt;
         private Font f;
@@ -25,8 +24,6 @@ namespace Ordenar
         private Brush _brush2;
 
         private Label info;
-
-        private GraphicsState gr;
 
         public byte modo
         {
@@ -63,7 +60,7 @@ namespace Ordenar
             {
                 _CorFundo = value;
                 if (modo == BARRA)
-                    this.BackColor = Color.FromArgb(127, _CorFundo);
+                    this.BackColor = Color.FromArgb(255, _CorFundo);
                 else
                     this.BackColor = Color.Transparent;
             }
@@ -104,7 +101,7 @@ namespace Ordenar
                     info.ForeColor = Color.White;
                     //info.Height = (int)f.SizeInPoints * f.Height;
                     info.BackColor = Color.Transparent;
-                    info.FlatStyle=FlatStyle.Flat;
+                    info.FlatStyle = FlatStyle.Flat;
                     info.BorderStyle = BorderStyle.None;
                     info.AutoSize = true;
                 }
@@ -143,23 +140,9 @@ namespace Ordenar
             });
         }
 
-        /*protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x20;
-                return cp;
-            }
-        }
-
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            base.OnPaintBackground(e);
-        }*/
-
         protected override void OnPaint(PaintEventArgs e)
         {
+            PointF[] p;
             //if (gr != null) e.Graphics.Restore(gr);
             if (modo == BOLA)
             {
@@ -168,8 +151,8 @@ namespace Ordenar
                 _pen1 = new Pen(_brush1);
                 _brush2 = new SolidBrush(CorFundo);
                 _pen2 = new Pen(_brush1);
-                e.Graphics.DrawEllipse(_pen1, 0, 0, _width - 2, _width - 2);
                 e.Graphics.FillEllipse(_brush2, 0, 0, _width - 2, _width - 2);
+                e.Graphics.DrawEllipse(_pen1, 0, 0, _width - 2, _width - 2);
                 this.BackColor = Color.Transparent;
                 //gr = e.Graphics.Save();
             }
@@ -181,6 +164,25 @@ namespace Ordenar
                 e.Graphics.DrawLine(_pen1, _width / 2, 0, _width / 2, _height);
                 this.BackColor = Color.Transparent;
                 //gr = e.Graphics.Save();
+            }
+            if (modo == TRIANGULO)
+            {
+                SetStyle(ControlStyles.Opaque, false);
+                _brush1 = new SolidBrush(CorFrente);
+                _pen1 = new Pen(_brush1);
+                _brush2 = new SolidBrush(CorFundo);
+                _pen2 = new Pen(_brush1);
+                p = new PointF[3];
+                int w = _width / 3;
+                p[0].X = _width / 2;
+                p[0].Y = 0;
+                p[1].X = (_width / 2) - w;
+                p[1].Y = 2 * w;
+                p[2].X = (_width / 2) + w;
+                p[2].Y = 2 * w;
+                e.Graphics.FillPolygon(_brush2, p);
+                e.Graphics.DrawPolygon(_pen1, p);
+                this.BackColor = Color.Transparent;
             }
             Draw(e.Graphics);
             base.OnPaint(e);
@@ -207,6 +209,11 @@ namespace Ordenar
         protected virtual void Draw(Graphics g)
         {
 
+        }
+
+        public override string ToString()
+        {
+            return "Visual Control - " + modo.ToString() + " - " + txt;
         }
     }
 }

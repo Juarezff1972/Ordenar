@@ -26,25 +26,19 @@ namespace Ordenar
         private ProgressBar pb1;
         private TrackBar piv1;
         private TrackBar piv2;
-        //private System.Windows.Forms.PictureBox p;
-        private System.Windows.Forms.PictureBox painel;
+        private PictureBox painel;
         private int recursoes;
         private int trocas;
         private int segmentos;
         private int externos;
         private ArrayItem[] vetor;
 
-        //public Algoritmos(System.Windows.Forms.PictureBox pic)
-        //{
-        //p = pic;
-        //}
-
         public Algoritmos()
         {
 
         }
 
-        public void SetPainel(PictureBox pn)
+        public void SetPictureBox(PictureBox pn)
         {
             painel = pn;
         }
@@ -71,7 +65,7 @@ namespace Ordenar
             double v;
             double r, g, b;
 
-            r = l;   // default to gray
+            r = l;
             g = l;
             b = l;
             v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
@@ -289,14 +283,9 @@ namespace Ordenar
                     painel.Refresh();
                     break;
                 default:
-                    System.Threading.Thread.Sleep(delay);
-                    /*for (int i = 0; i < delay; i++)
-                    {
-                        Thread.Sleep(1);
-                        Application.DoEvents();
-                    }*/
                     painel.Refresh();
                     ChecaSegmentos();
+                    System.Threading.Thread.Sleep(delay * 10);
                     break;
             }
         }
@@ -385,7 +374,7 @@ namespace Ordenar
                 vetor[m].SetColor2(cc);
                 vetor[m].Indice = m;
                 vetor[m].Mudou = true;
-                System.Threading.Thread.Sleep(20);
+                System.Threading.Thread.Sleep(5);
             }
         }
 

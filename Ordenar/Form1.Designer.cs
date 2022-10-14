@@ -37,13 +37,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -56,14 +49,15 @@
             this.label10 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tipoVisual = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.PictureBox();
+            this.area1 = new System.Windows.Forms.PictureBox();
             this.tipoVisual2 = new System.Windows.Forms.ComboBox();
+            this.ordemInicial = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pivot1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.area1)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -183,66 +177,6 @@
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
-            // groupBox1
-            // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Controls.Add(this.radioButton6);
-            this.groupBox1.Controls.Add(this.radioButton5);
-            this.groupBox1.Controls.Add(this.radioButton4);
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // radioButton6
-            // 
-            resources.ApplyResources(this.radioButton6, "radioButton6");
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.TabStop = true;
-            this.radioButton6.UseVisualStyleBackColor = true;
-            this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
-            // 
-            // radioButton5
-            // 
-            resources.ApplyResources(this.radioButton5, "radioButton5");
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.TabStop = true;
-            this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
-            // 
-            // radioButton4
-            // 
-            resources.ApplyResources(this.radioButton4, "radioButton4");
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.TabStop = true;
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
-            // 
-            // radioButton3
-            // 
-            resources.ApplyResources(this.radioButton3, "radioButton3");
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
-            // 
-            // radioButton2
-            // 
-            resources.ApplyResources(this.radioButton2, "radioButton2");
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
-            // 
-            // radioButton1
-            // 
-            resources.ApplyResources(this.radioButton1, "radioButton1");
-            this.radioButton1.Checked = true;
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.TabStop = true;
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
@@ -319,17 +253,18 @@
             this.tipoVisual.Items.AddRange(new object[] {
             resources.GetString("tipoVisual.Items"),
             resources.GetString("tipoVisual.Items1"),
-            resources.GetString("tipoVisual.Items2")});
+            resources.GetString("tipoVisual.Items2"),
+            resources.GetString("tipoVisual.Items3")});
             this.tipoVisual.Name = "tipoVisual";
             // 
-            // panel1
+            // area1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Name = "panel1";
-            this.panel1.TabStop = false;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
+            resources.ApplyResources(this.area1, "area1");
+            this.area1.BackColor = System.Drawing.Color.Black;
+            this.area1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.area1.Name = "area1";
+            this.area1.TabStop = false;
+            this.area1.Paint += new System.Windows.Forms.PaintEventHandler(this.area1_Paint);
             // 
             // tipoVisual2
             // 
@@ -341,13 +276,34 @@
             resources.GetString("tipoVisual2.Items2")});
             this.tipoVisual2.Name = "tipoVisual2";
             // 
+            // ordemInicial
+            // 
+            resources.ApplyResources(this.ordemInicial, "ordemInicial");
+            this.ordemInicial.FormattingEnabled = true;
+            this.ordemInicial.Items.AddRange(new object[] {
+            resources.GetString("ordemInicial.Items"),
+            resources.GetString("ordemInicial.Items1"),
+            resources.GetString("ordemInicial.Items2"),
+            resources.GetString("ordemInicial.Items3"),
+            resources.GetString("ordemInicial.Items4"),
+            resources.GetString("ordemInicial.Items5")});
+            this.ordemInicial.Name = "ordemInicial";
+            this.ordemInicial.SelectedIndexChanged += new System.EventHandler(this.ordemInicial_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.ordemInicial);
             this.Controls.Add(this.tipoVisual2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.area1);
             this.Controls.Add(this.tipoVisual);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label10);
@@ -360,7 +316,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.label1);
@@ -377,11 +332,9 @@
             this.StyleChanged += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pivot1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.area1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -397,11 +350,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -414,10 +362,10 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ComboBox tipoVisual;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.PictureBox panel1;
+        private System.Windows.Forms.PictureBox area1;
         private System.Windows.Forms.ComboBox tipoVisual2;
+        private System.Windows.Forms.ComboBox ordemInicial;
+        private System.Windows.Forms.Label label7;
     }
 }
 
