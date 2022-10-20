@@ -1,7 +1,9 @@
 ﻿using MultiMedia;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsMediaLib.Defs;
@@ -11,6 +13,8 @@ namespace Ordenar
 {
     public delegate void EscritaEventHandler(object sender, VetorEventArgs e);
     public delegate void MudarEventHandler(object sender, VetorEventArgs e);
+    public delegate void LerEventHandler(object sender, VetorEventArgs e);
+    public delegate void AuxEventHandler(object sender, VetorAuxEventArgs e);
 
     public partial class Form1 : Form
     {
@@ -55,6 +59,9 @@ namespace Ordenar
         private int escritas;
 
         private PointF[] points;
+        private long[] auxVetor;
+        //Graphics auxGr;
+        //GraphicsState auxGrState;
 
         private int[] m_array;
         private int maximo;
@@ -71,6 +78,8 @@ namespace Ordenar
         public Form1()
         {
             InitializeComponent();
+            //auxGr = AuxVetor1.CreateGraphics();
+
             ordem = 1;
             m_Format = new WaveFormatEx();
 
@@ -97,6 +106,8 @@ namespace Ordenar
             pivot1.Visible = false;
             pivot2.Visible = false;
 
+            AuxEventHandler d = new AuxEventHandler(OnAuxVetor);
+
             x = comboBox1.SelectedItem.ToString();
             Algoritmos algo;
             algo = new Algoritmos();
@@ -113,6 +124,7 @@ namespace Ordenar
             algo.SetProgress(progressBar1);
             algo.SetPivot(pivot1, 1);
             algo.SetPivot(pivot2, 2);
+            algo.auxVetor += d;
 
             button1.Enabled = false;
             button2.Enabled = false;
@@ -273,6 +285,8 @@ namespace Ordenar
 
         private void button2_Click(object sender, EventArgs e)
         {
+            auxVetor = null;
+            AuxVetor1.Refresh();
             Resetar();
             area1.Refresh();
         }
@@ -367,7 +381,18 @@ namespace Ordenar
             ordem = (byte)(ordemInicial.SelectedIndex + 1);
         }
 
+        public virtual void OnAuxVetor(object sender, VetorAuxEventArgs e)
+        {
+            auxVetor = e.vetor;
+            AuxVetor1.Refresh();
+        }
+
         public virtual void OnEscreveu(object sender, VetorEventArgs e)
+        {
+            ContaEscrita();
+        }
+
+        public virtual void OnLer(object sender, VetorEventArgs e)
         {
             if (checkBox1.Checked)
             {
@@ -377,7 +402,6 @@ namespace Ordenar
                 int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
                 vetor[e.indice].waveSize = iSize;
             }
-            ContaEscrita();
         }
 
         public virtual void OnMudar(object sender, VetorEventArgs e)
@@ -418,6 +442,8 @@ namespace Ordenar
             int j;
             int k;
             int max;
+
+            //auxGr.Clear(Color.DarkGray);
 
             escritas = 0;
             label6.Text = "Escritas: " + escritas.ToString();
@@ -501,15 +527,10 @@ namespace Ordenar
                 m_pWave[i] = new();
                 iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
 
-                EscritaEventHandler d1 = new EscritaEventHandler(OnEscreveu);
-                MudarEventHandler d2 = new MudarEventHandler(OnMudar);
-
                 vetor[i] = new ArrayItem
                 {
                     Indice = i
                 };
-                vetor[i].Escreveu += d1;
-                vetor[i].Mudar += d2;
                 vetor[i].Valor = m_array[i];
                 vetor[i].SetColorIDX(0);
                 double freq;
@@ -543,6 +564,14 @@ namespace Ordenar
                     Visible = true
                 };
 
+                EscritaEventHandler d1 = new EscritaEventHandler(OnEscreveu);
+                MudarEventHandler d2 = new MudarEventHandler(OnMudar);
+                LerEventHandler d3 = new LerEventHandler(OnLer);
+
+                vetor[i].Escreveu += d1;
+                vetor[i].Mudar += d2;
+                vetor[i].Ler += d3;
+
                 area1.Controls.Add(barras[i]);
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
             }
@@ -571,6 +600,17 @@ namespace Ordenar
                         Width = 1
                     };
 
+                    AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+
+
+                    pen.DashCap = DashCap.Triangle;
+                    pen.CustomEndCap = bigArrow;
+                    pen.CustomStartCap = bigArrow;
+                    //pen.LineJoin = LineJoin.Round;
+                    pen.DashStyle = DashStyle.Solid;
+                    //pen.EndCap = LineCap.DiamondAnchor;
+                    //pen.StartCap=LineCap.DiamondAnchor;
+
                     if (points != null) e.Graphics.DrawLines(pen, points);
 
                     break;
@@ -589,6 +629,58 @@ namespace Ordenar
             }
         }
 
+        public override string ToString()
+        {
+            return $"{{{nameof(AcceptButton)}={AcceptButton}, {nameof(ActiveForm)}={ActiveForm}, {nameof(ActiveMdiChild)}={ActiveMdiChild}, {nameof(AllowTransparency)}={AllowTransparency.ToString()}, {nameof(AutoScale)}={AutoScale.ToString()}, {nameof(AutoScaleBaseSize)}={AutoScaleBaseSize.ToString()}, {nameof(AutoScroll)}={AutoScroll.ToString()}, {nameof(AutoSize)}={AutoSize.ToString()}, {nameof(AutoSizeMode)}={AutoSizeMode.ToString()}, {nameof(AutoValidate)}={AutoValidate.ToString()}, {nameof(BackColor)}={BackColor.ToString()}, {nameof(FormBorderStyle)}={FormBorderStyle.ToString()}, {nameof(CancelButton)}={CancelButton}, {nameof(ClientSize)}={ClientSize.ToString()}, {nameof(ControlBox)}={ControlBox.ToString()}, {nameof(DesktopBounds)}={DesktopBounds.ToString()}, {nameof(DesktopLocation)}={DesktopLocation.ToString()}, {nameof(DialogResult)}={DialogResult.ToString()}, {nameof(HelpButton)}={HelpButton.ToString()}, {nameof(Icon)}={Icon}, {nameof(IsMdiChild)}={IsMdiChild.ToString()}, {nameof(IsMdiContainer)}={IsMdiContainer.ToString()}, {nameof(IsRestrictedWindow)}={IsRestrictedWindow.ToString()}, {nameof(KeyPreview)}={KeyPreview.ToString()}, {nameof(Location)}={Location.ToString()}, {nameof(MaximumSize)}={MaximumSize.ToString()}, {nameof(MainMenuStrip)}={MainMenuStrip}, {nameof(Margin)}={Margin.ToString()}, {nameof(MinimumSize)}={MinimumSize.ToString()}, {nameof(MaximizeBox)}={MaximizeBox.ToString()}, {nameof(MdiChildren)}={MdiChildren}, {nameof(MdiParent)}={MdiParent}, {nameof(MinimizeBox)}={MinimizeBox.ToString()}, {nameof(Modal)}={Modal.ToString()}, {nameof(Opacity)}={Opacity.ToString()}, {nameof(OwnedForms)}={OwnedForms}, {nameof(Owner)}={Owner}, {nameof(RestoreBounds)}={RestoreBounds.ToString()}, {nameof(RightToLeftLayout)}={RightToLeftLayout.ToString()}, {nameof(ShowInTaskbar)}={ShowInTaskbar.ToString()}, {nameof(ShowIcon)}={ShowIcon.ToString()}, {nameof(Size)}={Size.ToString()}, {nameof(SizeGripStyle)}={SizeGripStyle.ToString()}, {nameof(StartPosition)}={StartPosition.ToString()}, {nameof(TabIndex)}={TabIndex.ToString()}, {nameof(TabStop)}={TabStop.ToString()}, {nameof(Text)}={Text}, {nameof(TopLevel)}={TopLevel.ToString()}, {nameof(TopMost)}={TopMost.ToString()}, {nameof(TransparencyKey)}={TransparencyKey.ToString()}, {nameof(WindowState)}={WindowState.ToString()}, {nameof(AutoScaleDimensions)}={AutoScaleDimensions.ToString()}, {nameof(AutoScaleMode)}={AutoScaleMode.ToString()}, {nameof(AutoValidate)}={AutoValidate.ToString()}, {nameof(BindingContext)}={BindingContext}, {nameof(ActiveControl)}={ActiveControl}, {nameof(CurrentAutoScaleDimensions)}={CurrentAutoScaleDimensions.ToString()}, {nameof(ParentForm)}={ParentForm}, {nameof(AutoScroll)}={AutoScroll.ToString()}, {nameof(AutoScrollMargin)}={AutoScrollMargin.ToString()}, {nameof(AutoScrollPosition)}={AutoScrollPosition.ToString()}, {nameof(AutoScrollMinSize)}={AutoScrollMinSize.ToString()}, {nameof(DisplayRectangle)}={DisplayRectangle.ToString()}, {nameof(HorizontalScroll)}={HorizontalScroll}, {nameof(VerticalScroll)}={VerticalScroll}, {nameof(DockPadding)}={DockPadding}, {nameof(AccessibilityObject)}={AccessibilityObject}, {nameof(AccessibleDefaultActionDescription)}={AccessibleDefaultActionDescription}, {nameof(AccessibleDescription)}={AccessibleDescription}, {nameof(AccessibleName)}={AccessibleName}, {nameof(AccessibleRole)}={AccessibleRole.ToString()}, {nameof(AllowDrop)}={AllowDrop.ToString()}, {nameof(Anchor)}={Anchor.ToString()}, {nameof(AutoSize)}={AutoSize.ToString()}, {nameof(AutoScrollOffset)}={AutoScrollOffset.ToString()}, {nameof(LayoutEngine)}={LayoutEngine}, {nameof(BackColor)}={BackColor.ToString()}, {nameof(BackgroundImage)}={BackgroundImage}, {nameof(BackgroundImageLayout)}={BackgroundImageLayout.ToString()}, {nameof(BindingContext)}={BindingContext}, {nameof(Bottom)}={Bottom.ToString()}, {nameof(Bounds)}={Bounds.ToString()}, {nameof(CanFocus)}={CanFocus.ToString()}, {nameof(CanSelect)}={CanSelect.ToString()}, {nameof(Capture)}={Capture.ToString()}, {nameof(CausesValidation)}={CausesValidation.ToString()}, {nameof(CheckForIllegalCrossThreadCalls)}={CheckForIllegalCrossThreadCalls.ToString()}, {nameof(ClientRectangle)}={ClientRectangle.ToString()}, {nameof(ClientSize)}={ClientSize.ToString()}, {nameof(CompanyName)}={CompanyName}, {nameof(ContainsFocus)}={ContainsFocus.ToString()}, {nameof(ContextMenuStrip)}={ContextMenuStrip}, {nameof(Controls)}={Controls}, {nameof(Created)}={Created.ToString()}, {nameof(Cursor)}={Cursor}, {nameof(DataBindings)}={DataBindings}, {nameof(DefaultBackColor)}={DefaultBackColor.ToString()}, {nameof(DefaultFont)}={DefaultFont}, {nameof(DefaultForeColor)}={DefaultForeColor.ToString()}, {nameof(DeviceDpi)}={DeviceDpi.ToString()}, {nameof(DisplayRectangle)}={DisplayRectangle.ToString()}, {nameof(IsDisposed)}={IsDisposed.ToString()}, {nameof(Disposing)}={Disposing.ToString()}, {nameof(Dock)}={Dock.ToString()}, {nameof(Enabled)}={Enabled.ToString()}, {nameof(Focused)}={Focused.ToString()}, {nameof(Font)}={Font}, {nameof(ForeColor)}={ForeColor.ToString()}, {nameof(Handle)}={Handle.ToString()}, {nameof(HasChildren)}={HasChildren.ToString()}, {nameof(Height)}={Height.ToString()}, {nameof(IsHandleCreated)}={IsHandleCreated.ToString()}, {nameof(InvokeRequired)}={InvokeRequired.ToString()}, {nameof(IsAccessible)}={IsAccessible.ToString()}, {nameof(IsMirrored)}={IsMirrored.ToString()}, {nameof(Left)}={Left.ToString()}, {nameof(Location)}={Location.ToString()}, {nameof(Margin)}={Margin.ToString()}, {nameof(MaximumSize)}={MaximumSize.ToString()}, {nameof(MinimumSize)}={MinimumSize.ToString()}, {nameof(ModifierKeys)}={ModifierKeys.ToString()}, {nameof(MouseButtons)}={MouseButtons.ToString()}, {nameof(MousePosition)}={MousePosition.ToString()}, {nameof(Name)}={Name}, {nameof(Parent)}={Parent}, {nameof(ProductName)}={ProductName}, {nameof(ProductVersion)}={ProductVersion}, {nameof(RecreatingHandle)}={RecreatingHandle.ToString()}, {nameof(Region)}={Region}, {nameof(Right)}={Right.ToString()}, {nameof(RightToLeft)}={RightToLeft.ToString()}, {nameof(Site)}={Site}, {nameof(Size)}={Size.ToString()}, {nameof(TabIndex)}={TabIndex.ToString()}, {nameof(TabStop)}={TabStop.ToString()}, {nameof(Tag)}={Tag}, {nameof(Text)}={Text}, {nameof(Top)}={Top.ToString()}, {nameof(TopLevelControl)}={TopLevelControl}, {nameof(UseWaitCursor)}={UseWaitCursor.ToString()}, {nameof(Visible)}={Visible.ToString()}, {nameof(Width)}={Width.ToString()}, {nameof(WindowTarget)}={WindowTarget}, {nameof(PreferredSize)}={PreferredSize.ToString()}, {nameof(Padding)}={Padding.ToString()}, {nameof(ImeMode)}={ImeMode.ToString()}, {nameof(Container)}={Container}, {nameof(Site)}={Site}}}";
+        }
 
+        private void AuxVetor1_Paint(object sender, PaintEventArgs e)
+        {
+            if (auxVetor != null)
+            {
+                e.Graphics.Clear(AuxVetor1.BackColor);
+                //int min = auxVetor.Min();
+                long max = auxVetor.Max();
+                int l = auxVetor.Length;
+                int i;
+                int t;
+                Pen p;// = new Pen(Color.White);
+                int y;
+                int w;
+                w = AuxVetor1.Height / l;//5;
+                Debug.WriteLine("w=" + w.ToString() + " | " + l.ToString() + " | " + AuxVetor1.Height);
+                for (i = 0; i < l; i++)
+                {
+                    double m = i / (double)l;
+                    Algoritmos.ColorRGB c = Algoritmos.HSL2RGB(m, 0.5, 0.5);
+                    Color cc = Color.FromArgb(c.R, c.G, c.B);
+                    p = new Pen(cc);
+                    p.Width = w;
+                    t = (int)(((float)auxVetor[i] / (float)max) * (float)(AuxVetor1.Width - 10));
+                    if (t < 0) t = 0;
+                    y = (int)(((float)i / (float)l) * (float)(AuxVetor1.Height)) + w / 2;
+                    if (y < 0) y = 0;
+                    try
+                    {
+                        e.Graphics.DrawLine(p, 0, y, t, y);
+                    }
+                    catch (OverflowException)
+                    {
+                        //Debug.WriteLine("Exception: p={0} / y={1} / t={2}.", p, y, t);
+                    }
+
+                    //Debug.WriteLine(t.ToString() + " | " + i.ToString() + " - " + y.ToString());
+                }
+            }
+            else
+            {
+                e.Graphics.Clear(AuxVetor1.BackColor);
+            }
+        }
+
+        private void AuxVetor1_Resize(object sender, EventArgs e)
+        {
+            AuxVetor1.CreateGraphics().Clear(AuxVetor1.BackColor);
+        }
     }
 }

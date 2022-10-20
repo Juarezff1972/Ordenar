@@ -23,9 +23,19 @@ namespace Ordenar
         public int indice;
         public int valor;
 
-        public override string  ToString()
+        public override string ToString()
         {
             return indice.ToString() + " - " + valor.ToString();
+        }
+    }
+
+    public class VetorAuxEventArgs
+    {
+        public long[] vetor;
+
+        public override string ToString()
+        {
+            return vetor.ToString();
         }
     }
 }

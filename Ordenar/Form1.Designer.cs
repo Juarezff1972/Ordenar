@@ -53,11 +53,14 @@
             this.tipoVisual2 = new System.Windows.Forms.ComboBox();
             this.ordemInicial = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.AuxVetor1 = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.area1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AuxVetor1)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -295,11 +298,28 @@
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
             // 
+            // AuxVetor1
+            // 
+            resources.ApplyResources(this.AuxVetor1, "AuxVetor1");
+            this.AuxVetor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.AuxVetor1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.AuxVetor1.Name = "AuxVetor1";
+            this.AuxVetor1.TabStop = false;
+            this.AuxVetor1.Paint += new System.Windows.Forms.PaintEventHandler(this.AuxVetor1_Paint);
+            this.AuxVetor1.Resize += new System.EventHandler(this.AuxVetor1_Resize);
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.AuxVetor1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.ordemInicial);
             this.Controls.Add(this.tipoVisual2);
@@ -335,6 +355,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pivot1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.area1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AuxVetor1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,6 +387,8 @@
         private System.Windows.Forms.ComboBox tipoVisual2;
         private System.Windows.Forms.ComboBox ordemInicial;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox AuxVetor1;
+        private System.Windows.Forms.Label label11;
     }
 }
 

@@ -33,9 +33,39 @@ namespace Ordenar
         private int externos;
         private ArrayItem[] vetor;
 
+        public event AuxEventHandler auxVetor;
+
         public Algoritmos()
         {
 
+        }
+
+        public void Dispara(long[] v)
+        {
+            VetorAuxEventArgs e = new();
+            e.vetor = v;
+            if (auxVetor != null) auxVetor.Invoke(this, e);
+        }
+
+        public void Dispara(int[] v)
+        {
+            long[] v1 = new long[v.Length];
+            for (int i = 0; i < v1.Length; i++)
+            {
+                v1[i] = (long)v[i];
+            }
+            Dispara(v1);
+        }
+
+        public void Dispara(Array[] a)
+        {
+            long[] v1 = new long[a.Length];
+            for (int i = 0; i < a.Length; i++)
+            {
+                int[] c = Array.FindAll((int[])a[i], x => x == 1);
+                v1[i] = c.Length;
+            }
+            Dispara(v1);
         }
 
         public void SetPictureBox(PictureBox pn)
@@ -285,7 +315,7 @@ namespace Ordenar
                 default:
                     painel.Refresh();
                     ChecaSegmentos();
-                    System.Threading.Thread.Sleep(delay * 10);
+                    System.Threading.Thread.Sleep(delay);
                     break;
             }
         }
@@ -736,11 +766,13 @@ namespace Ordenar
                 b[j] = vetor[j].Valor;
                 externos++;
                 vetor[j].SetColorIDX(1);
+                Dispara(cnt);
                 Pausa();
             }
             for (int i = 1; i <= mc; i++)
             {
                 cnt[i] = cnt[i] + cnt[i - 1];
+                Dispara(cnt);
                 externos++;
             }
             for (j = max; j >= 0; j--)
@@ -751,6 +783,7 @@ namespace Ordenar
                 externos++;
                 vetor[cnt[idx] - 1].SetColorIDX(2);
                 cnt[idx]--;
+                Dispara(cnt);
                 Pausa();
             }
             for (j = 0; j <= max; j++)
@@ -921,6 +954,7 @@ namespace Ordenar
             for (K = 2; K <= m; K++)
             {
                 L[K] = L[K] + L[K - 1];
+                Dispara(L);
                 externos++;
             }
             Swap(maxIndex, 0);
@@ -943,6 +977,7 @@ namespace Ordenar
                     int location = L[K] - 1;
                     (evicted, vetor[location].Valor) = (vetor[location].Valor, evicted);
                     L[K] -= 1;
+                    Dispara(L);
                     externos++;
                     numMoves++;
                     Pausa();
@@ -1223,6 +1258,7 @@ namespace Ordenar
             for (i = 0; i < n; i++)
             {
                 pigeonHoles[vetor[i].Valor - min]++;
+                Dispara(pigeonHoles);
                 externos++;
                 Pausa();
             }
@@ -1233,6 +1269,7 @@ namespace Ordenar
             {
                 while (pigeonHoles[j]-- > 0)
                 {
+                    Dispara(pigeonHoles);
                     externos++;
                     vetor[index++].Valor = j + min;
                     ChecaSegmentos();
@@ -1645,6 +1682,7 @@ namespace Ordenar
                     int r = copy[i] / base1 % RADIX;
                     piv1.Value = r + 1;
                     count[r]++;
+                    Dispara(count);
                     externos++;
                     vetor[i].SetColorIDX(0);
                 }
@@ -1657,6 +1695,7 @@ namespace Ordenar
                     for (int y = 0; y <= z; y++)
                     {
                         bkt[z + 1] += count[y];
+                        Dispara(count);
                         externos++;
                     }
                     piv2.Value = z + 1;
@@ -1719,6 +1758,7 @@ namespace Ordenar
                 uint r = (uint)vetor[i].Valor / base1 % RADIX;
                 piv1.Value = i + 1;
                 count[r]++;
+                Dispara(count);
                 externos++;
                 vetor[i].SetColorIDX(0);
             }
@@ -1735,6 +1775,8 @@ namespace Ordenar
                     bkt[z] += count[y];
                     externos++;
                 }
+                Dispara(bkt);
+
             }
 
             // mark bucket boundaries
@@ -1900,6 +1942,7 @@ namespace Ordenar
                     ++j;
                     outA[o++] = aj;
                 }
+                Dispara(outA);
                 externos++;
             }
 
@@ -1907,11 +1950,13 @@ namespace Ordenar
             while (i < mid)
             {
                 outA[o++] = vetor[i++].Valor;
+                Dispara(outA);
             }
 
             while (j < hi)
             {
                 outA[o++] = vetor[j++].Valor;
+                Dispara(outA);
             }
             externos++;
 
@@ -2023,6 +2068,7 @@ namespace Ordenar
                 {
                     abacus[i].SetValue(1, abacus[0].Length - j - 1);
                     piv1.Value = abacus[0].Length - j;
+                    Dispara(abacus);
                     externos++;
                     //Pausa();
                 }
@@ -2044,6 +2090,7 @@ namespace Ordenar
                         {
                             abacus[j].SetValue(0, i);
                             abacus[droppos].SetValue(1, i);
+                            Dispara(abacus);
                             externos++;
                         }
                     }
@@ -2082,6 +2129,7 @@ namespace Ordenar
                 int k = i / 2;
                 int j = i - 1;
                 tmp[k] = vencedor(i, j);
+                Dispara(tmp);
                 externos++;
                 piv2.Value = tmp[k];
                 Pausa();
@@ -2104,6 +2152,7 @@ namespace Ordenar
                 externos++;
                 i = k;
                 piv2.Value = tmp[k];
+                Dispara(tmp);
                 Pausa();
             }
             valor = tmp[tmp[1]];
@@ -2168,6 +2217,7 @@ namespace Ordenar
                 int d = vetor[i].Valor;
                 digitos = Digitos(d, divisor);
                 contagem[digitos]++;
+                Dispara(contagem);
                 externos++;
                 piv1.Value = i + 1;
             }
@@ -2177,6 +2227,7 @@ namespace Ordenar
             for (int i = 1; i < NUMBER_OF_BUCKETS; i++)
             {
                 offset[i] = contagem[i - 1] + offset[i - 1];
+                Dispara(offset);
                 externos++;
                 piv2.Value = i;
             }
@@ -2199,6 +2250,7 @@ namespace Ordenar
                         vetor[destino].Valor = num;
                         num = temp;
                         fonte = destino;
+                        Dispara(contagem);
                         Pausa();
                         ChecaSegmentos();
                     } while (fonte != origem);
@@ -2254,6 +2306,7 @@ namespace Ordenar
                     externos++;
                     if ((pointer % fator) == 0) Pausa();
                 }
+                Dispara(aux);
             }
             for (int mainPointer = vetor.Length - 1; mainPointer >= 0; mainPointer--)
             {
@@ -2265,6 +2318,7 @@ namespace Ordenar
                     externos++;
                     if ((pointer % fator) == 0) Pausa();
                 }
+                Dispara(aux);
             }
         }
         // //////////////////////////////////////////////////////

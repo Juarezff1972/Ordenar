@@ -27,6 +27,7 @@ namespace Ordenar
 
         public event EscritaEventHandler Escreveu;
         public event MudarEventHandler Mudar;
+        public event LerEventHandler Ler;
 
         public WBuf MyBuf
         {
@@ -81,6 +82,12 @@ namespace Ordenar
         {
             get
             {
+                VetorEventArgs e = new()
+                {
+                    indice = Indice,
+                    valor = v
+                };
+                DisparaLer(e);
                 return v;
             }
             set
@@ -98,12 +105,17 @@ namespace Ordenar
 
         public void Dispara(VetorEventArgs e)
         {
-            Escreveu.Invoke(this, e);
+            if (Escreveu!=null) Escreveu.Invoke(this, e);
         }
 
         public void DisparaMudar(VetorEventArgs e)
         {
-            Mudar.Invoke(this, e);
+            if (Mudar != null) Mudar.Invoke(this, e);
+        }
+
+        public void DisparaLer(VetorEventArgs e)
+        {
+            if (Ler!=null) Ler.Invoke(this, e);
         }
 
         public bool Mudou
