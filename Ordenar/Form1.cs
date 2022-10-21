@@ -1,7 +1,6 @@
 ﻿using MultiMedia;
 using System;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -119,7 +118,7 @@ namespace Ordenar
             algo.SetVetor(vetor);
             algo.SetQuickSortPivot(qsPivotSel1.Text);
             algo.LimpaTXT();
-            algo.SetDelay((int)numericUpDown1.Value);
+            algo.SetDelay((int)Math.Pow(2, (int)numericUpDown1.Value));
             algo.SetPictureBox(area1);
             algo.SetProgress(progressBar1);
             algo.SetPivot(pivot1, 1);
@@ -390,10 +389,6 @@ namespace Ordenar
         public virtual void OnEscreveu(object sender, VetorEventArgs e)
         {
             ContaEscrita();
-        }
-
-        public virtual void OnLer(object sender, VetorEventArgs e)
-        {
             if (checkBox1.Checked)
             {
                 double freq;
@@ -401,12 +396,34 @@ namespace Ordenar
                 if (vetor[e.indice].MyBuf == null) vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
                 int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
                 vetor[e.indice].waveSize = iSize;
+                int iRet;
+                int i = e.indice;
+
+                if (AUDIO_LENGTH_IN_SECONDS > 0)
+                {
+                    //iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
+                }
+            }
+
+        }
+
+        public virtual void OnLer(object sender, VetorEventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                int i = e.indice;
+
+                if (AUDIO_LENGTH_IN_SECONDS > 0)
+                {
+                    int iRet;
+                    iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
+                }
             }
         }
 
         public virtual void OnMudar(object sender, VetorEventArgs e)
         {
-            int iRet;
+
 
             if (barras == null) return;
             decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
@@ -425,13 +442,7 @@ namespace Ordenar
                 barras[i].txt = vetor[i].Valor.ToString();
                 barras[i].Refresh();
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                if (checkBox1.Checked)
-                {
-                    if (AUDIO_LENGTH_IN_SECONDS > 0)
-                    {
-                        iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
-                    }
-                }
+
             }
         }
 
@@ -444,6 +455,8 @@ namespace Ordenar
             int max;
 
             //auxGr.Clear(Color.DarkGray);
+
+            area1.CreateGraphics().Clear(area1.BackColor);
 
             escritas = 0;
             label6.Text = "Escritas: " + escritas.ToString();
@@ -510,6 +523,7 @@ namespace Ordenar
                     area1.Controls.Remove(barras[i]);
                 }
             }
+            area1.Refresh();
 
             barras = new VisualControl[m_array.Length];
             float itens = area1.Width / (float)m_array.Length;
@@ -648,7 +662,7 @@ namespace Ordenar
                 int y;
                 int w;
                 w = AuxVetor1.Height / l;//5;
-                Debug.WriteLine("w=" + w.ToString() + " | " + l.ToString() + " | " + AuxVetor1.Height);
+                //Debug.WriteLine("w=" + w.ToString() + " | " + l.ToString() + " | " + AuxVetor1.Height);
                 for (i = 0; i < l; i++)
                 {
                     double m = i / (double)l;

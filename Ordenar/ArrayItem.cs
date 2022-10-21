@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms.Design;
 
 namespace Ordenar
 {
@@ -16,6 +15,8 @@ namespace Ordenar
         private byte[] myWaveData;
         private WBuf Buf;
         public int waveSize = 0;
+
+        public bool som = true;
 
         public ArrayItem()
         {
@@ -87,7 +88,7 @@ namespace Ordenar
                     indice = Indice,
                     valor = v
                 };
-                DisparaLer(e);
+                if (som) DisparaLer(e);
                 return v;
             }
             set
@@ -105,7 +106,7 @@ namespace Ordenar
 
         public void Dispara(VetorEventArgs e)
         {
-            if (Escreveu!=null) Escreveu.Invoke(this, e);
+            if (Escreveu != null) Escreveu.Invoke(this, e);
         }
 
         public void DisparaMudar(VetorEventArgs e)
@@ -115,7 +116,7 @@ namespace Ordenar
 
         public void DisparaLer(VetorEventArgs e)
         {
-            if (Ler!=null) Ler.Invoke(this, e);
+            if (Ler != null) Ler.Invoke(this, e);
         }
 
         public bool Mudou
@@ -145,21 +146,25 @@ namespace Ordenar
             int ret;
             ArrayItem a = (ArrayItem)v1;
             ret = 0;
+            int b = a.Valor;
 
-            if (a.Valor == v)
+            //a.som = false;
+
+            if (b == v)
             {
                 ret = 0;
             }
 
-            if (a.Valor < v)
+            if (b < v)
             {
                 ret = 1;
             }
 
-            if (a.Valor > v)
+            if (b > v)
             {
                 ret = -1;
             }
+            //a.som = true;
 
             return ret;
         }
@@ -195,7 +200,7 @@ namespace Ordenar
             switch (idx)
             {
                 case 1:
-                    SetColor1(Color.FromArgb(255,192,192,0));
+                    SetColor1(Color.FromArgb(255, 192, 192, 0));
                     SetColor2(Color.Orange);
                     break;
 

@@ -136,13 +136,13 @@
             resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
             this.numericUpDown1.BackColor = System.Drawing.Color.DarkGray;
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            500,
+            10,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Value = new decimal(new int[] {
-            20,
+            5,
             0,
             0,
             0});

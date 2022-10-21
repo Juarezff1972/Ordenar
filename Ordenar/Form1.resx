@@ -185,7 +185,7 @@
     <value>61, 22</value>
   </data>
   <data name="button1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="button1.Text" xml:space="preserve">
     <value>Iniciar</value>
@@ -215,7 +215,7 @@
     <value>61, 22</value>
   </data>
   <data name="button2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="button2.Text" xml:space="preserve">
     <value>Resetar</value>
@@ -260,7 +260,7 @@
     <value>133, 23</value>
   </data>
   <data name="qsPivotSel1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>1</value>
   </data>
   <data name="qsPivotSel1.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -290,7 +290,7 @@
     <value>59, 23</value>
   </data>
   <data name="numericUpDown1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;numericUpDown1.Name" xml:space="preserve">
     <value>numericUpDown1</value>
@@ -347,7 +347,7 @@
     <value>60, 23</value>
   </data>
   <data name="numericUpDown2.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;numericUpDown2.Name" xml:space="preserve">
     <value>numericUpDown2</value>
@@ -683,7 +683,7 @@
     <value>50, 19</value>
   </data>
   <data name="checkBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
+    <value>6</value>
   </data>
   <data name="checkBox1.Text" xml:space="preserve">
     <value>Som</value>
@@ -725,7 +725,7 @@
     <value>121, 23</value>
   </data>
   <data name="tipoVisual.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
+    <value>9</value>
   </data>
   <data name="tipoVisual.Text" xml:space="preserve">
     <value>Barras</value>
@@ -791,7 +791,7 @@
     <value>121, 23</value>
   </data>
   <data name="tipoVisual2.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+    <value>10</value>
   </data>
   <data name="tipoVisual2.Text" xml:space="preserve">
     <value>Nenhum</value>
@@ -839,7 +839,7 @@
     <value>121, 23</value>
   </data>
   <data name="ordemInicial.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
+    <value>4</value>
   </data>
   <data name="ordemInicial.Text" xml:space="preserve">
     <value>Aleatório</value>

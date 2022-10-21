@@ -224,6 +224,8 @@ namespace Ordenar
         {
             ArrayItem c;
             c = vetor[a];
+            vetor[a].som = false;
+            vetor[b].som = false;
             vetor[a] = vetor[b];
             vetor[b] = c;
             vetor[a].SetColorIDX(8);
@@ -239,6 +241,9 @@ namespace Ordenar
                 l1.Refresh();
                 ChecaSegmentos();
             }
+            vetor[a].som = true;
+            vetor[b].som = true;
+
         }
 
         private void ChecaSegmentos()
@@ -248,10 +253,14 @@ namespace Ordenar
             int i;
             for (i = 1; i < vetor.Length - 1; i++)
             {
+                vetor[i].som = false;
+                vetor[i - 1].som = false;
                 if (vetor[i].CompareTo(vetor[i - 1]) == -1)
                 {
                     segmentos++;
                 }
+                vetor[i].som = true;
+                vetor[i - 1].som = true;
             }
             pb1.Value = vetor.Length - (segmentos - 1);
             l4.Text = "Segmentos: " + segmentos.ToString();
@@ -1659,7 +1668,7 @@ namespace Ordenar
             piv1.Visible = true;
             piv2.Visible = true;
             // radix and base calculations
-            const int RADIX = 4;
+            const int RADIX = 10;
 
             uint pmax = (uint)Math.Ceiling(Math.Log(vetor.Max().Valor + 1) / Math.Log(RADIX));
             ChecaSegmentos();
@@ -1680,7 +1689,7 @@ namespace Ordenar
                     copy[i] = vetor[i].Valor;
                     externos++;
                     int r = copy[i] / base1 % RADIX;
-                    piv1.Value = r + 1;
+                    piv1.Value = i + 1;
                     count[r]++;
                     Dispara(count);
                     externos++;
@@ -1740,7 +1749,7 @@ namespace Ordenar
             Pausa();
 
             // radix and base calculations
-            const uint RADIX = 4;
+            const uint RADIX = 10;
 
             uint pmax = (uint)Math.Floor(Math.Log(vetor.Max().Valor + 1) / Math.Log(RADIX));
 
@@ -2305,8 +2314,10 @@ namespace Ordenar
                     aux[pointer] = ++aux[pointer];
                     externos++;
                     if ((pointer % fator) == 0) Pausa();
+                    vetor[index].som = false;
                 }
                 Dispara(aux);
+                vetor[index].som = true;
             }
             for (int mainPointer = vetor.Length - 1; mainPointer >= 0; mainPointer--)
             {
@@ -2317,8 +2328,10 @@ namespace Ordenar
                     aux[pointer] = --aux[pointer];
                     externos++;
                     if ((pointer % fator) == 0) Pausa();
+                    vetor[index].som = false;
                 }
                 Dispara(aux);
+                vetor[index].som = true;
             }
         }
         // //////////////////////////////////////////////////////
