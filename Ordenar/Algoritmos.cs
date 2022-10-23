@@ -867,6 +867,7 @@ namespace Ordenar
                             ContaComparacao();
                             pos++;
                             piv2.Value = pos + 1;
+                            vetor[pos].SetColorIDX(4);
                         }
                         tmp = vetor[pos].Valor;
                         vetor[pos].Valor = item;
@@ -901,6 +902,9 @@ namespace Ordenar
                 int big;
                 int bigIndex;
 
+                vetor[i].SetColorIDX(3);
+                vetor[i + 1].SetColorIDX(7);
+                ContaComparacao();
                 if (vetor[i].Valor < vetor[i + 1].Valor)
                 {
                     small = vetor[i].Valor;
@@ -926,6 +930,8 @@ namespace Ordenar
                 }
                 piv1.Value = min + 1;
                 piv2.Value = max + 1;
+                vetor[i].Mudou = true;
+                vetor[i+1].Mudou = true;
                 Pausa();
             }
             if (vetor[length - 1].Valor < min)
@@ -958,13 +964,16 @@ namespace Ordenar
             {
                 K = ((int)((vetor[h].Valor - min) * c)) + 1;
                 L[K] += 1;
+                Dispara(L);
                 externos++;
+                Pausa();
             }
             for (K = 2; K <= m; K++)
             {
                 L[K] = L[K] + L[K - 1];
                 Dispara(L);
                 externos++;
+                Pausa();
             }
             Swap(maxIndex, 0);
             Pausa();

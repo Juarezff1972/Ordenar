@@ -424,7 +424,6 @@ namespace Ordenar
         public virtual void OnMudar(object sender, VetorEventArgs e)
         {
 
-
             if (barras == null) return;
             decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
             float itens = area1.Width / (float)m_array.Length;
@@ -442,7 +441,6 @@ namespace Ordenar
                 barras[i].txt = vetor[i].Valor.ToString();
                 barras[i].Refresh();
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-
             }
         }
 
@@ -616,7 +614,6 @@ namespace Ordenar
 
                     AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
 
-
                     pen.DashCap = DashCap.Triangle;
                     pen.CustomEndCap = bigArrow;
                     pen.CustomStartCap = bigArrow;
@@ -638,7 +635,6 @@ namespace Ordenar
 
                     break;
                 default:
-                    //e.Graphics.Clear(Color.Black);
                     break;
             }
         }
