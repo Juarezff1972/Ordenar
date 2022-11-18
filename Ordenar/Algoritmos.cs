@@ -2350,6 +2350,7 @@ namespace Ordenar
             {
                 for (int j = i + 1; j < vetor.Length; j++)
                 {
+                    ContaComparacao();
                     if (vetor[i].Valor > vetor[j].Valor)
                     {
                         Swap(i, j);
