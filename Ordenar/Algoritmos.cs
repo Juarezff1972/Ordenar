@@ -310,7 +310,7 @@ namespace Ordenar
             l2.Refresh();
         }
 
-        private void Pausa()
+        /*private void Pausa()
         {
             switch (delay)
             {
@@ -327,7 +327,7 @@ namespace Ordenar
                     System.Threading.Thread.Sleep(delay);
                     break;
             }
-        }
+        }*/
 
         private static int PrevPowerOfTwo(int x)
         {
@@ -459,7 +459,6 @@ namespace Ordenar
                 int key = vetor[i].Valor;
                 piv1.Value = i + 1;
                 vetor[i].SetColorIDX(1);
-                Pausa();
 
                 int lo = 0, hi = i;
                 while (lo < hi)
@@ -480,20 +479,20 @@ namespace Ordenar
                 while (j >= lo)
                 {
                     Swap(j, j + 1);
-                    Pausa();
                     j--;
                 }
 
                 vetor[j + 1].SetColorIDX(2);
-                Pausa();
                 vetor[i].SetColorIDX(0);
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         public void BitonicSort()
         {
             BitonicSort(0, vetor.Length, ASCENDING);
+
+            ChecaSegmentos();
         }
 
         private void Bitonic_compare(int i, int j, bool dir)
@@ -513,7 +512,6 @@ namespace Ordenar
                 int m = GreatestPowerOfTwoLessThan(n);
                 piv2.Value = m + 1;
                 vetor[m].SetColorIDX(1);
-                Pausa();
                 vetor[m].SetColorIDX(4);
                 for (int i = lo; i < lo + n - m; i++)
                 {
@@ -537,8 +535,6 @@ namespace Ordenar
                 int m = n / 2;
                 piv1.Value = m + 1;
                 vetor[m].SetColorIDX(1);
-                Pausa();
-                //vetor[m].SetColorIDX(2);
                 BitonicSort(lo, m, !dir);
                 BitonicSort(lo + m, n - m, dir);
                 BitonicMerge(lo, n, dir);
@@ -561,13 +557,11 @@ namespace Ordenar
                     if (vetor[j].CompareTo(vetor[j + 1]) == 1)
                     {
                         Swap(j, j + 1);
-                        //Pausa();
                     }
-                    Pausa();
                 }
                 vetor[i].SetColorIDX(3);
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         public void BubbleSort2()
@@ -584,7 +578,6 @@ namespace Ordenar
                 for (j = 0; j < i; j++)
                 {
                     vetor[j].SetColorIDX(1);
-                    Pausa();
                     vetor[j].SetColorIDX(0);
                     ContaComparacao();
 
@@ -595,7 +588,6 @@ namespace Ordenar
                         maxidx = j;
                         piv1.Value = maxidx + 1;
                         vetor[j].SetColorIDX(2);
-                        Pausa();
                     }
                 }
                 ContaComparacao();
@@ -603,7 +595,6 @@ namespace Ordenar
                 {
                     Swap(i, maxidx);
                 }
-                Pausa();
             }
             ChecaSegmentos();
         }
@@ -630,7 +621,6 @@ namespace Ordenar
                 for (i = inicio; i < final; i++)
                 {
                     vetor[i].SetColorIDX(1);
-                    Pausa();
                     vetor[i].SetColorIDX(0);
                     if (max < vetor[i].Valor)
                     {
@@ -650,7 +640,6 @@ namespace Ordenar
                     vetor[i].SetColorIDX(0);
                     vetor[maxidx].SetColorIDX(2);
                     vetor[minidx].SetColorIDX(3);
-                    Pausa();
                 }
                 ContaComparacao();
                 if (vetor[final - 1].CompareTo(vetor[maxidx]) == -1)
@@ -669,7 +658,6 @@ namespace Ordenar
                 }
                 vetor[final - 1].SetColorIDX(10);
                 vetor[inicio].SetColorIDX(9);
-                Pausa();
                 final--;
                 inicio++;
             }
@@ -682,7 +670,6 @@ namespace Ordenar
             int hi = vetor.Length - 1;
             int mov = lo;
 
-            ChecaSegmentos();
             piv1.Visible = true;
             while (lo < hi)
             {
@@ -697,7 +684,6 @@ namespace Ordenar
                     piv1.Value = i;
                     vetor[i - 1].SetColorIDX(1);
                     vetor[i].SetColorIDX(9);
-                    Pausa();
                     vetor[i - 1].SetColorIDX(0);
                 }
                 lo = mov;
@@ -713,12 +699,11 @@ namespace Ordenar
                     piv1.Value = i;
                     vetor[i + 1].SetColorIDX(1);
                     vetor[i].SetColorIDX(10);
-                    Pausa();
                     vetor[i + 1].SetColorIDX(0);
                 }
                 hi = mov;
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         public void CombSort()
@@ -746,12 +731,11 @@ namespace Ordenar
                     if (vetor[i].CompareTo(vetor[i + gap]) == 1)
                     {
                         Swap(i, i + gap);
-                        Pausa();
                         swapped = true;
                     }
                 }
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         public void CountingSort()
@@ -776,7 +760,6 @@ namespace Ordenar
                 externos++;
                 vetor[j].SetColorIDX(1);
                 Dispara(cnt);
-                Pausa();
             }
             for (int i = 1; i <= mc; i++)
             {
@@ -793,13 +776,12 @@ namespace Ordenar
                 vetor[cnt[idx] - 1].SetColorIDX(2);
                 cnt[idx]--;
                 Dispara(cnt);
-                Pausa();
             }
             for (j = 0; j <= max; j++)
             {
                 vetor[j].Valor = b[j];
                 vetor[j].SetColorIDX(1);
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
             ChecaSegmentos();
         }
@@ -820,7 +802,6 @@ namespace Ordenar
                 {
                     piv1.Value = i + 1;
                     vetor[i].SetColorIDX(1);
-                    Pausa();
                     ContaComparacao();
                     if (vetor[i].Valor < item)
                     {
@@ -843,7 +824,7 @@ namespace Ordenar
                     vetor[pos].Valor = item;
                     item = tmp;
                     vetor[pos].SetColorIDX(3);
-                    Pausa();
+                    ChecaSegmentos();//Pausa();
 
                     while (pos != cycle_start)
                     {
@@ -852,7 +833,6 @@ namespace Ordenar
                         for (int i = cycle_start + 1; i < vetor.Length; i++)
                         {
                             vetor[i].SetColorIDX(1);
-                            Pausa();
                             ContaComparacao();
                             if (vetor[i].Valor < item)
                             {
@@ -873,7 +853,7 @@ namespace Ordenar
                         vetor[pos].Valor = item;
                         item = tmp;
                         vetor[pos].SetColorIDX(3);
-                        Pausa();
+                        ChecaSegmentos();//Pausa();
                     }
                 }
             }
@@ -932,7 +912,6 @@ namespace Ordenar
                 piv2.Value = max + 1;
                 vetor[i].Mudou = true;
                 vetor[i+1].Mudou = true;
-                Pausa();
             }
             if (vetor[length - 1].Valor < min)
             {
@@ -945,7 +924,6 @@ namespace Ordenar
             }
             piv1.Value = min + 1;
             piv2.Value = max + 1;
-            Pausa();
 
             if (max == min)
             {
@@ -966,18 +944,14 @@ namespace Ordenar
                 L[K] += 1;
                 Dispara(L);
                 externos++;
-                Pausa();
             }
             for (K = 2; K <= m; K++)
             {
                 L[K] = L[K] + L[K - 1];
                 Dispara(L);
                 externos++;
-                Pausa();
             }
             Swap(maxIndex, 0);
-            Pausa();
-            ChecaSegmentos();
             int j = 0;
             K = m;
             int numMoves = 0;
@@ -998,8 +972,6 @@ namespace Ordenar
                     Dispara(L);
                     externos++;
                     numMoves++;
-                    Pausa();
-                    ChecaSegmentos();
                 }
             }
             InsertSort();
@@ -1030,11 +1002,9 @@ namespace Ordenar
                     {
                         --i;
                     }
-
-                    Pausa();
                 }
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         /// ////////////////////////////////////////////////////////////////////////////////////////
         public void HeapSort()
@@ -1049,7 +1019,6 @@ namespace Ordenar
                 cores = Math.Log(PrevPowerOfTwo(j + 1)) / Math.Log(2) + 4;
                 vetor[i].SetColorIDX((byte)cores);
             }
-            Pausa();
 
             while (true)
             {
@@ -1062,7 +1031,7 @@ namespace Ordenar
                     n--;
                     if (n == 0)
                     {
-                        Pausa();
+                        ChecaSegmentos();//Pausa();
                         return;
                     }
 
@@ -1073,8 +1042,6 @@ namespace Ordenar
                     {
                         vetor[n + 1].SetColorIDX(0);
                     }
-
-                    Pausa();
                 }
 
                 int parent = i;
@@ -1098,11 +1065,10 @@ namespace Ordenar
                     {
                         break;
                     }
-                    Pausa();
                 }
                 cores = Math.Log(PrevPowerOfTwo(i + 1)) / Math.Log(2) + 4;
                 vetor[i].SetColorIDX((byte)cores);
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
         }
         // //////////////////////////////////////////////////////
@@ -1113,7 +1079,6 @@ namespace Ordenar
             {
                 int key = vetor[i].Valor;
                 vetor[i].SetColorIDX(1);
-                Pausa();
 
                 int j = i - 1;
                 while (j >= 0 && vetor[j].Valor > key)
@@ -1121,11 +1086,10 @@ namespace Ordenar
                     ContaComparacao();
                     Swap(j, j + 1);
                     j--;
-                    Pausa();
                 }
                 vetor[i].SetColorIDX(0);
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         public void InsertSort2()
@@ -1144,13 +1108,13 @@ namespace Ordenar
                     vetor[j + 1].Valor = tmp;
                     vetor[j + 1].SetColorIDX(2);
                     j--;
-                    Pausa();
+                    ChecaSegmentos();//Pausa();
                 }
                 vetor[j + 1].Valor = key;
 
                 vetor[i].SetColorIDX(3);
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         public void OddEvenSort()
@@ -1168,7 +1132,6 @@ namespace Ordenar
                     {
                         Swap(i, i + 1);
                         sorted = false;
-                        Pausa();
                     }
                     vetor[i].SetColorIDX(1);
                 }
@@ -1180,13 +1143,11 @@ namespace Ordenar
                     {
                         Swap(i, i + 1);
                         sorted = false;
-                        Pausa();
                     }
                     vetor[i].SetColorIDX(2);
                 }
-                Pausa();
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         private void Flip(int k)
@@ -1221,13 +1182,10 @@ namespace Ordenar
             while (n > 1)
             {
                 maxdex = MaxIndex(n);
-                Pausa();
                 if (maxdex != n)
                 {
                     Flip(maxdex);
-                    Pausa();
                     Flip(n - 1);
-                    Pausa();
                 }
                 n--;
             }
@@ -1267,7 +1225,7 @@ namespace Ordenar
                 }
                 piv1.Value = min + 1;
                 piv2.Value = max + 1;
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
 
             range = max - min + 1;
@@ -1278,7 +1236,6 @@ namespace Ordenar
                 pigeonHoles[vetor[i].Valor - min]++;
                 Dispara(pigeonHoles);
                 externos++;
-                Pausa();
             }
 
             index = 0;
@@ -1290,11 +1247,10 @@ namespace Ordenar
                     Dispara(pigeonHoles);
                     externos++;
                     vetor[index++].Valor = j + min;
-                    ChecaSegmentos();
-                    Pausa();
+                    ChecaSegmentos();//Pausa();
                 }
             }
-            return;
+            ChecaSegmentos();
         }
         // //////////////////////////////////////////////////////
         public void SetQuickSortPivot(string q)
@@ -1307,8 +1263,6 @@ namespace Ordenar
             piv1.Visible = true;
             piv2.Visible = true;
             QuickSortDualPivotYaroslavskiy(0, vetor.Length - 1);
-            //Desmarcar();
-            Pausa();
         }
 
         public void QuickSortLL()
@@ -1316,7 +1270,6 @@ namespace Ordenar
             piv1.Visible = true;
             piv2.Visible = true;
             QuickSortLL(0, vetor.Length);
-            Pausa();
         }
 
         public void QuickSortLR()
@@ -1325,7 +1278,6 @@ namespace Ordenar
             piv2.Visible = true;
 
             QuickSortLR(0, vetor.Length - 1);
-            Pausa();
         }
 
         public void QuickSortTernaryLR()
@@ -1334,12 +1286,10 @@ namespace Ordenar
             piv2.Visible = true;
 
             QuickSortTernaryLR(0, vetor.Length - 1);
-            Pausa();
         }
 
         private void QuickSortDualPivotYaroslavskiy(int left, int right)
         {
-            ChecaSegmentos();
             AdRecursao();
 
             if (right > left)
@@ -1350,7 +1300,6 @@ namespace Ordenar
                 if (vetor[left].CompareTo(vetor[right]) == 1)
                 {
                     Swap(left, right);
-                    Pausa();
                 }
 
                 int p1 = vetor[left].Valor;
@@ -1366,7 +1315,6 @@ namespace Ordenar
                 vetor[l].SetColorIDX(3);
                 vetor[g].SetColorIDX(4);
                 vetor[k].SetColorIDX(5);
-                Pausa();
 
                 while (k <= g)
                 {
@@ -1377,7 +1325,6 @@ namespace Ordenar
                     {
                         Swap(k, l);
                         ++l;
-                        Pausa();
                     }
                     else if (vetor[k].Valor >= q)
                     {
@@ -1388,13 +1335,11 @@ namespace Ordenar
 
                         Swap(k, g);
                         --g;
-                        Pausa();
 
                         if (vetor[k].Valor < p1)
                         {
                             Swap(k, l);
                             ++l;
-                            Pausa();
                         }
                     }
                     ++k;
@@ -1403,7 +1348,6 @@ namespace Ordenar
                 ++g;
                 Swap(left, l);
                 Swap(right, g);
-                Pausa();
 
                 QuickSortDualPivotYaroslavskiy(left, l - 1);
                 QuickSortDualPivotYaroslavskiy(l + 1, g - 1);
@@ -1486,7 +1430,6 @@ namespace Ordenar
             int i = lo;
             vetor[lo].SetColorIDX(2);
             vetor[hi - 1].SetColorIDX(2);
-            Pausa();
 
             for (int j = lo; j < hi - 1; ++j)
             {
@@ -1496,14 +1439,11 @@ namespace Ordenar
                     Swap(i, j);
                     ++i;
                     vetor[j].SetColorIDX(1);
-                    Pausa();
                 }
             }
 
             Swap(i, hi - 1);
-            Pausa();
             vetor[hi - 1].SetColorIDX(0);
-            Pausa();
             return i;
         }
 
@@ -1516,12 +1456,10 @@ namespace Ordenar
             int pivot = vetor[p1].Valor;
 
             vetor[p1].SetColorIDX(1);
-            //Pausa();
 
             int i = lo, j = hi;
             vetor[i].SetColorIDX(2);
             vetor[j].SetColorIDX(2);
-            Pausa();
 
             while (i <= j)
             {
@@ -1555,11 +1493,8 @@ namespace Ordenar
                     j--;
 
                     vetor[p1].SetColorIDX(1);
-                    Pausa();
                 }
             }
-
-            Pausa();
 
             if (lo < j)
             {
@@ -1591,7 +1526,6 @@ namespace Ordenar
             int piv = QuickSortSelectPivot(lo, hi + 1);
             Swap(piv, hi);
             vetor[hi].SetColorIDX(1);
-            Pausa();
 
             int pivot = vetor[hi].Valor;
 
@@ -1603,7 +1537,6 @@ namespace Ordenar
 
             vetor[i].SetColorIDX(2);
             vetor[j].SetColorIDX(2);
-            Pausa();
 
             for (; ; )
             {
@@ -1614,7 +1547,6 @@ namespace Ordenar
                     {
                         vetor[p1].SetColorIDX(3);
                         Swap(i, p1++);
-                        Pausa();
                     }
                     ++i;
                 }
@@ -1626,7 +1558,6 @@ namespace Ordenar
                     {
                         vetor[q].SetColorIDX(3);
                         Swap(j, q--);
-                        Pausa();
                     }
                     --j;
                 }
@@ -1638,12 +1569,10 @@ namespace Ordenar
 
                 // swap item between < > regions
                 Swap(i++, j--);
-                Pausa();
             }
 
             // swap pivot to right place
             Swap(i, hi);
-            Pausa();
 
             int num_less = i - p1;
             int num_greater = q - j;
@@ -1655,16 +1584,13 @@ namespace Ordenar
             for (int k = lo; k < pe; k++, j--)
             {
                 Swap(k, j);
-                Pausa();
             }
 
             int qe = hi - 1 - Math.Min(hi - 1 - q, num_greater - 1); // one already greater at end
             for (int k = hi - 1; k > qe; k--, i++)
             {
                 Swap(i, k);
-                Pausa();
             }
-            //Pausa();
 
             QuickSortTernaryLR(lo, lo + num_less - 1);
             QuickSortTernaryLR(hi - num_greater + 1, hi);
@@ -1694,7 +1620,6 @@ namespace Ordenar
                 for (int i = 0; i < vetor.Length; ++i)
                 {
                     vetor[i].SetColorIDX(1);
-                    Pausa();
                     copy[i] = vetor[i].Valor;
                     externos++;
                     int r = copy[i] / base1 % RADIX;
@@ -1728,10 +1653,8 @@ namespace Ordenar
                     }
 
                     vetor[bkt[i]].SetColorIDX(3);
-                    Pausa();
                     vetor[bkt[i]].SetColorIDX(0);
                 }
-                Pausa();
 
                 // redistribute items back into array (stable)
                 for (int i = 0; i < vetor.Length; ++i)
@@ -1739,12 +1662,11 @@ namespace Ordenar
                     int r = copy[i] / base1 % RADIX;
                     vetor[bkt[r]++].Valor = copy[i];
                     vetor[bkt[r] - 1].SetColorIDX(1);
-                    Pausa();
+                    ChecaSegmentos();//Pausa();
                     vetor[bkt[r] - 1].SetColorIDX(0);
                 }
-                Pausa();
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
 
         private void RadixSortMSD(int lo, int hi, int depth)
@@ -1755,7 +1677,6 @@ namespace Ordenar
             piv2.Visible = true;
             vetor[lo].SetColorIDX(1);
             vetor[hi - 1].SetColorIDX(2);
-            Pausa();
 
             // radix and base calculations
             const uint RADIX = 10;
@@ -1772,7 +1693,6 @@ namespace Ordenar
             for (int i = lo; i < hi; ++i)
             {
                 vetor[i].SetColorIDX(1);
-                Pausa();
                 uint r = (uint)vetor[i].Valor / base1 % RADIX;
                 piv1.Value = i + 1;
                 count[r]++;
@@ -1808,7 +1728,7 @@ namespace Ordenar
                 piv2.Value = lo + bkt[i];
 
                 vetor[lo + bkt[i] - 1].SetColorIDX(8);
-                Pausa();
+                ChecaSegmentos();//Pausa();
                 vetor[lo + bkt[i] - 1].SetColorIDX(0);
             }
 
@@ -1818,11 +1738,9 @@ namespace Ordenar
                 while ((j = --bkt[(vetor[lo + i].Valor / base1 % RADIX)]) > i)
                 {
                     Swap(lo + i, lo + j);
-                    Pausa();
                     piv1.Value = lo + i + 1;
                     piv2.Value = lo + j + 1;
                 }
-                //Pausa();
                 i += count[(vetor[lo + i].Valor / base1 % RADIX)];
             }
 
@@ -1844,14 +1762,13 @@ namespace Ordenar
                 RadixSortMSD(sum, sum + count[i], depth + 1);
                 sum += count[i];
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
             RmRecursao();
         }
 
         public void RadixSortMSD()
         {
             RadixSortMSD(0, vetor.Length, 0);
-            Pausa();
         }
         // //////////////////////////////////////////////////////
         public void SelectionSort()
@@ -1871,10 +1788,8 @@ namespace Ordenar
                         vetor[j].SetColorIDX(2);
                         vetor[jMin].SetColorIDX(2);
                         jMin = j;
-                        Pausa();
                     }
                 }
-
 
                 Swap(i, jMin);
 
@@ -1886,10 +1801,9 @@ namespace Ordenar
 
                 piv1.Value = i + 1;
                 vetor[i].SetColorIDX(1);
-                Pausa();
                 vetor[i].SetColorIDX(0);
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         public void ShellSort()
@@ -1911,16 +1825,16 @@ namespace Ordenar
                         vetor[j].SetColorIDX(3);
                         vetor[j].Valor = vetor[j - h].Valor;
                         j -= h;
-                        Pausa();
+                        ChecaSegmentos();//Pausa();
                         vetor[j].SetColorIDX(4);
                     }
                     vetor[j].SetColorIDX(1);
                     vetor[j].Valor = v;
-                    Pausa();
+                    ChecaSegmentos();//Pausa();
                     vetor[i].SetColorIDX(0);
                 }
             }
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         private void Merge(int lo, int mid, int hi)
@@ -1934,7 +1848,6 @@ namespace Ordenar
             vetor[lo].SetColorIDX(2);
             vetor[mid].SetColorIDX(1);
             vetor[hi - 1].SetColorIDX(2);
-            Pausa();
 
             // allocate output
             outA = new int[hi - lo];
@@ -1985,11 +1898,10 @@ namespace Ordenar
             {
                 vetor[lo + i].Valor = outA[i];
                 vetor[lo + i].SetColorIDX(1);
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
 
             vetor[hi - 1].SetColorIDX(1);
-            Pausa();
         }
 
         private void MergeSort(int lo, int hi)
@@ -2011,9 +1923,8 @@ namespace Ordenar
         public void MergeSort()
         {
             MergeSort(0, vetor.Length);
-            //Desmarcar();
 
-            Pausa();
+            ChecaSegmentos();//Pausa();
         }
         // //////////////////////////////////////////////////////
         private void SlowSort(int i, int j)
@@ -2032,7 +1943,6 @@ namespace Ordenar
             piv1.Value = m + 1;
 
             vetor[j].SetColorIDX(1);
-            Pausa();
             SlowSort(i, m);
             SlowSort(m + 1, j);
 
@@ -2042,13 +1952,10 @@ namespace Ordenar
                 Swap(m, j);
             }
 
-
-            //Pausa();
             vetor[j].SetColorIDX(0);
             SlowSort(i, j - 1);
 
             vetor[j].SetColorIDX(1);
-            Pausa();
             RmRecursao();
         }
         public void SlowSort()
@@ -2088,7 +1995,6 @@ namespace Ordenar
                     piv1.Value = abacus[0].Length - j;
                     Dispara(abacus);
                     externos++;
-                    //Pausa();
                 }
                 piv2.Value = i + 1;
             }
@@ -2123,9 +2029,8 @@ namespace Ordenar
                     }
                     vetor[x].Valor = count;
                 }
-                ChecaSegmentos();
                 piv1.Value = i + 1;
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
         }
         // //////////////////////////////////////////////////////
@@ -2150,7 +2055,7 @@ namespace Ordenar
                 Dispara(tmp);
                 externos++;
                 piv2.Value = tmp[k];
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
             valor = tmp[tmp[1]];
             tmp[tmp[1]] = int.MaxValue;
@@ -2171,7 +2076,7 @@ namespace Ordenar
                 i = k;
                 piv2.Value = tmp[k];
                 Dispara(tmp);
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
             valor = tmp[tmp[1]];
             tmp[tmp[1]] = int.MaxValue;
@@ -2194,9 +2099,8 @@ namespace Ordenar
             {
                 vetor[i].Valor = valor;
                 recriar(ref valor);
-                ChecaSegmentos();
                 piv1.Value = i + 1;
-                Pausa();
+                ChecaSegmentos();//Pausa();
             }
         }
 
@@ -2226,6 +2130,7 @@ namespace Ordenar
             int[] contagem = new int[NUMBER_OF_BUCKETS];
             int[] offset = new int[NUMBER_OF_BUCKETS];
             int digitos = 0;
+            ChecaSegmentos();
             AdRecursao();
             //passo 1
             piv1.Value = 1;
@@ -2249,7 +2154,6 @@ namespace Ordenar
                 externos++;
                 piv2.Value = i;
             }
-            ChecaSegmentos();
             //passo 2
             for (int b = 0; b < NUMBER_OF_BUCKETS; b++)
             {
@@ -2269,8 +2173,7 @@ namespace Ordenar
                         num = temp;
                         fonte = destino;
                         Dispara(contagem);
-                        Pausa();
-                        ChecaSegmentos();
+                        ChecaSegmentos();//Pausa();
                     } while (fonte != origem);
                 }
                 piv2.Value = b + 1;
@@ -2289,6 +2192,7 @@ namespace Ordenar
         }
         public void AmericanSort()
         {
+            ChecaSegmentos();
             piv1.Visible = true;
             piv2.Visible = true;
             int digitos = MaximoDigitos();
@@ -2298,6 +2202,7 @@ namespace Ordenar
                 max *= NUMBER_OF_BUCKETS;
             }
             AmericanSort(0, vetor.Length, max);
+            ChecaSegmentos();
         }
         // //////////////////////////////////////////////////////
         public void SimplisticGravitySort()
@@ -2322,7 +2227,7 @@ namespace Ordenar
                     vetor[index].Valor = --vetor[index].Valor;
                     aux[pointer] = ++aux[pointer];
                     externos++;
-                    if ((pointer % fator) == 0) Pausa();
+                    if ((pointer % fator) == 0) ChecaSegmentos();//Pausa();
                     vetor[index].som = false;
                 }
                 Dispara(aux);
@@ -2336,7 +2241,7 @@ namespace Ordenar
                     vetor[index].Valor = ++vetor[index].Valor;
                     aux[pointer] = --aux[pointer];
                     externos++;
-                    if ((pointer % fator) == 0) Pausa();
+                    if ((pointer % fator) == 0) ChecaSegmentos();//Pausa();
                     vetor[index].som = false;
                 }
                 Dispara(aux);
@@ -2346,6 +2251,7 @@ namespace Ordenar
         // //////////////////////////////////////////////////////
         public void SandpaperSort()
         {
+            ChecaSegmentos();
             for (int i = 0; i < vetor.Length - 1; i++)
             {
                 for (int j = i + 1; j < vetor.Length; j++)
@@ -2354,15 +2260,16 @@ namespace Ordenar
                     if (vetor[i].Valor > vetor[j].Valor)
                     {
                         Swap(i, j);
-                        Pausa();
                     }
                 }
             }
+            ChecaSegmentos();
         }
         // //////////////////////////////////////////////////////
 
         public void DiamondSort()
         {
+            ChecaSegmentos();
             int n = 1;
             for (; n < vetor.Length; n *= 2) ;
 
@@ -2381,7 +2288,6 @@ namespace Ordenar
                                 if (vetor[i].Valor > vetor[i + 1].Valor)
                                 {
                                     Swap(i, i + 1);
-                                    Pausa();
                                 }
                             }
                         }
@@ -2396,10 +2302,10 @@ namespace Ordenar
                     if (vetor[i].Valor > vetor[i + 1].Valor)
                     {
                         Swap(i, i + 1);
-                        Pausa();
                     }
                 }
             }
+            ChecaSegmentos();
         }
         // //////////////////////////////////////////////////////
         #endregion

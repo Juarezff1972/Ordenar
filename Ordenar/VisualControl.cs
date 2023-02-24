@@ -20,7 +20,7 @@ namespace Ordenar
         private int _height;
         private Pen _pen1;
         private Brush _brush1;
-        private Pen _pen2;
+        //private Pen _pen2;
         private Brush _brush2;
 
         private Label info;
@@ -150,7 +150,7 @@ namespace Ordenar
                 _brush1 = new SolidBrush(CorFrente);
                 _pen1 = new Pen(_brush1);
                 _brush2 = new SolidBrush(CorFundo);
-                _pen2 = new Pen(_brush1);
+                //_pen2 = new Pen(_brush1);
                 e.Graphics.FillEllipse(_brush2, 0, 0, _width - 2, _width - 2);
                 e.Graphics.DrawEllipse(_pen1, 0, 0, _width - 2, _width - 2);
                 this.BackColor = Color.Transparent;
@@ -171,7 +171,7 @@ namespace Ordenar
                 _brush1 = new SolidBrush(CorFrente);
                 _pen1 = new Pen(_brush1);
                 _brush2 = new SolidBrush(CorFundo);
-                _pen2 = new Pen(_brush1);
+                //_pen2 = new Pen(_brush1);
                 p = new PointF[3];
                 int w = _width / 3;
                 p[0].X = _width / 2;

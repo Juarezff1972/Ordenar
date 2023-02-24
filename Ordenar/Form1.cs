@@ -421,6 +421,26 @@ namespace Ordenar
             }
         }
 
+        private void Pausa()
+        {
+            int delay = (int)Math.Pow(2, (int)numericUpDown1.Value);
+            switch (delay)
+            {
+                case 0:
+                    //return;
+                    break;
+                case 1:
+                    //ChecaSegmentos();
+                    area1.Refresh();
+                    break;
+                default:
+                    area1.Refresh();
+                    //ChecaSegmentos();
+                    System.Threading.Thread.Sleep(delay);
+                    break;
+            }
+        }
+
         public virtual void OnMudar(object sender, VetorEventArgs e)
         {
 
@@ -441,6 +461,7 @@ namespace Ordenar
                 barras[i].txt = vetor[i].Valor.ToString();
                 barras[i].Refresh();
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+                Pausa();
             }
         }
 
