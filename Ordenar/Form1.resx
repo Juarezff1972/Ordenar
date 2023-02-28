@@ -718,6 +718,9 @@
   <data name="tipoVisual.Items3" xml:space="preserve">
     <value>Triângulo</value>
   </data>
+  <data name="tipoVisual.Items4" xml:space="preserve">
+    <value>Espiral</value>
+  </data>
   <data name="tipoVisual.Location" type="System.Drawing.Point, System.Drawing">
     <value>653, 220</value>
   </data>
