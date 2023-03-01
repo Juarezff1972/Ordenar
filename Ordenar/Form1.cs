@@ -609,7 +609,7 @@ namespace Ordenar
                 vetor[i].Mudar += d2;
                 vetor[i].Ler += d3;
 
-                if (tipoVisual.Text!= "Circular") area1.Controls.Add(barras[i]);
+                if (tipoVisual.Text!= "Espiral") area1.Controls.Add(barras[i]);
 
                 if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
@@ -641,7 +641,6 @@ namespace Ordenar
             Brush b;
             
             //PictureBox pictureBox1 = (PictureBox)sender;
-            Debug.WriteLine(sender);
             if (tipoVisual.Text== "Espiral")
             {
                 if (points!=null)

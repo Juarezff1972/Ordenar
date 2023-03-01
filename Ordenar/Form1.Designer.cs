@@ -100,18 +100,21 @@
             resources.GetString("comboBox1.Items27")});
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Sorted = true;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // button1
             // 
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
             resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // qsPivotSel1
             // 
@@ -126,6 +129,7 @@
             resources.GetString("qsPivotSel1.Items3"),
             resources.GetString("qsPivotSel1.Items4")});
             this.qsPivotSel1.Name = "qsPivotSel1";
+            this.qsPivotSel1.SelectedIndexChanged += new System.EventHandler(this.qsPivotSel1_SelectedIndexChanged);
             // 
             // numericUpDown1
             // 
@@ -142,6 +146,7 @@
             0,
             0,
             0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label1
             // 
@@ -263,6 +268,7 @@
             this.area1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.area1.Name = "area1";
             this.area1.TabStop = false;
+            this.area1.Paint += new System.Windows.Forms.PaintEventHandler(this.area1_Paint);
             // 
             // tipoVisual2
             // 
@@ -286,6 +292,7 @@
             resources.GetString("ordemInicial.Items4"),
             resources.GetString("ordemInicial.Items5")});
             this.ordemInicial.Name = "ordemInicial";
+            this.ordemInicial.SelectedIndexChanged += new System.EventHandler(this.ordemInicial_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -299,6 +306,8 @@
             this.AuxVetor1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.AuxVetor1.Name = "AuxVetor1";
             this.AuxVetor1.TabStop = false;
+            this.AuxVetor1.Paint += new System.Windows.Forms.PaintEventHandler(this.AuxVetor1_Paint);
+            this.AuxVetor1.Resize += new System.EventHandler(this.AuxVetor1_Resize);
             // 
             // label11
             // 
@@ -338,6 +347,10 @@
             this.Controls.Add(this.comboBox1);
             this.DoubleBuffered = true;
             this.Name = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_ResizeEnd);
+            this.StyleChanged += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pivot1)).EndInit();
