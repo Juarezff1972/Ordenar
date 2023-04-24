@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Windows.Forms;
+using System.Xml;
 using WindowsMediaLib.Defs;
 
 
@@ -61,7 +62,7 @@ namespace Ordenar
 
         private PointF[] points;
         private long[] auxVetor;
-        private int maxPoint=0;
+        private int maxPoint = 0;
         //Graphics auxGr;
         //GraphicsState auxGrState;
 
@@ -399,13 +400,6 @@ namespace Ordenar
                 if (vetor[e.indice].MyBuf == null) vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
                 int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
                 vetor[e.indice].waveSize = iSize;
-                int iRet;
-                int i = e.indice;
-
-                if (AUDIO_LENGTH_IN_SECONDS > 0)
-                {
-                    //iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
-                }
             }
 
         }
@@ -415,10 +409,10 @@ namespace Ordenar
             if (checkBox1.Checked)
             {
                 int i = e.indice;
+                int iRet;
 
                 if (AUDIO_LENGTH_IN_SECONDS > 0)
                 {
-                    int iRet;
                     iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
                 }
             }
@@ -463,7 +457,7 @@ namespace Ordenar
                 barras[i].CorFrente = vetor[i].GetColor(2);
                 barras[i].txt = vetor[i].Valor.ToString();
                 barras[i].Refresh();
-                if (maxPoint< barras[i].Top) maxPoint = barras[i].Top;
+                if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
                 Pausa();
             }
@@ -609,7 +603,7 @@ namespace Ordenar
                 vetor[i].Mudar += d2;
                 vetor[i].Ler += d3;
 
-                if (tipoVisual.Text!= "Espiral") area1.Controls.Add(barras[i]);
+                if (tipoVisual.Text != "Espiral") area1.Controls.Add(barras[i]);
 
                 if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
@@ -635,70 +629,125 @@ namespace Ordenar
             int i;
             int l;
             double pr;
+            double pr1;
             double pa;
+            double pa1;
             double px;
+            double px1;
+            double px2;
+            double apx;
             double py;
+            double py1;
+            double py2;
+            double apy;
+            double ag1;
+            double ag2;
+            int p;
+            double p1;
             Brush b;
-            
-            //PictureBox pictureBox1 = (PictureBox)sender;
-            if (tipoVisual.Text== "Espiral")
+            int rw;
+            int rh;
+
+            switch (tipoVisual.Text)
             {
-                if (points!=null)
-                {
-                    max = (int)numericUpDown2.Value;
-                    l=points.Length;
-                    for (i=0; i < l; i++)
+                case "Espiral":
+                    if (points != null)
                     {
-                        pa = ((double)i/(double)max)*2.0*Math.PI;
-                        pr = (double)points[i].Y / 2.0;
-                        //e.ClipRectangle.X
-                        px = (e.ClipRectangle.Width/2)+ pr * Math.Cos(pa); // calculate x-coordinate
-                        py = (e.ClipRectangle.Height/2)+pr * Math.Sin(pa); // calculate y-coordinate
-                        pen = new(barras[i].CorFundo);
+                        max = (int)numericUpDown2.Value;
+                        l = points.Length;
+                        apx = 0;
+                        apy = 0;
+                        pa1 = 0;
+                        pr1 = 0;
+                        rw = e.ClipRectangle.Width / 2;
+                        rh = e.ClipRectangle.Height / 2;
+                        for (i = 0; i < l; i++)
                         {
-                            Width = 1;
-                        };
-                        b = new SolidBrush(barras[i].CorFrente);
-                        e.Graphics.FillEllipse(b, (float)px, (float)py, 5, 5);
-                        e.Graphics.DrawEllipse(pen, (float)px, (float)py, 6, 6);
+                            pa = ((double)i / (double)max) * 2.0 * Math.PI;
+                            pr = (double)points[i].Y / 2.0;
+   
+                            //e.ClipRectangle.X
+                            px = rw + pr * Math.Cos(pa); // calculate x-coordinate
+                            py = rh + pr * Math.Sin(pa); // calculate y-coordinate
+                            pen = new(barras[i].CorFundo);
+                            {
+                                Width = 1;
+                            };
+                            if (tipoVisual2.Text == GRAFICO_LINHA)
+                            {
+                                if (i > 0)
+                                {
+                                    e.Graphics.DrawLine(pen, (float)apx, (float)apy, (float)px, (float)py);
+                                }
+                                apx = px;
+                                apy = py;
+                            }
+                            if (tipoVisual2.Text==GRAFICO_CURVA)
+                            {
+                                if (i == 0)
+                                {
+                                    pa1 = pa;
+                                    pr1 = pr;
+                                }
+                                if (i > 0)
+                                {
+                                    pr1 = (pr + pr1) / 2;
+                                    ag1 = (pa + pa1) / 2;
+                                    ag2 = (ag1 + pa) / 2;
+                                    px1 = rw + pr1 * Math.Cos(ag1);
+                                    py1 = rh + pr1 * Math.Sin(ag1);
+                                    px2 = rw + pr1 * Math.Cos(ag2);
+                                    py2 = rh + pr1 * Math.Sin(ag2);
+
+                                    e.Graphics.DrawBezier(pen, (float)apx, (float)apy, (float)px1, (float)py1, (float)px2, (float)py2, (float)px, (float)py);
+                                }
+                                apx = px;
+                                apy = py;
+                                pa1 = pa;
+                                pr1 = pr;
+                            }
+
+                            b = new SolidBrush(barras[i].CorFrente);
+                            e.Graphics.FillEllipse(b, (float)px, (float)py, 5, 5);
+                            e.Graphics.DrawEllipse(pen, (float)px, (float)py, 6, 6);
+                        }
                     }
-                }
-            }
-            else
-            {
-                switch (tipoVisual2.Text)
-                {
-                    case GRAFICO_LINHA:
-                        pen = new(Color.White)
-                        {
-                            Width = 1
-                        };
+                    break;
+                default:
+                    switch (tipoVisual2.Text)
+                    {
+                        case GRAFICO_LINHA:
+                            pen = new(Color.White)
+                            {
+                                Width = 1
+                            };
 
-                        AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+                            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
 
-                        pen.DashCap = DashCap.Triangle;
-                        pen.CustomEndCap = bigArrow;
-                        pen.CustomStartCap = bigArrow;
-                        //pen.LineJoin = LineJoin.Round;
-                        pen.DashStyle = DashStyle.Solid;
-                        //pen.EndCap = LineCap.DiamondAnchor;
-                        //pen.StartCap=LineCap.DiamondAnchor;
+                            pen.DashCap = DashCap.Triangle;
+                            pen.CustomEndCap = bigArrow;
+                            pen.CustomStartCap = bigArrow;
+                            //pen.LineJoin = LineJoin.Round;
+                            pen.DashStyle = DashStyle.Solid;
+                            //pen.EndCap = LineCap.DiamondAnchor;
+                            //pen.StartCap=LineCap.DiamondAnchor;
 
-                        if (points != null) e.Graphics.DrawLines(pen, points);
+                            if (points != null) e.Graphics.DrawLines(pen, points);
 
-                        break;
-                    case GRAFICO_CURVA:
-                        pen = new(Color.White)
-                        {
-                            Width = 1
-                        };
+                            break;
+                        case GRAFICO_CURVA:
+                            pen = new(Color.White)
+                            {
+                                Width = 1
+                            };
 
-                        if (points != null) e.Graphics.DrawCurve(pen, points);
+                            if (points != null) e.Graphics.DrawCurve(pen, points);
 
-                        break;
-                    default:
-                        break;
-                }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
             }
         }
 
