@@ -12,9 +12,7 @@ namespace Ordenar
         private int v;
         private int indice;
         private bool mudou;
-        private byte[] myWaveData;
-        private WBuf Buf;
-        public int waveSize = 0;
+
 
         public bool som = true;
 
@@ -30,30 +28,6 @@ namespace Ordenar
         public event MudarEventHandler Mudar;
         public event LerEventHandler Ler;
 
-        public WBuf MyBuf
-        {
-            get
-            {
-                return Buf;
-            }
-            set
-            {
-                Buf = value;
-            }
-        }
-
-        public byte[] WaveData
-        {
-            get
-            {
-                return myWaveData;
-            }
-            set
-            {
-                myWaveData = value;
-            }
-        }
-
         public int Indice
         {
             get
@@ -66,18 +40,6 @@ namespace Ordenar
             }
 
         }
-
-        /*public bool Marca
-        {
-            get
-            {
-                return m;
-            }
-            set
-            {
-                m = value;
-            }
-        }*/
 
         public int Valor
         {

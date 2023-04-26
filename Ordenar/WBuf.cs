@@ -54,6 +54,7 @@ namespace Ordenar
         public int GenerateLa(WaveFormatEx wfx, int iDuration, double freq)
         {
             int iSamples;
+            int vol = 20;
             int iSize = GenerateLaSize(wfx, iDuration, out iSamples);
             if (iSize > m_MaxLen)
             {
@@ -67,8 +68,7 @@ namespace Ordenar
             for (int i = 0; i < iSamples; i++)
             {
                 double damp = ((double)iSamples - (double)i) / (double)iSamples;
-                double y = damp * Math.Sin((freq * 2 * Math.PI * i) / wfx.nSamplesPerSec); // tone
-
+                double y = (damp * Math.Sin((freq * 2 * Math.PI * i) / wfx.nSamplesPerSec))/vol; // tone
                 if (wfx.wBitsPerSample == 8)
                 {
                     byte sample = (byte)(127.5 * (y + 1.0));

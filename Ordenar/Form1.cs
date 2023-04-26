@@ -74,9 +74,9 @@ namespace Ordenar
 
         private WaveFormatEx m_Format;
         IntPtr[] m_pWave;
-
         private const int SAMPLE_FREQUENCY = 44100;
         private float AUDIO_LENGTH_IN_SECONDS = 1.0f;
+        private Sons[] sons;
 
         public Form1()
         {
@@ -393,14 +393,14 @@ namespace Ordenar
         public virtual void OnEscreveu(object sender, VetorEventArgs e)
         {
             ContaEscrita();
-            if (checkBox1.Checked)
+            /*if (checkBox1.Checked)
             {
                 double freq;
                 freq = 55.0 * Math.Pow(2.0, (100.0 * e.valor / (m_array.Length - 1.0)) / 12.0);
-                if (vetor[e.indice].MyBuf == null) vetor[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
-                int iSize = vetor[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
-                vetor[e.indice].waveSize = iSize;
-            }
+                if (sons[e.indice].MyBuf == null) sons[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
+                int iSize = sons[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
+                sons[e.indice].waveSize = iSize;
+            }*/
 
         }
 
@@ -410,10 +410,14 @@ namespace Ordenar
             {
                 int i = e.indice;
                 int iRet;
+                int s;
 
                 if (AUDIO_LENGTH_IN_SECONDS > 0)
                 {
-                    iRet = waveOut.Write(m_pWave[i], vetor[i].MyBuf.GetPtr(), vetor[i].waveSize);
+                    //Debug.WriteLine("i=" + i + " | valor=" + e.valor);
+                    s = e.valor - 1;
+                    if (s < 0) s = 0;
+                    iRet = waveOut.Write(m_pWave[i], sons[s].MyBuf.GetPtr(), sons[s].waveSize);
                 }
             }
         }
@@ -531,7 +535,7 @@ namespace Ordenar
             vetor.Initialize();
 
             m_pWave = new IntPtr[m_array.Length];
-
+            sons = new Sons[m_array.Length+1];
 
             if (barras != null)
             {
@@ -555,23 +559,24 @@ namespace Ordenar
             points = new PointF[l1];
             for (i = 0; i < vetor.Length; i++)
             {
-                m_pWave[i] = new();
-                iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
-
                 vetor[i] = new ArrayItem
                 {
                     Indice = i
                 };
                 vetor[i].Valor = m_array[i];
                 vetor[i].SetColorIDX(0);
+
+                m_pWave[i] = new();
+                iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
+
                 double freq;
-                freq = 55.0 * Math.Pow(2.0, (100.0 * (m_array[i] / 2) / (m_array.Length - 1.0)) / 12.0);
+                freq = 55.0 * Math.Pow(2.0, (100.0 * ((i + 1) / 2) / (m_array.Length - 1.0)) / 12.0);
+                sons[i] = new();
+                sons[i].MyBuf = new WBuf(m_pWave[i], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
+                int iSize = sons[i].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, freq);
+                sons[i].waveSize = iSize;
 
-                vetor[i].MyBuf = new WBuf(m_pWave[i], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
-                int iSize = vetor[i].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
-                vetor[i].waveSize = iSize;
-
-                while (!vetor[i].MyBuf.IsBufferFree())
+                while (!sons[i].MyBuf.IsBufferFree())
                 {
                     System.Threading.Thread.Sleep(1);
                 }
@@ -619,7 +624,7 @@ namespace Ordenar
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            AUDIO_LENGTH_IN_SECONDS = (float)numericUpDown1.Value / 2;
+            //AUDIO_LENGTH_IN_SECONDS = (float)numericUpDown1.Value / 2;
         }
 
         private void area1_Paint(object sender, PaintEventArgs e)
@@ -643,7 +648,7 @@ namespace Ordenar
             double ag1;
             double ag2;
             int p;
-            double p1;
+            //double p1;
             Brush b;
             int rw;
             int rh;
