@@ -55,6 +55,7 @@
             label7 = new System.Windows.Forms.Label();
             AuxVetor1 = new System.Windows.Forms.PictureBox();
             label11 = new System.Windows.Forms.Label();
+            button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pivot1).BeginInit();
@@ -247,11 +248,19 @@
             resources.ApplyResources(label11, "label11");
             label11.Name = "label11";
             // 
+            // button3
+            // 
+            resources.ApplyResources(button3, "button3");
+            button3.Name = "button3";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Gray;
+            Controls.Add(button3);
             Controls.Add(label11);
             Controls.Add(AuxVetor1);
             Controls.Add(label7);
@@ -322,6 +331,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox AuxVetor1;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button3;
     }
 }
 

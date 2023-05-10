@@ -243,7 +243,6 @@ namespace Ordenar
             }
             vetor[a].som = true;
             vetor[b].som = true;
-
         }
 
         private void ChecaSegmentos()
@@ -413,7 +412,7 @@ namespace Ordenar
                 vetor[m].SetColor2(cc);
                 vetor[m].Indice = m;
                 vetor[m].Mudou = true;
-                System.Threading.Thread.Sleep(5);
+                System.Threading.Thread.Sleep(2);
             }
         }
 
@@ -2227,7 +2226,7 @@ namespace Ordenar
                     vetor[index].Valor = --vetor[index].Valor;
                     aux[pointer] = ++aux[pointer];
                     externos++;
-                    if ((pointer % fator) == 0) ChecaSegmentos();//Pausa();
+                    //if (((float)pointer % (float)fator) == 0) ChecaSegmentos();//Pausa();
                     vetor[index].som = false;
                 }
                 Dispara(aux);
@@ -2241,7 +2240,7 @@ namespace Ordenar
                     vetor[index].Valor = ++vetor[index].Valor;
                     aux[pointer] = --aux[pointer];
                     externos++;
-                    if ((pointer % fator) == 0) ChecaSegmentos();//Pausa();
+                    //if ((pointer % fator) == 0) ChecaSegmentos();//Pausa();
                     vetor[index].som = false;
                 }
                 Dispara(aux);

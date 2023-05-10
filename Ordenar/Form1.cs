@@ -1,4 +1,5 @@
 ﻿using MultiMedia;
+using Ordenar;
 using System;
 using System.Data;
 using System.Diagnostics;
@@ -78,18 +79,21 @@ namespace Ordenar
         private float AUDIO_LENGTH_IN_SECONDS = 1.0f;
         private Sons[] sons;
 
+        private bool fim;
+
         public Form1()
         {
             InitializeComponent();
             //auxGr = AuxVetor1.CreateGraphics();
 
+            fim = false;
             ordem = 1;
             m_Format = new WaveFormatEx();
 
             m_Format.wFormatTag = 1; // PCM
             m_Format.nChannels = 2; // Stereo
             m_Format.nSamplesPerSec = SAMPLE_FREQUENCY;
-            m_Format.wBitsPerSample = 8;
+            m_Format.wBitsPerSample = 16;
             m_Format.nBlockAlign = (short)(m_Format.nChannels * (m_Format.wBitsPerSample / 8));
             m_Format.nAvgBytesPerSec = m_Format.nSamplesPerSec * m_Format.nBlockAlign;
             m_Format.cbSize = 0;
@@ -274,7 +278,9 @@ namespace Ordenar
                 default:
                     break;
             }
+            fim = true;
             algo.Desmarcar();
+            fim = false;
 
             button1.Enabled = true;
             button2.Enabled = true;
@@ -393,15 +399,6 @@ namespace Ordenar
         public virtual void OnEscreveu(object sender, VetorEventArgs e)
         {
             ContaEscrita();
-            /*if (checkBox1.Checked)
-            {
-                double freq;
-                freq = 55.0 * Math.Pow(2.0, (100.0 * e.valor / (m_array.Length - 1.0)) / 12.0);
-                if (sons[e.indice].MyBuf == null) sons[e.indice].MyBuf = new WBuf(m_pWave[e.indice], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
-                int iSize = sons[e.indice].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, (int)freq);
-                sons[e.indice].waveSize = iSize;
-            }*/
-
         }
 
         public virtual void OnLer(object sender, VetorEventArgs e)
@@ -463,7 +460,7 @@ namespace Ordenar
                 barras[i].Refresh();
                 if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
                 points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                Pausa();
+                if (!fim) Pausa();
             }
         }
 
@@ -535,7 +532,7 @@ namespace Ordenar
             vetor.Initialize();
 
             m_pWave = new IntPtr[m_array.Length];
-            sons = new Sons[m_array.Length+1];
+            sons = new Sons[m_array.Length + 1];
 
             if (barras != null)
             {
@@ -647,7 +644,7 @@ namespace Ordenar
             double apy;
             double ag1;
             double ag2;
-            int p;
+            //int p;
             //double p1;
             Brush b;
             int rw;
@@ -670,7 +667,7 @@ namespace Ordenar
                         {
                             pa = ((double)i / (double)max) * 2.0 * Math.PI;
                             pr = (double)points[i].Y / 2.0;
-   
+
                             //e.ClipRectangle.X
                             px = rw + pr * Math.Cos(pa); // calculate x-coordinate
                             py = rh + pr * Math.Sin(pa); // calculate y-coordinate
@@ -687,7 +684,7 @@ namespace Ordenar
                                 apx = px;
                                 apy = py;
                             }
-                            if (tipoVisual2.Text==GRAFICO_CURVA)
+                            if (tipoVisual2.Text == GRAFICO_CURVA)
                             {
                                 if (i == 0)
                                 {
@@ -758,7 +755,7 @@ namespace Ordenar
 
         public override string ToString()
         {
-            return $"{{{nameof(AcceptButton)}={AcceptButton}, {nameof(ActiveForm)}={ActiveForm}, {nameof(ActiveMdiChild)}={ActiveMdiChild}, {nameof(AllowTransparency)}={AllowTransparency.ToString()}, {nameof(AutoScale)}={AutoScale.ToString()}, {nameof(AutoScaleBaseSize)}={AutoScaleBaseSize.ToString()}, {nameof(AutoScroll)}={AutoScroll.ToString()}, {nameof(AutoSize)}={AutoSize.ToString()}, {nameof(AutoSizeMode)}={AutoSizeMode.ToString()}, {nameof(AutoValidate)}={AutoValidate.ToString()}, {nameof(BackColor)}={BackColor.ToString()}, {nameof(FormBorderStyle)}={FormBorderStyle.ToString()}, {nameof(CancelButton)}={CancelButton}, {nameof(ClientSize)}={ClientSize.ToString()}, {nameof(ControlBox)}={ControlBox.ToString()}, {nameof(DesktopBounds)}={DesktopBounds.ToString()}, {nameof(DesktopLocation)}={DesktopLocation.ToString()}, {nameof(DialogResult)}={DialogResult.ToString()}, {nameof(HelpButton)}={HelpButton.ToString()}, {nameof(Icon)}={Icon}, {nameof(IsMdiChild)}={IsMdiChild.ToString()}, {nameof(IsMdiContainer)}={IsMdiContainer.ToString()}, {nameof(IsRestrictedWindow)}={IsRestrictedWindow.ToString()}, {nameof(KeyPreview)}={KeyPreview.ToString()}, {nameof(Location)}={Location.ToString()}, {nameof(MaximumSize)}={MaximumSize.ToString()}, {nameof(MainMenuStrip)}={MainMenuStrip}, {nameof(Margin)}={Margin.ToString()}, {nameof(MinimumSize)}={MinimumSize.ToString()}, {nameof(MaximizeBox)}={MaximizeBox.ToString()}, {nameof(MdiChildren)}={MdiChildren}, {nameof(MdiParent)}={MdiParent}, {nameof(MinimizeBox)}={MinimizeBox.ToString()}, {nameof(Modal)}={Modal.ToString()}, {nameof(Opacity)}={Opacity.ToString()}, {nameof(OwnedForms)}={OwnedForms}, {nameof(Owner)}={Owner}, {nameof(RestoreBounds)}={RestoreBounds.ToString()}, {nameof(RightToLeftLayout)}={RightToLeftLayout.ToString()}, {nameof(ShowInTaskbar)}={ShowInTaskbar.ToString()}, {nameof(ShowIcon)}={ShowIcon.ToString()}, {nameof(Size)}={Size.ToString()}, {nameof(SizeGripStyle)}={SizeGripStyle.ToString()}, {nameof(StartPosition)}={StartPosition.ToString()}, {nameof(TabIndex)}={TabIndex.ToString()}, {nameof(TabStop)}={TabStop.ToString()}, {nameof(Text)}={Text}, {nameof(TopLevel)}={TopLevel.ToString()}, {nameof(TopMost)}={TopMost.ToString()}, {nameof(TransparencyKey)}={TransparencyKey.ToString()}, {nameof(WindowState)}={WindowState.ToString()}, {nameof(AutoScaleDimensions)}={AutoScaleDimensions.ToString()}, {nameof(AutoScaleMode)}={AutoScaleMode.ToString()}, {nameof(AutoValidate)}={AutoValidate.ToString()}, {nameof(BindingContext)}={BindingContext}, {nameof(ActiveControl)}={ActiveControl}, {nameof(CurrentAutoScaleDimensions)}={CurrentAutoScaleDimensions.ToString()}, {nameof(ParentForm)}={ParentForm}, {nameof(AutoScroll)}={AutoScroll.ToString()}, {nameof(AutoScrollMargin)}={AutoScrollMargin.ToString()}, {nameof(AutoScrollPosition)}={AutoScrollPosition.ToString()}, {nameof(AutoScrollMinSize)}={AutoScrollMinSize.ToString()}, {nameof(DisplayRectangle)}={DisplayRectangle.ToString()}, {nameof(HorizontalScroll)}={HorizontalScroll}, {nameof(VerticalScroll)}={VerticalScroll}, {nameof(DockPadding)}={DockPadding}, {nameof(AccessibilityObject)}={AccessibilityObject}, {nameof(AccessibleDefaultActionDescription)}={AccessibleDefaultActionDescription}, {nameof(AccessibleDescription)}={AccessibleDescription}, {nameof(AccessibleName)}={AccessibleName}, {nameof(AccessibleRole)}={AccessibleRole.ToString()}, {nameof(AllowDrop)}={AllowDrop.ToString()}, {nameof(Anchor)}={Anchor.ToString()}, {nameof(AutoSize)}={AutoSize.ToString()}, {nameof(AutoScrollOffset)}={AutoScrollOffset.ToString()}, {nameof(LayoutEngine)}={LayoutEngine}, {nameof(BackColor)}={BackColor.ToString()}, {nameof(BackgroundImage)}={BackgroundImage}, {nameof(BackgroundImageLayout)}={BackgroundImageLayout.ToString()}, {nameof(BindingContext)}={BindingContext}, {nameof(Bottom)}={Bottom.ToString()}, {nameof(Bounds)}={Bounds.ToString()}, {nameof(CanFocus)}={CanFocus.ToString()}, {nameof(CanSelect)}={CanSelect.ToString()}, {nameof(Capture)}={Capture.ToString()}, {nameof(CausesValidation)}={CausesValidation.ToString()}, {nameof(CheckForIllegalCrossThreadCalls)}={CheckForIllegalCrossThreadCalls.ToString()}, {nameof(ClientRectangle)}={ClientRectangle.ToString()}, {nameof(ClientSize)}={ClientSize.ToString()}, {nameof(CompanyName)}={CompanyName}, {nameof(ContainsFocus)}={ContainsFocus.ToString()}, {nameof(ContextMenuStrip)}={ContextMenuStrip}, {nameof(Controls)}={Controls}, {nameof(Created)}={Created.ToString()}, {nameof(Cursor)}={Cursor}, {nameof(DataBindings)}={DataBindings}, {nameof(DefaultBackColor)}={DefaultBackColor.ToString()}, {nameof(DefaultFont)}={DefaultFont}, {nameof(DefaultForeColor)}={DefaultForeColor.ToString()}, {nameof(DeviceDpi)}={DeviceDpi.ToString()}, {nameof(DisplayRectangle)}={DisplayRectangle.ToString()}, {nameof(IsDisposed)}={IsDisposed.ToString()}, {nameof(Disposing)}={Disposing.ToString()}, {nameof(Dock)}={Dock.ToString()}, {nameof(Enabled)}={Enabled.ToString()}, {nameof(Focused)}={Focused.ToString()}, {nameof(Font)}={Font}, {nameof(ForeColor)}={ForeColor.ToString()}, {nameof(Handle)}={Handle.ToString()}, {nameof(HasChildren)}={HasChildren.ToString()}, {nameof(Height)}={Height.ToString()}, {nameof(IsHandleCreated)}={IsHandleCreated.ToString()}, {nameof(InvokeRequired)}={InvokeRequired.ToString()}, {nameof(IsAccessible)}={IsAccessible.ToString()}, {nameof(IsMirrored)}={IsMirrored.ToString()}, {nameof(Left)}={Left.ToString()}, {nameof(Location)}={Location.ToString()}, {nameof(Margin)}={Margin.ToString()}, {nameof(MaximumSize)}={MaximumSize.ToString()}, {nameof(MinimumSize)}={MinimumSize.ToString()}, {nameof(ModifierKeys)}={ModifierKeys.ToString()}, {nameof(MouseButtons)}={MouseButtons.ToString()}, {nameof(MousePosition)}={MousePosition.ToString()}, {nameof(Name)}={Name}, {nameof(Parent)}={Parent}, {nameof(ProductName)}={ProductName}, {nameof(ProductVersion)}={ProductVersion}, {nameof(RecreatingHandle)}={RecreatingHandle.ToString()}, {nameof(Region)}={Region}, {nameof(Right)}={Right.ToString()}, {nameof(RightToLeft)}={RightToLeft.ToString()}, {nameof(Site)}={Site}, {nameof(Size)}={Size.ToString()}, {nameof(TabIndex)}={TabIndex.ToString()}, {nameof(TabStop)}={TabStop.ToString()}, {nameof(Tag)}={Tag}, {nameof(Text)}={Text}, {nameof(Top)}={Top.ToString()}, {nameof(TopLevelControl)}={TopLevelControl}, {nameof(UseWaitCursor)}={UseWaitCursor.ToString()}, {nameof(Visible)}={Visible.ToString()}, {nameof(Width)}={Width.ToString()}, {nameof(WindowTarget)}={WindowTarget}, {nameof(PreferredSize)}={PreferredSize.ToString()}, {nameof(Padding)}={Padding.ToString()}, {nameof(ImeMode)}={ImeMode.ToString()}, {nameof(Container)}={Container}, {nameof(Site)}={Site}}}";
+            return $"{{{nameof(AcceptButton)}={AcceptButton}, {nameof(ActiveForm)}={ActiveForm}, {nameof(ActiveMdiChild)}={ActiveMdiChild}, {nameof(AllowTransparency)}={AllowTransparency.ToString()}, {nameof(AutoScaleMode)}={AutoScaleMode.ToString()}, {nameof(AutoScaleBaseSize)}={AutoScaleBaseSize.ToString()}, {nameof(AutoScroll)}={AutoScroll.ToString()}, {nameof(AutoSize)}={AutoSize.ToString()}, {nameof(AutoSizeMode)}={AutoSizeMode.ToString()}, {nameof(AutoValidate)}={AutoValidate.ToString()}, {nameof(BackColor)}={BackColor.ToString()}, {nameof(FormBorderStyle)}={FormBorderStyle.ToString()}, {nameof(CancelButton)}={CancelButton}, {nameof(ClientSize)}={ClientSize.ToString()}, {nameof(ControlBox)}={ControlBox.ToString()}, {nameof(DesktopBounds)}={DesktopBounds.ToString()}, {nameof(DesktopLocation)}={DesktopLocation.ToString()}, {nameof(DialogResult)}={DialogResult.ToString()}, {nameof(HelpButton)}={HelpButton.ToString()}, {nameof(Icon)}={Icon}, {nameof(IsMdiChild)}={IsMdiChild.ToString()}, {nameof(IsMdiContainer)}={IsMdiContainer.ToString()}, {nameof(IsRestrictedWindow)}={IsRestrictedWindow.ToString()}, {nameof(KeyPreview)}={KeyPreview.ToString()}, {nameof(Location)}={Location.ToString()}, {nameof(MaximumSize)}={MaximumSize.ToString()}, {nameof(MainMenuStrip)}={MainMenuStrip}, {nameof(Margin)}={Margin.ToString()}, {nameof(MinimumSize)}={MinimumSize.ToString()}, {nameof(MaximizeBox)}={MaximizeBox.ToString()}, {nameof(MdiChildren)}={MdiChildren}, {nameof(MdiParent)}={MdiParent}, {nameof(MinimizeBox)}={MinimizeBox.ToString()}, {nameof(Modal)}={Modal.ToString()}, {nameof(Opacity)}={Opacity.ToString()}, {nameof(OwnedForms)}={OwnedForms}, {nameof(Owner)}={Owner}, {nameof(RestoreBounds)}={RestoreBounds.ToString()}, {nameof(RightToLeftLayout)}={RightToLeftLayout.ToString()}, {nameof(ShowInTaskbar)}={ShowInTaskbar.ToString()}, {nameof(ShowIcon)}={ShowIcon.ToString()}, {nameof(Size)}={Size.ToString()}, {nameof(SizeGripStyle)}={SizeGripStyle.ToString()}, {nameof(StartPosition)}={StartPosition.ToString()}, {nameof(TabIndex)}={TabIndex.ToString()}, {nameof(TabStop)}={TabStop.ToString()}, {nameof(Text)}={Text}, {nameof(TopLevel)}={TopLevel.ToString()}, {nameof(TopMost)}={TopMost.ToString()}, {nameof(TransparencyKey)}={TransparencyKey.ToString()}, {nameof(WindowState)}={WindowState.ToString()}, {nameof(AutoScaleDimensions)}={AutoScaleDimensions.ToString()}, {nameof(AutoScaleMode)}={AutoScaleMode.ToString()}, {nameof(AutoValidate)}={AutoValidate.ToString()}, {nameof(BindingContext)}={BindingContext}, {nameof(ActiveControl)}={ActiveControl}, {nameof(CurrentAutoScaleDimensions)}={CurrentAutoScaleDimensions.ToString()}, {nameof(ParentForm)}={ParentForm}, {nameof(AutoScroll)}={AutoScroll.ToString()}, {nameof(AutoScrollMargin)}={AutoScrollMargin.ToString()}, {nameof(AutoScrollPosition)}={AutoScrollPosition.ToString()}, {nameof(AutoScrollMinSize)}={AutoScrollMinSize.ToString()}, {nameof(DisplayRectangle)}={DisplayRectangle.ToString()}, {nameof(HorizontalScroll)}={HorizontalScroll}, {nameof(VerticalScroll)}={VerticalScroll}, {nameof(DockPadding)}={DockPadding}, {nameof(AccessibilityObject)}={AccessibilityObject}, {nameof(AccessibleDefaultActionDescription)}={AccessibleDefaultActionDescription}, {nameof(AccessibleDescription)}={AccessibleDescription}, {nameof(AccessibleName)}={AccessibleName}, {nameof(AccessibleRole)}={AccessibleRole.ToString()}, {nameof(AllowDrop)}={AllowDrop.ToString()}, {nameof(Anchor)}={Anchor.ToString()}, {nameof(AutoSize)}={AutoSize.ToString()}, {nameof(AutoScrollOffset)}={AutoScrollOffset.ToString()}, {nameof(LayoutEngine)}={LayoutEngine}, {nameof(BackColor)}={BackColor.ToString()}, {nameof(BackgroundImage)}={BackgroundImage}, {nameof(BackgroundImageLayout)}={BackgroundImageLayout.ToString()}, {nameof(BindingContext)}={BindingContext}, {nameof(Bottom)}={Bottom.ToString()}, {nameof(Bounds)}={Bounds.ToString()}, {nameof(CanFocus)}={CanFocus.ToString()}, {nameof(CanSelect)}={CanSelect.ToString()}, {nameof(Capture)}={Capture.ToString()}, {nameof(CausesValidation)}={CausesValidation.ToString()}, {nameof(CheckForIllegalCrossThreadCalls)}={CheckForIllegalCrossThreadCalls.ToString()}, {nameof(ClientRectangle)}={ClientRectangle.ToString()}, {nameof(ClientSize)}={ClientSize.ToString()}, {nameof(CompanyName)}={CompanyName}, {nameof(ContainsFocus)}={ContainsFocus.ToString()}, {nameof(ContextMenuStrip)}={ContextMenuStrip}, {nameof(Controls)}={Controls}, {nameof(Created)}={Created.ToString()}, {nameof(Cursor)}={Cursor}, {nameof(DataBindings)}={DataBindings}, {nameof(DefaultBackColor)}={DefaultBackColor.ToString()}, {nameof(DefaultFont)}={DefaultFont}, {nameof(DefaultForeColor)}={DefaultForeColor.ToString()}, {nameof(DeviceDpi)}={DeviceDpi.ToString()}, {nameof(DisplayRectangle)}={DisplayRectangle.ToString()}, {nameof(IsDisposed)}={IsDisposed.ToString()}, {nameof(Disposing)}={Disposing.ToString()}, {nameof(Dock)}={Dock.ToString()}, {nameof(Enabled)}={Enabled.ToString()}, {nameof(Focused)}={Focused.ToString()}, {nameof(Font)}={Font}, {nameof(ForeColor)}={ForeColor.ToString()}, {nameof(Handle)}={Handle.ToString()}, {nameof(HasChildren)}={HasChildren.ToString()}, {nameof(Height)}={Height.ToString()}, {nameof(IsHandleCreated)}={IsHandleCreated.ToString()}, {nameof(InvokeRequired)}={InvokeRequired.ToString()}, {nameof(IsAccessible)}={IsAccessible.ToString()}, {nameof(IsMirrored)}={IsMirrored.ToString()}, {nameof(Left)}={Left.ToString()}, {nameof(Location)}={Location.ToString()}, {nameof(Margin)}={Margin.ToString()}, {nameof(MaximumSize)}={MaximumSize.ToString()}, {nameof(MinimumSize)}={MinimumSize.ToString()}, {nameof(ModifierKeys)}={ModifierKeys.ToString()}, {nameof(MouseButtons)}={MouseButtons.ToString()}, {nameof(MousePosition)}={MousePosition.ToString()}, {nameof(Name)}={Name}, {nameof(Parent)}={Parent}, {nameof(ProductName)}={ProductName}, {nameof(ProductVersion)}={ProductVersion}, {nameof(RecreatingHandle)}={RecreatingHandle.ToString()}, {nameof(Region)}={Region}, {nameof(Right)}={Right.ToString()}, {nameof(RightToLeft)}={RightToLeft.ToString()}, {nameof(Site)}={Site}, {nameof(Size)}={Size.ToString()}, {nameof(TabIndex)}={TabIndex.ToString()}, {nameof(TabStop)}={TabStop.ToString()}, {nameof(Tag)}={Tag}, {nameof(Text)}={Text}, {nameof(Top)}={Top.ToString()}, {nameof(TopLevelControl)}={TopLevelControl}, {nameof(UseWaitCursor)}={UseWaitCursor.ToString()}, {nameof(Visible)}={Visible.ToString()}, {nameof(Width)}={Width.ToString()}, {nameof(WindowTarget)}={WindowTarget}, {nameof(PreferredSize)}={PreferredSize.ToString()}, {nameof(Padding)}={Padding.ToString()}, {nameof(ImeMode)}={ImeMode.ToString()}, {nameof(Container)}={Container}, {nameof(Site)}={Site}}}";
         }
 
         private void AuxVetor1_Paint(object sender, PaintEventArgs e)
@@ -808,6 +805,116 @@ namespace Ordenar
         private void AuxVetor1_Resize(object sender, EventArgs e)
         {
             AuxVetor1.CreateGraphics().Clear(AuxVetor1.BackColor);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form2 f;
+            string x;
+            x = comboBox1.SelectedItem.ToString();
+            f = new Form2();
+            //Form2.ActiveForm.Load();
+            f.Show();
+            f.txt = "Ainda não implementado";
+            if (x != null)
+            {
+                switch(x)
+                {
+                    case AMERICANSORT:
+                        f.txt = Resource1.AmericanSortString;
+                        return;
+                    case BINARYINSERTIONSORT:
+                        f.txt = Resource1.BinaryInsertionSortString;
+                        return;
+                    case BITONICSORT:
+                        f.txt = Resource1.BitonicSortString;
+                        return;
+                    case BUBBLESORT:
+                        f.txt = Resource1.BubbleSortString;
+                        return;
+                    case BUBBLESORT2:
+                        f.txt = Resource1.BubbleSort2String;
+                        return;
+                    case BUBBLESORT3:
+                        f.txt = Resource1.BubbleSort3String;
+                        return;
+                    case COCKTAILSHAKERSORT:
+                        f.txt = Resource1.CocktailShakerSortString;
+                        return;
+                    case COMBSORT:
+                        f.txt = Resource1.CombSortString;
+                        return;
+                    case COUNTINGSORT:
+                        f.txt = Resource1.CountingSortString;
+                        return;
+                    case CYCLESORT:
+                        f.txt = Resource1.CycleSortString;
+                        return;
+                    case DIAMONDSORT:
+                        f.txt = Resource1.DiamondSortString;
+                        return;
+                    case FLASHSORT:
+                        f.txt = Resource1.FlashSortString;
+                        return;
+                    case GNOMESORT:
+                        f.txt = Resource1.GnomeSortString;
+                        return;
+                    case GRAVITYSORT:
+                        f.txt = Resource1.GravitySortString;
+                        return;
+                    case HEAPSORT:
+                        f.txt = Resource1.HeapSortString;
+                        return;
+                    case INSERTSORT:
+                        f.txt = Resource1.InsertSortString;
+                        return;
+                    case INSERTSORT2:
+                        f.txt = Resource1.InsertSort2String;
+                        return;
+                    case MERGESORT:
+                        f.txt = Resource1.MergeSortString;
+                        return;
+                    case ODDEVENSORT:
+                        f.txt = Resource1.OddEvenSortString;
+                        return;
+                    case PANCAKESORT:
+                        f.txt = Resource1.PancakeSortString;
+                        return;
+                    case PIGEONHOLESORT:
+                        f.txt = Resource1.PigeonHoleSortString;
+                        return;
+                    case QUICKSORTDUALPIVOT:
+                    case QUICKSORTLL:
+                    case QUICKSORTLR:
+                    case QUICKSORTTERNARYLR:
+                        f.txt = Resource1.QuickSortString;
+                        return;
+                    case RADIXSORTLSD:
+                        f.txt = Resource1.RadixSortLSDString;
+                        return;
+                    case RADIXSORTMSD:
+                        f.txt = Resource1.RadixSortMSDString;
+                        return;
+                    case SANDPAPERSORT:
+                        f.txt = Resource1.SandpaperSortString;
+                        return;
+                    case SELECTIONSORT:
+                        f.txt = Resource1.SelectionSortString;
+                        return;
+                    case SHELLSORT:
+                        f.txt = Resource1.ShellSortString;
+                        return;
+                    case SIMPLISTICGRAVITYSORT:
+                        f.txt = Resource1.SimplisticGravitySortString;
+                        return;
+                    case SLOWSORT:
+                        f.txt = Resource1.SlowSortString;
+                        return;
+                    case TOURNAMENTSORT:
+                        f.txt = Resource1.TournamentSortString;
+                        return;
+                }
+            }
         }
     }
 }
