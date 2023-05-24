@@ -422,6 +422,7 @@ namespace Ordenar
         private void Pausa()
         {
             int delay = (int)Math.Pow(2, (int)numericUpDown1.Value);
+            if (fim) delay = 1;
             switch (delay)
             {
                 case 0:
@@ -457,10 +458,16 @@ namespace Ordenar
                 barras[i].CorFundo = vetor[i].GetColor(1);
                 barras[i].CorFrente = vetor[i].GetColor(2);
                 barras[i].txt = vetor[i].Valor.ToString();
-                barras[i].Refresh();
                 if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
-                points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                if (!fim) Pausa();
+                if (tipoVisual.Text == "Bolas")
+                {
+                    points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top + (barras[i].Largura / 2));
+                }
+                else
+                {
+                    points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+                }
+                Pausa();
             }
         }
 
@@ -534,13 +541,6 @@ namespace Ordenar
             m_pWave = new IntPtr[m_array.Length];
             sons = new Sons[m_array.Length + 1];
 
-            if (barras != null)
-            {
-                for (i = 0; i < barras.Length; i++)
-                {
-                    area1.Controls.Remove(barras[i]);
-                }
-            }
             area1.Refresh();
 
             barras = new VisualControl[m_array.Length];
@@ -567,7 +567,7 @@ namespace Ordenar
                 iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
 
                 double freq;
-                freq = 55.0 * Math.Pow(2.0, (100.0 * ((i + 1) / 2) / (m_array.Length - 1.0)) / 12.0);
+                freq = 16.35 * Math.Pow(2.0, i / 12.0);
                 sons[i] = new();
                 sons[i].MyBuf = new WBuf(m_pWave[i], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
                 int iSize = sons[i].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, freq);
@@ -594,7 +594,6 @@ namespace Ordenar
                     CorFundo = Color.Blue,
                     CorFrente = Color.Red,
                     txt = m_array[i].ToString(),
-                    Visible = true
                 };
 
                 EscritaEventHandler d1 = new EscritaEventHandler(OnEscreveu);
@@ -605,10 +604,27 @@ namespace Ordenar
                 vetor[i].Mudar += d2;
                 vetor[i].Ler += d3;
 
-                if (tipoVisual.Text != "Espiral") area1.Controls.Add(barras[i]);
-
                 if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
-                points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+
+                switch (tipoVisual.Text)
+                {
+                    case "Barras":
+                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+                        break;
+                    case "Bolas":
+                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top + (barras[i].Largura / 2));
+                        break;
+                    case "Linhas Verticais":
+                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+                        break;
+                    case "Triângulo":
+                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+                        break;
+                    case "Espiral":
+                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+                        break;
+
+                }
             }
 
             ArrayItem zzz = vetor.Max();
@@ -622,6 +638,44 @@ namespace Ordenar
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             //AUDIO_LENGTH_IN_SECONDS = (float)numericUpDown1.Value / 2;
+        }
+
+        private void grafico(PaintEventArgs e)
+        {
+            Pen pen;
+            switch (tipoVisual2.Text)
+            {
+                case GRAFICO_LINHA:
+                    pen = new(Color.White)
+                    {
+                        Width = 1
+                    };
+
+                    AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+
+                    pen.DashCap = DashCap.Triangle;
+                    pen.CustomEndCap = bigArrow;
+                    pen.CustomStartCap = bigArrow;
+                    //pen.LineJoin = LineJoin.Round;
+                    pen.DashStyle = DashStyle.Solid;
+                    //pen.EndCap = LineCap.DiamondAnchor;
+                    //pen.StartCap=LineCap.DiamondAnchor;
+
+                    if (points != null) e.Graphics.DrawLines(pen, points);
+
+                    break;
+                case GRAFICO_CURVA:
+                    pen = new(Color.White)
+                    {
+                        Width = 1
+                    };
+
+                    if (points != null) e.Graphics.DrawCurve(pen, points);
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void area1_Paint(object sender, PaintEventArgs e)
@@ -649,9 +703,135 @@ namespace Ordenar
             Brush b;
             int rw;
             int rh;
+            Pen _pen1;
+            Brush _brush1;
+            Brush _brush2;
+            Brush _brushtxt;
+            float itens;
+            Font font;
+            PointF[] p;
+
+            rw = e.ClipRectangle.Width;
+            rh = e.ClipRectangle.Height;
 
             switch (tipoVisual.Text)
             {
+                case "Barras":
+                    if (points != null)
+                    {
+                        l = points.Length;
+                        itens = rw / l;
+                        //SetStyle(ControlStyles.Opaque, false);
+
+                        rw = (int)itens - 2;
+                        apx = rw / 2;
+
+                        rh = e.ClipRectangle.Height;
+                        font = new(FontFamily.GenericSerif, itens / 2);
+                        _brushtxt = new SolidBrush(Color.White);
+
+                        for (i = 0; i < l; i++)
+                        {
+                            _brush1 = new SolidBrush(barras[i].CorFrente);
+                            _pen1 = new Pen(_brush1);
+                            _brush2 = new SolidBrush(barras[i].CorFundo);
+                            /*pen = new(barras[i].CorFrente);
+                            {
+                                Width = 1;
+                            };*/
+                            px = (double)points[i].X;
+                            py = (double)points[i].Y;
+                            e.Graphics.FillRectangle(_brush2, (float)(px - apx), (float)py, (float)(rw), (float)rh);
+                            e.Graphics.DrawRectangle(_pen1, (float)(px - apx), (float)py, (float)(rw), (float)rh);
+                            if (itens >= 16) e.Graphics.DrawString(barras[i].txt, font, _brushtxt, (float)(px-apx), (float)py);
+                        }
+                        grafico(e);
+                    }
+                    break;
+                case "Linhas Verticais":
+                    if (points != null)
+                    {
+                        l = points.Length;
+                        for (i = 0; i < l; i++)
+                        {
+                            pen = new(barras[i].CorFundo);
+                            {
+                                Width = 1;
+                            };
+                            px = (double)points[i].X;
+                            py = (double)points[i].Y;
+                            e.Graphics.DrawLine(pen, (float)px, (float)py, (float)px, (float)rh);
+                        }
+                        grafico(e);
+                    }
+                    break;
+                case "Bolas":
+                    if (points != null)
+                    {
+                        l = points.Length;
+                        itens = rw / l;
+
+                        rw = (int)itens - 2;
+                        rh = e.ClipRectangle.Height;
+                        font = new(FontFamily.GenericSerif, itens/2);
+                        _brushtxt = new SolidBrush(Color.White);
+
+                        for (i = 0; i < l; i++)
+                        {
+                            pen = new(barras[i].CorFundo);
+                            {
+                                Width = 1;
+                            };
+                            px = (double)points[i].X - rw / 2;
+                            py = (double)points[i].Y - rw / 2;
+                            //SetStyle(ControlStyles.Opaque, false);
+                            _brush1 = new SolidBrush(barras[i].CorFrente);
+                            _pen1 = new Pen(_brush1);
+                            _brush2 = new SolidBrush(barras[i].CorFundo);
+                            e.Graphics.FillEllipse(_brush2, (float)px, (float)py, rw, rw);
+                            e.Graphics.DrawEllipse(_pen1, (float)px, (float)py, rw, rw);
+                            if (itens >= 16) e.Graphics.DrawString(barras[i].txt, font, _brushtxt, (float)px, (float)py);
+                        }
+                        grafico(e);
+                    }
+                    break;
+                case "Triângulo":
+                    if (points != null)
+                    {
+                        l = points.Length;
+                        itens = rw / l;
+
+                        rw = (int)itens - 2;
+                        rh = e.ClipRectangle.Height;
+                        font = new(FontFamily.GenericSerif, itens / 2);
+
+                        for (i = 0; i < l; i++)
+                        {
+                            pen = new(barras[i].CorFundo);
+                            {
+                                Width = 1;
+                            };
+                            px = (double)points[i].X;// - rw / 2;
+                            py = (double)points[i].Y;// - rw / 2;
+                            //SetStyle(ControlStyles.Opaque, false);
+                            _brush1 = new SolidBrush(barras[i].CorFrente);
+                            _pen1 = new Pen(_brush1);
+                            _brush2 = new SolidBrush(barras[i].CorFundo);
+                            p = new PointF[3];
+                            apx = rw / 3;
+                            apy = rw / 2;
+                            p[0].X = (float)px;
+                            p[0].Y = (float)py;
+                            p[1].X = (float)px - (float)apx;
+                            p[1].Y = (float)py + (float)apy;
+                            p[2].X = (float)px + (float)apx;
+                            p[2].Y = (float)py + (float)apy;
+                            e.Graphics.FillPolygon(_brush2, p);
+                            e.Graphics.DrawPolygon(_pen1, p);
+                        }
+                        grafico(e);
+                    }
+                    break;
                 case "Espiral":
                     if (points != null)
                     {
@@ -710,45 +890,14 @@ namespace Ordenar
                             }
 
                             b = new SolidBrush(barras[i].CorFrente);
-                            e.Graphics.FillEllipse(b, (float)px, (float)py, 5, 5);
-                            e.Graphics.DrawEllipse(pen, (float)px, (float)py, 6, 6);
+                            e.Graphics.FillEllipse(b, (float)px - 2, (float)py - 2, 5, 5);
+                            e.Graphics.DrawEllipse(pen, (float)px - 2, (float)py - 2, 6, 6);
                         }
                     }
                     break;
                 default:
-                    switch (tipoVisual2.Text)
-                    {
-                        case GRAFICO_LINHA:
-                            pen = new(Color.White)
-                            {
-                                Width = 1
-                            };
+                    grafico(e);
 
-                            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
-
-                            pen.DashCap = DashCap.Triangle;
-                            pen.CustomEndCap = bigArrow;
-                            pen.CustomStartCap = bigArrow;
-                            //pen.LineJoin = LineJoin.Round;
-                            pen.DashStyle = DashStyle.Solid;
-                            //pen.EndCap = LineCap.DiamondAnchor;
-                            //pen.StartCap=LineCap.DiamondAnchor;
-
-                            if (points != null) e.Graphics.DrawLines(pen, points);
-
-                            break;
-                        case GRAFICO_CURVA:
-                            pen = new(Color.White)
-                            {
-                                Width = 1
-                            };
-
-                            if (points != null) e.Graphics.DrawCurve(pen, points);
-
-                            break;
-                        default:
-                            break;
-                    }
                     break;
             }
         }
@@ -818,7 +967,7 @@ namespace Ordenar
             f.txt = "Ainda não implementado";
             if (x != null)
             {
-                switch(x)
+                switch (x)
                 {
                     case AMERICANSORT:
                         f.txt = Resource1.AmericanSortString;
