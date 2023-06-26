@@ -605,7 +605,8 @@ inicio
 fim
 	</value>
   </data>
-  <data name="InsertSortString" xml:space="preserve"><value>
+  <data name="InsertSortString" xml:space="preserve">
+    <value>
 Procedimento InsertSort()
 inicio
 	para (Inteiro i = 1; i &lt; vetor.Tamanho; ++i)
@@ -619,8 +620,10 @@ inicio
 		fim
 	fim
 fim
-</value></data>
-<data name="InsertSort2String" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="InsertSort2String" xml:space="preserve">
+    <value>
 Procedimento InsertSort2()
 inicio
 	para (Inteiro i = 1; i &lt; vetor.Tamanho; ++i)
@@ -635,9 +638,10 @@ inicio
 		vetor[j + 1].Valor = chave;
 	fim
 fim
-</value></data>
-<data name="OddEvenSortString" xml:space="preserve"><value>
-Procedimento OddEvenSort()
+</value>
+  </data>
+  <data name="OddEvenSortString" xml:space="preserve">
+    <value>Procedimento OddEvenSort()
 inicio
 	Booleano ordenado = FALSO;
 	Faça Enquanto (!ordenado)
@@ -651,7 +655,6 @@ inicio
 				Troca(i, i + 1);
 				ordenado = FALSO;
 			fim
-			vetor[i].SetColorIDX(1);
 		fim
 
 		para (Inteiro i = 0; i &lt; vetor.Tamanho - 1; i += 2)
@@ -664,8 +667,10 @@ inicio
 		fim
 	fim
 fim
-</value></data>
-<data name="PancakeSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="PancakeSortString" xml:space="preserve">
+    <value>
 Procedimento Virar(Inteiro k)
 inicio
 	Inteiro esquerda = 0;
@@ -709,8 +714,10 @@ Procedimento PancakeSort()
 inicio
 	PancakeSort(vetor.Tamanho);
 fim
-</value></data>
-<data name="PigeonHoleSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="PigeonHoleSortString" xml:space="preserve">
+    <value>
 Procedimento pigeonholeSort()
 inicio
 	Inteiro min = vetor[0].Valor;
@@ -749,8 +756,10 @@ inicio
 	fim
 	Fim_Do_Procedimento;
 fim
-</value></data>
-<data name="QuickSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="QuickSortString" xml:space="preserve">
+    <value>
 Procedimento SetQuickSortPivot(string q)
 inicio
 	g_quicksort_pivot = q;
@@ -1027,8 +1036,10 @@ inicio
 	QuickSortTernaryLR(baixo, baixo + numero_menor - 1);
 	QuickSortTernaryLR(alto - numero_maior + 1, alto);
 fim
-</value></data>
-<data name="RadixSortLSDString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="RadixSortLSDString" xml:space="preserve">
+    <value>
 Procedimento RadixSortLSD()
 inicio
 	constante Inteiro RADIX = 10;
@@ -1072,8 +1083,10 @@ inicio
 		fim
 	fim
 fim
-</value></data>
-<data name="RadixSortMSDString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="RadixSortMSDString" xml:space="preserve">
+    <value>
 Procedimento RadixSortMSD(Inteiro baixo, Inteiro alto, Inteiro profundidade)
 inicio
 	constante uInteiro RADIX = 10;
@@ -1140,8 +1153,10 @@ Procedimento RadixSortMSD()
 inicio
 	RadixSortMSD(0, vetor.Tamanho, 0);
 fim
-</value></data>
-<data name="SelectionSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="SelectionSortString" xml:space="preserve">
+    <value>
 Procedimento SelectionSort()
 inicio
 	para (Inteiro i = 0; i &lt; vetor.Tamanho - 1; ++i)
@@ -1166,8 +1181,10 @@ inicio
 		piv1.Value = i + 1;
 	fim
 fim
-</value></data>
-<data name="ShellSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="ShellSortString" xml:space="preserve">
+    <value>
 Procedimento ShellSort()
 inicio
 	Inteiro[] incs = [1391376, 463792, 198768, 86961, 33936, 13776, 4592, 1968, 861, 336, 112, 48, 21, 7, 3, 1];
@@ -1186,8 +1203,10 @@ inicio
 		fim
 	fim
 fim
-</value></data>
-<data name="MergeSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="MergeSortString" xml:space="preserve">
+    <value>
 Procedimento Merge(Inteiro baixo, Inteiro meio, Inteiro alto)
 inicio
 	Inteiro[] outA;
@@ -1243,8 +1262,10 @@ Procedimento MergeSort()
 inicio
 	MergeSort(0, vetor.Tamanho);
 fim
-</value></data>
-<data name="SlowSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="SlowSortString" xml:space="preserve">
+    <value>
 Procedimento SlowSort(Inteiro i, Inteiro j)
 inicio
 	Se (i &gt;= j)
@@ -1270,8 +1291,10 @@ Procedimento SlowSort()
 inicio
 	SlowSort(0, vetor.Tamanho - 1);
 fim
-</value></data>
-<data name="GravitySortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="GravitySortString" xml:space="preserve">
+    <value>
 Procedimento GravitySort()
 inicio
 	Inteiro max = vetor.Max().Valor;
@@ -1325,8 +1348,10 @@ inicio
 		fim
 	fim
 fim
-</value></data>
-<data name="TournamentSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="TournamentSortString" xml:space="preserve">
+    <value>
 Inteiro[] tmp;
 
 Função Inteiro vencedor(Inteiro pos1, Inteiro pos2)
@@ -1380,8 +1405,10 @@ inicio
 		recriar(ref valor);
 	fim
 fim
-</value></data>
-<data name="AmericanSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="AmericanSortString" xml:space="preserve">
+    <value>
 constante Inteiro NUMERO_DE_BALDES = 128;
 
 Função Inteiro MaximoDigitos()
@@ -1462,8 +1489,10 @@ inicio
 	fim
 	AmericanSort(0, vetor.Tamanho, max);
 fim
-</value></data>
-<data name="SimplisticGravitySortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="SimplisticGravitySortString" xml:space="preserve">
+    <value>
 Procedimento SimplisticGravitySort()
 inicio
 	Inteiro[] aux;
@@ -1497,8 +1526,10 @@ inicio
 		fim
 	fim
 fim
-</value></data>
-<data name="SandpaperSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="SandpaperSortString" xml:space="preserve">
+    <value>
 Procedimento SandpaperSort()
 inicio
 	para (Inteiro i = 0; i &lt; vetor.Tamanho - 1; i++)
@@ -1512,8 +1543,10 @@ inicio
 		fim
 	fim
 fim
-</value></data>
-<data name="DiamondSortString" xml:space="preserve"><value>
+</value>
+  </data>
+  <data name="DiamondSortString" xml:space="preserve">
+    <value>
 Procedimento DiamondSort()
 inicio
 	Inteiro n = 1;
@@ -1552,5 +1585,6 @@ inicio
 		fim
 	fim
 fim
-</value></data>
+</value>
+  </data>
 </root>

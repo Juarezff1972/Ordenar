@@ -26,7 +26,7 @@ namespace Ordenar
         private ProgressBar pb1;
         private TrackBar piv1;
         private TrackBar piv2;
-        private PictureBox painel;
+        //private PictureBox painel;
         private int recursoes;
         private int trocas;
         private int segmentos;
@@ -68,10 +68,10 @@ namespace Ordenar
             Dispara(v1);
         }
 
-        public void SetPictureBox(PictureBox pn)
+        /*public void SetPictureBox(PictureBox pn)
         {
-            painel = pn;
-        }
+            //painel = pn;
+        }*/
 
         public void SetProgress(ProgressBar p)
         {
@@ -220,12 +220,33 @@ namespace Ordenar
             h /= 6.0;
         }*/
 
-        private void Swap(int a, int b)
+        private void SwapSound(int a, int b)
         {
             ArrayItem c;
             c = vetor[a];
+            vetor[a] = vetor[b];
+            vetor[b] = c;
+            vetor[a].SetColorIDX(8);
+            vetor[b].SetColorIDX(3);
+            vetor[a].Indice = b;
+            vetor[b].Indice = a;
+            vetor[a].Mudou = true;
+            vetor[b].Mudou = true;
+            trocas++;
+            l1.Text = "Trocas: " + trocas.ToString();
+            if (delay > 0)
+            {
+                l1.Refresh();
+                ChecaSegmentos();
+            }
+        }
+
+        private void Swap(int a, int b)
+        {
+            ArrayItem c;
             vetor[a].som = false;
             vetor[b].som = false;
+            c = vetor[a];
             vetor[a] = vetor[b];
             vetor[b] = c;
             vetor[a].SetColorIDX(8);
@@ -250,17 +271,22 @@ namespace Ordenar
             pb1.Maximum = vetor.Length;
             segmentos = 1;
             int i;
-            for (i = 1; i < vetor.Length - 1; i++)
+            for (i = 0; i < vetor.Length - 1; i++)
             {
                 vetor[i].som = false;
-                vetor[i - 1].som = false;
+            }
+            for (i = 1; i < vetor.Length - 1; i++)
+            {
                 if (vetor[i].CompareTo(vetor[i - 1]) == -1)
                 {
                     segmentos++;
                 }
-                vetor[i].som = true;
-                vetor[i - 1].som = true;
             }
+            for (i = 0; i < vetor.Length - 1; i++)
+            {
+                vetor[i].som = true;
+            }
+
             pb1.Value = vetor.Length - (segmentos - 1);
             l4.Text = "Segmentos: " + segmentos.ToString();
             l5.Text = "Escrita em vetores externos: " + externos.ToString();
@@ -477,7 +503,7 @@ namespace Ordenar
                 int j = i - 1;
                 while (j >= lo)
                 {
-                    Swap(j, j + 1);
+                    SwapSound(j, j + 1);
                     j--;
                 }
 
@@ -1154,7 +1180,7 @@ namespace Ordenar
             int left = 0;
             while (left < k)
             {
-                Swap(k, left);
+                SwapSound(k, left);
                 k--;
                 left++;
             }
@@ -2227,7 +2253,7 @@ namespace Ordenar
                     aux[pointer] = ++aux[pointer];
                     externos++;
                     //if (((float)pointer % (float)fator) == 0) ChecaSegmentos();//Pausa();
-                    vetor[index].som = false;
+                    //vetor[index].som = false;
                 }
                 Dispara(aux);
                 vetor[index].som = true;
@@ -2241,7 +2267,7 @@ namespace Ordenar
                     aux[pointer] = --aux[pointer];
                     externos++;
                     //if ((pointer % fator) == 0) ChecaSegmentos();//Pausa();
-                    vetor[index].som = false;
+                    //vetor[index].som = false;
                 }
                 Dispara(aux);
                 vetor[index].som = true;

@@ -308,8 +308,7 @@ namespace Ordenar {
         ///			Se (vetor[i].ComparaCom(vetor[i + fenda]) == 1)
         ///			inicio
         ///				Troca(i, i + fenda);
-        ///				Trocado = VERDADEIRO;
-        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///				Trocado = VERDADEIRO;        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string CombSortString {
             get {
@@ -635,8 +634,7 @@ namespace Ordenar {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a 
-        ///Procedimento OddEvenSort()
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Procedimento OddEvenSort()
         ///inicio
         ///	Booleano ordenado = FALSO;
         ///	Faça Enquanto (!ordenado)
@@ -650,7 +648,6 @@ namespace Ordenar {
         ///				Troca(i, i + 1);
         ///				ordenado = FALSO;
         ///			fim
-        ///			vetor[i].SetColorIDX(1);
         ///		fim
         ///
         ///		para (Inteiro i = 0; i &lt; vetor.Tamanho - 1; i += 2)
@@ -658,7 +655,12 @@ namespace Ordenar {
         ///			Se (vetor[i].ComparaCom(vetor[i + 1]) == 1)
         ///			inicio
         ///				Troca(i, i + 1);
-        ///				ordenado = FALS [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///				ordenado = FALSO;
+        ///			fim
+        ///		fim
+        ///	fim
+        ///fim
+        ///.
         /// </summary>
         public static string OddEvenSortString {
             get {
@@ -794,8 +796,7 @@ namespace Ordenar {
         ///		inicio
         ///			copia[i] = vetor[i].Valor;
         ///			Inteiro r = copia[i] / base1 % RADIX;
-        ///			contagem[r]++;
-        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///			contagem[r]++;        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string RadixSortLSDString {
             get {
@@ -993,8 +994,7 @@ namespace Ordenar {
         ///	para (Inteiro i = 2 * vetor.Tamanho - 1; i &gt; 1; i -= 2)
         ///	inicio
         ///		Inteiro k = i / 2;
-        ///		Inteiro j = i - 1;
-        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///		Inteiro j = i - 1;        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string TournamentSortString {
             get {

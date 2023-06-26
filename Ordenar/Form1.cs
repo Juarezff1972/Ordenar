@@ -127,7 +127,7 @@ namespace Ordenar
             algo.SetQuickSortPivot(qsPivotSel1.Text);
             algo.LimpaTXT();
             algo.SetDelay((int)Math.Pow(2, (int)numericUpDown1.Value));
-            algo.SetPictureBox(area1);
+            //algo.SetPictureBox(area1);
             algo.SetProgress(progressBar1);
             algo.SetPivot(pivot1, 1);
             algo.SetPivot(pivot2, 2);
@@ -308,7 +308,7 @@ namespace Ordenar
             if (x.StartsWith("Quick"))
             {
                 qsPivotSel1.Visible = true;
-                qsPivotSel1.SelectedIndex = 0;
+                qsPivotSel1.SelectedIndex = 2;
             }
         }
 
@@ -478,15 +478,17 @@ namespace Ordenar
             int j;
             int k;
             int max;
+            Form3 f;
 
             //auxGr.Clear(Color.DarkGray);
+            f = new Form3();
 
             area1.CreateGraphics().Clear(area1.BackColor);
 
             escritas = 0;
             label6.Text = "Escritas: " + escritas.ToString();
             label6.Refresh();
-
+            f.Show();
             m_array = Enumerable.Range(1, nums).ToArray();
             if (ordem == 3)
             {
@@ -500,21 +502,25 @@ namespace Ordenar
             if (ordem == 4)
             {
                 max = m_array.Max();
+                f.max = m_array.Length;
                 double ang;
                 for (i = 0; i < m_array.Length; i++)
                 {
                     ang = ((float)m_array[i] / max) * Math.PI * 2;
                     m_array[i] = (int)Math.Round((Math.Sin(ang) * max / 2) + (max / 2));
+                    f.pb = i;
                 }
             }
             if (ordem == 5)
             {
                 max = m_array.Max();
+                f.max = m_array.Length;
                 double ang;
                 for (i = 0; i < m_array.Length; i++)
                 {
                     ang = ((float)m_array[i] / max) * Math.PI * 2;
                     m_array[i] = (int)Math.Round((Math.Cos(ang) * max / 2) + (max / 2));
+                    f.pb = i;
                 }
             }
             if (ordem == 6)
@@ -523,6 +529,7 @@ namespace Ordenar
                 i = 0;
                 j = m_array.Length - 1;
                 k = max;
+                f.max = j;
                 while (i < j)
                 {
                     m_array[i] = max - k + 1;
@@ -530,6 +537,7 @@ namespace Ordenar
                     i++;
                     j--;
                     k -= 2;
+                    f.pb = i;
                 }
 
             }
@@ -554,7 +562,8 @@ namespace Ordenar
             l1 = vetor.Length;
 
             points = new PointF[l1];
-            for (i = 0; i < vetor.Length; i++)
+            f.max = l1;
+            for (i = 0; i < l1; i++)
             {
                 vetor[i] = new ArrayItem
                 {
@@ -567,7 +576,7 @@ namespace Ordenar
                 iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
 
                 double freq;
-                freq = 16.35 * Math.Pow(2.0, i / 12.0);
+                freq = 16.35 * Math.Pow(2.0, (i*100/l1) / 12.0);
                 sons[i] = new();
                 sons[i].MyBuf = new WBuf(m_pWave[i], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
                 int iSize = sons[i].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, freq);
@@ -625,9 +634,11 @@ namespace Ordenar
                         break;
 
                 }
+                f.pb = i;
             }
 
             ArrayItem zzz = vetor.Max();
+            f.Close();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

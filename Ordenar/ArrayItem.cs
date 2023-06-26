@@ -110,8 +110,6 @@ namespace Ordenar
             ret = 0;
             int b = a.Valor;
 
-            //a.som = false;
-
             if (b == v)
             {
                 ret = 0;
@@ -126,7 +124,6 @@ namespace Ordenar
             {
                 ret = -1;
             }
-            //a.som = true;
 
             return ret;
         }
@@ -222,7 +219,5 @@ namespace Ordenar
         {
             return v.ToString();
         }
-
-        //public static ArrayItem operator +(ArrayItem a) => a.Valor;
     }
 }
