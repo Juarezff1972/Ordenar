@@ -244,8 +244,6 @@ namespace Ordenar
         private void Swap(int a, int b)
         {
             ArrayItem c;
-            vetor[a].som = false;
-            vetor[b].som = false;
             c = vetor[a];
             vetor[a] = vetor[b];
             vetor[b] = c;
@@ -262,8 +260,6 @@ namespace Ordenar
                 l1.Refresh();
                 ChecaSegmentos();
             }
-            vetor[a].som = true;
-            vetor[b].som = true;
         }
 
         private void ChecaSegmentos()
@@ -271,10 +267,6 @@ namespace Ordenar
             pb1.Maximum = vetor.Length;
             segmentos = 1;
             int i;
-            for (i = 0; i < vetor.Length - 1; i++)
-            {
-                vetor[i].som = false;
-            }
             for (i = 1; i < vetor.Length - 1; i++)
             {
                 if (vetor[i].CompareTo(vetor[i - 1]) == -1)
@@ -282,11 +274,6 @@ namespace Ordenar
                     segmentos++;
                 }
             }
-            for (i = 0; i < vetor.Length - 1; i++)
-            {
-                vetor[i].som = true;
-            }
-
             pb1.Value = vetor.Length - (segmentos - 1);
             l4.Text = "Segmentos: " + segmentos.ToString();
             l5.Text = "Escrita em vetores externos: " + externos.ToString();
@@ -2256,7 +2243,6 @@ namespace Ordenar
                     //vetor[index].som = false;
                 }
                 Dispara(aux);
-                vetor[index].som = true;
             }
             for (int mainPointer = vetor.Length - 1; mainPointer >= 0; mainPointer--)
             {
@@ -2270,7 +2256,6 @@ namespace Ordenar
                     //vetor[index].som = false;
                 }
                 Dispara(aux);
-                vetor[index].som = true;
             }
         }
         // //////////////////////////////////////////////////////

@@ -13,9 +13,6 @@ namespace Ordenar
         private int indice;
         private bool mudou;
 
-
-        public bool som = true;
-
         public ArrayItem()
         {
             cor1 = Color.Black;
@@ -50,7 +47,6 @@ namespace Ordenar
                     indice = Indice,
                     valor = v
                 };
-                if (som) DisparaLer(e);
                 return v;
             }
             set

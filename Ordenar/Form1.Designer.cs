@@ -47,7 +47,6 @@
             pivot1 = new System.Windows.Forms.TrackBar();
             pivot2 = new System.Windows.Forms.TrackBar();
             label10 = new System.Windows.Forms.Label();
-            checkBox1 = new System.Windows.Forms.CheckBox();
             tipoVisual = new System.Windows.Forms.ComboBox();
             area1 = new System.Windows.Forms.PictureBox();
             tipoVisual2 = new System.Windows.Forms.ComboBox();
@@ -190,12 +189,6 @@
             resources.ApplyResources(label10, "label10");
             label10.Name = "label10";
             // 
-            // checkBox1
-            // 
-            resources.ApplyResources(checkBox1, "checkBox1");
-            checkBox1.Name = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
             // tipoVisual
             // 
             resources.ApplyResources(tipoVisual, "tipoVisual");
@@ -268,7 +261,6 @@
             Controls.Add(tipoVisual2);
             Controls.Add(area1);
             Controls.Add(tipoVisual);
-            Controls.Add(checkBox1);
             Controls.Add(label10);
             Controls.Add(pivot2);
             Controls.Add(pivot1);
@@ -323,7 +315,6 @@
         private System.Windows.Forms.TrackBar pivot1;
         private System.Windows.Forms.TrackBar pivot2;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ComboBox tipoVisual;
         private System.Windows.Forms.PictureBox area1;
         private System.Windows.Forms.ComboBox tipoVisual2;

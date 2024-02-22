@@ -1,15 +1,9 @@
-﻿using MultiMedia;
-using Ordenar;
-using System;
+﻿using System;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Windows.Forms;
-using System.Xml;
-using WindowsMediaLib.Defs;
 
 
 namespace Ordenar
@@ -73,12 +67,6 @@ namespace Ordenar
         private ArrayItem[] vetor;
         private VisualControl[] barras;
 
-        private WaveFormatEx m_Format;
-        IntPtr[] m_pWave;
-        private const int SAMPLE_FREQUENCY = 44100;
-        private float AUDIO_LENGTH_IN_SECONDS = 1.0f;
-        private Sons[] sons;
-
         private bool fim;
 
         public Form1()
@@ -88,15 +76,6 @@ namespace Ordenar
 
             fim = false;
             ordem = 1;
-            m_Format = new WaveFormatEx();
-
-            m_Format.wFormatTag = 1; // PCM
-            m_Format.nChannels = 2; // Stereo
-            m_Format.nSamplesPerSec = SAMPLE_FREQUENCY;
-            m_Format.wBitsPerSample = 16;
-            m_Format.nBlockAlign = (short)(m_Format.nChannels * (m_Format.wBitsPerSample / 8));
-            m_Format.nAvgBytesPerSec = m_Format.nSamplesPerSec * m_Format.nBlockAlign;
-            m_Format.cbSize = 0;
 
             tipoVisual2.Items.Clear();
             tipoVisual2.Items.Add(GRAFICO_NENHUM);
@@ -284,12 +263,6 @@ namespace Ordenar
 
             button1.Enabled = true;
             button2.Enabled = true;
-            int iRet;
-            for (int i = 0; i < m_array.Length; i++)
-            {
-                iRet = waveOut.Close(m_pWave[i]);
-                Console.WriteLine(iRet);
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -403,20 +376,7 @@ namespace Ordenar
 
         public virtual void OnLer(object sender, VetorEventArgs e)
         {
-            if (checkBox1.Checked)
-            {
-                int i = e.indice;
-                int iRet;
-                int s;
 
-                if (AUDIO_LENGTH_IN_SECONDS > 0)
-                {
-                    //Debug.WriteLine("i=" + i + " | valor=" + e.valor);
-                    s = e.valor - 1;
-                    if (s < 0) s = 0;
-                    iRet = waveOut.Write(m_pWave[i], sons[s].MyBuf.GetPtr(), sons[s].waveSize);
-                }
-            }
         }
 
         private void Pausa()
@@ -546,9 +506,6 @@ namespace Ordenar
             vetor = new ArrayItem[m_array.Length];
             vetor.Initialize();
 
-            m_pWave = new IntPtr[m_array.Length];
-            sons = new Sons[m_array.Length + 1];
-
             area1.Refresh();
 
             barras = new VisualControl[m_array.Length];
@@ -556,7 +513,6 @@ namespace Ordenar
 
             decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
             int tam;
-            int iRet;
 
             int l1;
             l1 = vetor.Length;
@@ -572,20 +528,6 @@ namespace Ordenar
                 vetor[i].Valor = m_array[i];
                 vetor[i].SetColorIDX(0);
 
-                m_pWave[i] = new();
-                iRet = waveOut.Open(out m_pWave[i], 0, m_Format, IntPtr.Zero, IntPtr.Zero, WaveOpenFlags.None);
-
-                double freq;
-                freq = 16.35 * Math.Pow(2.0, (i*100/l1) / 12.0);
-                sons[i] = new();
-                sons[i].MyBuf = new WBuf(m_pWave[i], m_Format.nSamplesPerSec * (int)Math.Ceiling(AUDIO_LENGTH_IN_SECONDS * 10) * m_Format.nBlockAlign);
-                int iSize = sons[i].MyBuf.GenerateLa(m_Format, (int)AUDIO_LENGTH_IN_SECONDS, freq);
-                sons[i].waveSize = iSize;
-
-                while (!sons[i].MyBuf.IsBufferFree())
-                {
-                    System.Threading.Thread.Sleep(1);
-                }
 
                 tam = (int)Math.Round(ratio * m_array[i]);
                 byte m = 0;
