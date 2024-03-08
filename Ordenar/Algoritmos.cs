@@ -220,27 +220,6 @@ namespace Ordenar
             h /= 6.0;
         }*/
 
-        private void SwapSound(int a, int b)
-        {
-            ArrayItem c;
-            c = vetor[a];
-            vetor[a] = vetor[b];
-            vetor[b] = c;
-            vetor[a].SetColorIDX(8);
-            vetor[b].SetColorIDX(3);
-            vetor[a].Indice = b;
-            vetor[b].Indice = a;
-            vetor[a].Mudou = true;
-            vetor[b].Mudou = true;
-            trocas++;
-            l1.Text = "Trocas: " + trocas.ToString();
-            if (delay > 0)
-            {
-                l1.Refresh();
-                ChecaSegmentos();
-            }
-        }
-
         private void Swap(int a, int b)
         {
             ArrayItem c;
@@ -490,7 +469,7 @@ namespace Ordenar
                 int j = i - 1;
                 while (j >= lo)
                 {
-                    SwapSound(j, j + 1);
+                    Swap(j, j + 1);
                     j--;
                 }
 
@@ -1167,7 +1146,7 @@ namespace Ordenar
             int left = 0;
             while (left < k)
             {
-                SwapSound(k, left);
+                Swap(k, left);
                 k--;
                 left++;
             }
