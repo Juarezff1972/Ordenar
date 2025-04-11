@@ -10,6 +10,7 @@ namespace Ordenar
         public static byte BOLA { get { return 1; } }
         public static byte LINHA { get { return 2; } }
         public static byte TRIANGULO { get { return 3; } }
+        //public static byte CIRCULO { get { return 4; } }
 
         private string _txt;
         private byte _modo;
@@ -19,6 +20,8 @@ namespace Ordenar
         private int _height;
         private int _left;
         private int _top;
+        private int _originalIdx;
+        //private double _angle;
 
         public byte modo
         {
@@ -86,6 +89,17 @@ namespace Ordenar
                 _txt = value;
             }
         }
+
+        public int OriginalIdx
+        {
+            get => _originalIdx;
+            set => _originalIdx = value;
+        }
+        /*public double Angle
+        {
+            get => _angle;
+            set => _angle = value;
+        }*/
 
         public VisualControl()
         {

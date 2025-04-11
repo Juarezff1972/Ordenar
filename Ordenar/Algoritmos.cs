@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,8 +25,6 @@ namespace Ordenar
         private Label l4;
         private Label l5;
         private ProgressBar pb1;
-        private TrackBar piv1;
-        private TrackBar piv2;
         //private PictureBox painel;
         private int recursoes;
         private int trocas;
@@ -76,18 +75,6 @@ namespace Ordenar
         public void SetProgress(ProgressBar p)
         {
             pb1 = p;
-        }
-
-        public void SetPivot(TrackBar pv, int p)
-        {
-            if (p == 1)
-            {
-                piv1 = pv;
-            }
-            if (p == 2)
-            {
-                piv2 = pv;
-            }
         }
 
         public static ColorRGB HSL2RGB(double h, double sl, double l)
@@ -444,11 +431,9 @@ namespace Ordenar
         public void BinaryInsertionSort()
         {
             ChecaSegmentos();
-            piv1.Visible = true;
             for (int i = 1; i < vetor.Length; ++i)
             {
                 int key = vetor[i].Valor;
-                piv1.Value = i + 1;
                 vetor[i].SetColorIDX(1);
 
                 int lo = 0, hi = i;
@@ -501,7 +486,6 @@ namespace Ordenar
             if (n > 1)
             {
                 int m = GreatestPowerOfTwoLessThan(n);
-                piv2.Value = m + 1;
                 vetor[m].SetColorIDX(1);
                 vetor[m].SetColorIDX(4);
                 for (int i = lo; i < lo + n - m; i++)
@@ -519,12 +503,9 @@ namespace Ordenar
         {
             ChecaSegmentos();
             AdRecursao();
-            piv1.Visible = true;
-            piv2.Visible = true;
             if (n > 1)
             {
                 int m = n / 2;
-                piv1.Value = m + 1;
                 vetor[m].SetColorIDX(1);
                 BitonicSort(lo, m, !dir);
                 BitonicSort(lo + m, n - m, dir);
@@ -536,11 +517,9 @@ namespace Ordenar
         public void BubbleSort()
         {
             ChecaSegmentos();
-            piv1.Visible = true;
             for (int i = 0; i < vetor.Length - 1; ++i)
             {
                 vetor[i].SetColorIDX(1);
-                piv1.Value = i + 1;
                 for (int j = 0; j < vetor.Length - 1 - i; ++j)
                 {
                     vetor[j].SetColorIDX(2);
@@ -562,7 +541,6 @@ namespace Ordenar
             int max;
             int maxidx = 0;
             ChecaSegmentos();
-            piv1.Visible = true;
             for (i = vetor.Length - 1; i >= 0; i--)
             {
                 max = 0;
@@ -577,7 +555,6 @@ namespace Ordenar
                         vetor[maxidx].SetColorIDX(0);
                         max = vetor[j].Valor;
                         maxidx = j;
-                        piv1.Value = maxidx + 1;
                         vetor[j].SetColorIDX(2);
                     }
                 }
@@ -601,8 +578,6 @@ namespace Ordenar
             int inicio = 0;
             int final = vetor.Length;
             ChecaSegmentos();
-            piv1.Visible = true;
-            piv2.Visible = true;
             while (inicio < final)
             {
                 max = 0;
@@ -618,7 +593,6 @@ namespace Ordenar
                         vetor[maxidx].SetColorIDX(0);
                         max = vetor[i].Valor;
                         maxidx = i;
-                        piv1.Value = maxidx + 1;
                     }
                     ContaComparacao();
                     if (min > vetor[i].Valor)
@@ -626,7 +600,6 @@ namespace Ordenar
                         vetor[minidx].SetColorIDX(0);
                         min = vetor[i].Valor;
                         minidx = i;
-                        piv2.Value = minidx + 1;
                     }
                     vetor[i].SetColorIDX(0);
                     vetor[maxidx].SetColorIDX(2);
@@ -661,7 +634,6 @@ namespace Ordenar
             int hi = vetor.Length - 1;
             int mov = lo;
 
-            piv1.Visible = true;
             while (lo < hi)
             {
                 for (int i = hi; i > lo; --i)
@@ -672,7 +644,6 @@ namespace Ordenar
                         Swap(i - 1, i);
                         mov = i;
                     }
-                    piv1.Value = i;
                     vetor[i - 1].SetColorIDX(1);
                     vetor[i].SetColorIDX(9);
                     vetor[i - 1].SetColorIDX(0);
@@ -687,7 +658,6 @@ namespace Ordenar
                         Swap(i, i + 1);
                         mov = i;
                     }
-                    piv1.Value = i;
                     vetor[i + 1].SetColorIDX(1);
                     vetor[i].SetColorIDX(10);
                     vetor[i + 1].SetColorIDX(0);
@@ -704,7 +674,6 @@ namespace Ordenar
             bool swapped = false;
             int gap = vetor.Length;
             ChecaSegmentos();
-            piv1.Visible = true;
             while ((gap > 1) || swapped)
             {
                 if (gap > 1)
@@ -716,7 +685,6 @@ namespace Ordenar
 
                 for (int i = 0; gap + i < vetor.Length; ++i)
                 {
-                    piv1.Value = i + gap + 1;
                     vetor[i].SetColorIDX(1);
                     ContaComparacao();
                     if (vetor[i].CompareTo(vetor[i + gap]) == 1)
@@ -738,13 +706,11 @@ namespace Ordenar
             long idx;
 
             ChecaSegmentos();
-            piv1.Visible = true;
             cnt.Initialize();
             int j;
 
             for (j = 0; j <= max; j++)
             {
-                piv1.Value = j + 1;
                 int l = vetor[j].Valor;
                 cnt[l]++;
                 b[j] = vetor[j].Valor;
@@ -760,7 +726,6 @@ namespace Ordenar
             }
             for (j = max; j >= 0; j--)
             {
-                piv1.Value = j + 1;
                 idx = vetor[j].Valor;
                 b[cnt[idx] - 1] = vetor[j].Valor;
                 externos++;
@@ -782,8 +747,6 @@ namespace Ordenar
             int cycle_start;
             int tmp;
             ChecaSegmentos();
-            piv1.Visible = true;
-            piv2.Visible = true;
             for (cycle_start = 0; cycle_start < vetor.Length - 1; cycle_start++)
             {
                 int item = vetor[cycle_start].Valor;
@@ -791,7 +754,6 @@ namespace Ordenar
 
                 for (int i = cycle_start + 1; i < vetor.Length; i++)
                 {
-                    piv1.Value = i + 1;
                     vetor[i].SetColorIDX(1);
                     ContaComparacao();
                     if (vetor[i].Valor < item)
@@ -808,7 +770,6 @@ namespace Ordenar
                     {
                         ContaComparacao();
                         pos++;
-                        piv2.Value = pos + 1;
                     }
 
                     tmp = vetor[pos].Valor;
@@ -819,7 +780,6 @@ namespace Ordenar
 
                     while (pos != cycle_start)
                     {
-                        piv1.Value = pos + 1;
                         pos = cycle_start;
                         for (int i = cycle_start + 1; i < vetor.Length; i++)
                         {
@@ -829,7 +789,6 @@ namespace Ordenar
                             {
                                 pos++;
                             }
-                            piv2.Value = i;
 
                             vetor[i].SetColorIDX(0);
                         }
@@ -837,7 +796,6 @@ namespace Ordenar
                         {
                             ContaComparacao();
                             pos++;
-                            piv2.Value = pos + 1;
                             vetor[pos].SetColorIDX(4);
                         }
                         tmp = vetor[pos].Valor;
@@ -860,17 +818,11 @@ namespace Ordenar
             maxIndex = 0;
 
             ChecaSegmentos();
-            piv1.Visible = true;
-            piv2.Visible = true;
-            piv1.Maximum = length + 1;
-            piv2.Maximum = length + 1;
-            piv1.Value = 1;
-            piv2.Value = 1;
 
             for (int i = 1; i < length - 1; i += 2)
             {
-                int small;
-                int big;
+                ArrayItem small;
+                ArrayItem big;
                 int bigIndex;
 
                 vetor[i].SetColorIDX(3);
@@ -878,29 +830,27 @@ namespace Ordenar
                 ContaComparacao();
                 if (vetor[i].Valor < vetor[i + 1].Valor)
                 {
-                    small = vetor[i].Valor;
-                    big = vetor[i + 1].Valor;
+                    small = vetor[i];
+                    big = vetor[i + 1];
                     bigIndex = i + 1;
                 }
                 else
                 {
-                    big = vetor[i].Valor;
+                    big = vetor[i];
                     bigIndex = i;
-                    small = vetor[i + 1].Valor;
+                    small = vetor[i + 1];
                 }
 
-                if (big > max)
+                if (big.Valor > max)
                 {
-                    max = big;
+                    max = big.Valor;
                     maxIndex = bigIndex;
                 }
 
-                if (small < min)
+                if (small.Valor < min)
                 {
-                    min = small;
+                    min = small.Valor;
                 }
-                piv1.Value = min + 1;
-                piv2.Value = max + 1;
                 vetor[i].Mudou = true;
                 vetor[i+1].Mudou = true;
             }
@@ -913,8 +863,6 @@ namespace Ordenar
                 max = vetor[length - 1].Valor;
                 maxIndex = length - 1;
             }
-            piv1.Value = min + 1;
-            piv2.Value = max + 1;
 
             if (max == min)
             {
@@ -953,12 +901,13 @@ namespace Ordenar
                     j++;
                     K = ((int)((vetor[j].Valor - min) * c)) + 1;
                 }
-                int evicted = vetor[j].Valor;
+                ArrayItem evicted = vetor[j];
                 while (j < L[K])
                 {
-                    K = ((int)((evicted - min) * c)) + 1;
+                    K = ((int)((evicted.Valor - min) * c)) + 1;
                     int location = L[K] - 1;
-                    (evicted, vetor[location].Valor) = (vetor[location].Valor, evicted);
+                    (evicted, vetor[location]) = (vetor[location], evicted);
+                    vetor[location].Mudou = true;
                     L[K] -= 1;
                     Dispara(L);
                     externos++;
@@ -1088,20 +1037,23 @@ namespace Ordenar
             ChecaSegmentos();
             for (int i = 1; i < vetor.Length; ++i)
             {
-                int tmp, key = vetor[i].Valor;
+                ArrayItem tmp;
+                ArrayItem key = vetor[i];
                 vetor[i].SetColorIDX(1);
 
                 int j = i - 1;
-                while (j >= 0 && (tmp = vetor[j].Valor) > key)
+                while (j >= 0 && (tmp = vetor[j]).Valor > key.Valor )
                 {
                     vetor[j].SetColorIDX(1);
                     ContaComparacao();
-                    vetor[j + 1].Valor = tmp;
+                    vetor[j + 1] = tmp;
                     vetor[j + 1].SetColorIDX(2);
+                    vetor[j + 1].Mudou = true;
                     j--;
                     ChecaSegmentos();//Pausa();
                 }
-                vetor[j + 1].Valor = key;
+                vetor[j + 1] = key;
+                vetor[j + 1].Mudou = true;
 
                 vetor[i].SetColorIDX(3);
             }
@@ -1192,15 +1144,8 @@ namespace Ordenar
         {
             int min = vetor[0].Valor;
             int max = vetor[0].Valor;
-            int range, i, j, index;
+            int range, i, index;
             int n = vetor.Length;
-
-            piv1.Visible = true;
-            piv2.Visible = true;
-            piv1.Maximum = n + 1;
-            piv2.Maximum = n + 1;
-            piv1.Value = 1;
-            piv2.Value = 1;
 
             ChecaSegmentos();
 
@@ -1214,31 +1159,34 @@ namespace Ordenar
                 {
                     min = vetor[a].Valor;
                 }
-                piv1.Value = min + 1;
-                piv2.Value = max + 1;
                 ChecaSegmentos();//Pausa();
             }
 
             range = max - min + 1;
-            int[] pigeonHoles = new int[range];
-
-            for (i = 0; i < n; i++)
+            List<ArrayItem>[] holes = new List<ArrayItem>[range];
+            for (i = 0; i < range; i++)
             {
-                pigeonHoles[vetor[i].Valor - min]++;
-                Dispara(pigeonHoles);
+                holes[i] = new List<ArrayItem>();
+            }
+
+            foreach (var item in vetor)
+            {
+                holes[item.Valor - min].Add(item);
+                //Dispara(holes);
                 externos++;
             }
 
+
             index = 0;
 
-            for (j = 0; j < range; j++)
+            for (i = 0; i < range; i++)
             {
-                while (pigeonHoles[j]-- > 0)
+                foreach (var item in holes[i])
                 {
-                    Dispara(pigeonHoles);
-                    externos++;
-                    vetor[index++].Valor = j + min;
-                    ChecaSegmentos();//Pausa();
+
+                    vetor[index] = item;
+                    vetor[index].Mudou = true;
+                    index++;
                 }
             }
             ChecaSegmentos();
@@ -1251,31 +1199,21 @@ namespace Ordenar
 
         public void QuickSortDualPivot()
         {
-            piv1.Visible = true;
-            piv2.Visible = true;
             QuickSortDualPivotYaroslavskiy(0, vetor.Length - 1);
         }
 
         public void QuickSortLL()
         {
-            piv1.Visible = true;
-            piv2.Visible = true;
             QuickSortLL(0, vetor.Length);
         }
 
         public void QuickSortLR()
         {
-            piv1.Visible = true;
-            piv2.Visible = true;
-
             QuickSortLR(0, vetor.Length - 1);
         }
 
         public void QuickSortTernaryLR()
         {
-            piv1.Visible = true;
-            piv2.Visible = true;
-
             QuickSortTernaryLR(0, vetor.Length - 1);
         }
 
@@ -1285,8 +1223,6 @@ namespace Ordenar
 
             if (right > left)
             {
-                piv1.Value = left + 1;
-                piv2.Value = right + 1;
                 ContaComparacao();
                 if (vetor[left].CompareTo(vetor[right]) == 1)
                 {
@@ -1349,8 +1285,6 @@ namespace Ordenar
 
         private int QuickSortSelectPivot(int lo, int hi)
         {
-            piv1.Value = lo + 1;
-            piv2.Value = hi;
             Random rnd = new Random();
             if (g_quicksort_pivot == PIVOT_FIRST)
             {
@@ -1591,8 +1525,6 @@ namespace Ordenar
         // //////////////////////////////////////////////////////
         public void RadixSortLSD()
         {
-            piv1.Visible = true;
-            piv2.Visible = true;
             // radix and base calculations
             const int RADIX = 10;
 
@@ -1614,7 +1546,6 @@ namespace Ordenar
                     copy[i] = vetor[i].Valor;
                     externos++;
                     int r = copy[i] / base1 % RADIX;
-                    piv1.Value = i + 1;
                     count[r]++;
                     Dispara(count);
                     externos++;
@@ -1632,7 +1563,6 @@ namespace Ordenar
                         Dispara(count);
                         externos++;
                     }
-                    piv2.Value = z + 1;
                 }
 
                 // mark bucket boundaries
@@ -1664,8 +1594,6 @@ namespace Ordenar
         {
             ChecaSegmentos();
             AdRecursao();
-            piv1.Visible = true;
-            piv2.Visible = true;
             vetor[lo].SetColorIDX(1);
             vetor[hi - 1].SetColorIDX(2);
 
@@ -1685,7 +1613,6 @@ namespace Ordenar
             {
                 vetor[i].SetColorIDX(1);
                 uint r = (uint)vetor[i].Valor / base1 % RADIX;
-                piv1.Value = i + 1;
                 count[r]++;
                 Dispara(count);
                 externos++;
@@ -1716,8 +1643,6 @@ namespace Ordenar
                     continue;
                 }
 
-                piv2.Value = lo + bkt[i];
-
                 vetor[lo + bkt[i] - 1].SetColorIDX(8);
                 ChecaSegmentos();//Pausa();
                 vetor[lo + bkt[i] - 1].SetColorIDX(0);
@@ -1729,8 +1654,6 @@ namespace Ordenar
                 while ((j = --bkt[(vetor[lo + i].Valor / base1 % RADIX)]) > i)
                 {
                     Swap(lo + i, lo + j);
-                    piv1.Value = lo + i + 1;
-                    piv2.Value = lo + j + 1;
                 }
                 i += count[(vetor[lo + i].Valor / base1 % RADIX)];
             }
@@ -1765,14 +1688,11 @@ namespace Ordenar
         public void SelectionSort()
         {
             ChecaSegmentos();
-            piv1.Visible = true;
-            piv2.Visible = true;
             for (int i = 0; i < vetor.Length - 1; ++i)
             {
                 int jMin = i;
                 for (int j = i + 1; j < vetor.Length; ++j)
                 {
-                    piv2.Value = j + 1;
                     ContaComparacao();
                     if (vetor[j].CompareTo(vetor[jMin]) == -1)
                     {
@@ -1790,7 +1710,6 @@ namespace Ordenar
                     vetor[i - 1].SetColorIDX(3);
                 }
 
-                piv1.Value = i + 1;
                 vetor[i].SetColorIDX(1);
                 vetor[i].SetColorIDX(0);
             }
@@ -1801,26 +1720,26 @@ namespace Ordenar
         {
             int[] incs = { 1391376, 463792, 198768, 86961, 33936, 13776, 4592, 1968, 861, 336, 112, 48, 21, 7, 3, 1 };
             ChecaSegmentos();
-            piv1.Visible = true;
             for (int k = 0; k < 16; k++)
             {
                 for (int h = incs[k], i = h; i < vetor.Length; i++)
                 {
-                    int v = vetor[i].Valor;
+                    ArrayItem v = vetor[i];
                     int j = i;
                     vetor[i].SetColorIDX(1);
-                    piv1.Value = j + 1;
-                    while (j >= h && vetor[j - h].Valor > v)
+                    while (j >= h && vetor[j - h].Valor > v.Valor)
                     {
                         ContaComparacao();
                         vetor[j].SetColorIDX(3);
-                        vetor[j].Valor = vetor[j - h].Valor;
+                        vetor[j] = vetor[j - h];
+                        vetor[j].Mudou = true;
                         j -= h;
                         ChecaSegmentos();//Pausa();
                         vetor[j].SetColorIDX(4);
                     }
                     vetor[j].SetColorIDX(1);
-                    vetor[j].Valor = v;
+                    vetor[j] = v;
+                    vetor[j].Mudou = true;
                     ChecaSegmentos();//Pausa();
                     vetor[i].SetColorIDX(0);
                 }
@@ -1830,18 +1749,16 @@ namespace Ordenar
         // //////////////////////////////////////////////////////
         private void Merge(int lo, int mid, int hi)
         {
-            int[] outA;
+            ArrayItem[] outA;
 
             ChecaSegmentos();
-            piv1.Visible = true;
-            piv2.Visible = true;
             // mark merge boundaries
             vetor[lo].SetColorIDX(2);
             vetor[mid].SetColorIDX(1);
             vetor[hi - 1].SetColorIDX(2);
 
             // allocate output
-            outA = new int[hi - lo];
+            outA = new ArrayItem[hi - lo];
             //std::vector < value_type > out(hi - lo);
 
             // merge
@@ -1849,12 +1766,10 @@ namespace Ordenar
             while (i < mid && j < hi)
             {
                 // copy out for fewer time steps
-                int ai = vetor[i].Valor;
-                int aj = vetor[j].Valor;
-                piv1.Value = i + 1;
-                piv2.Value = j + 1;
+                ArrayItem ai = vetor[i];
+                ArrayItem aj = vetor[j];
                 ContaComparacao();
-                if (ai < aj)
+                if (ai.Valor < aj.Valor)
                 {
                     ++i;
                     outA[o++] = ai;
@@ -1864,21 +1779,21 @@ namespace Ordenar
                     ++j;
                     outA[o++] = aj;
                 }
-                Dispara(outA);
+                //Dispara(outA);
                 externos++;
             }
 
             // copy rest
             while (i < mid)
             {
-                outA[o++] = vetor[i++].Valor;
-                Dispara(outA);
+                outA[o++] = vetor[i++];
+                //Dispara(outA);
             }
 
             while (j < hi)
             {
-                outA[o++] = vetor[j++].Valor;
-                Dispara(outA);
+                outA[o++] = vetor[j++];
+                //Dispara(outA);
             }
             externos++;
 
@@ -1887,7 +1802,7 @@ namespace Ordenar
             // copy back
             for (i = 0; i < hi - lo; ++i)
             {
-                vetor[lo + i].Valor = outA[i];
+                vetor[lo + i] = outA[i];
                 vetor[lo + i].SetColorIDX(1);
                 ChecaSegmentos();//Pausa();
             }
@@ -1922,7 +1837,6 @@ namespace Ordenar
         {
             ChecaSegmentos();
             AdRecursao();
-            piv1.Visible = true;
             if (i >= j)
             {
                 RmRecursao();
@@ -1930,8 +1844,6 @@ namespace Ordenar
             }
 
             int m = (i + j) / 2;
-
-            piv1.Value = m + 1;
 
             vetor[j].SetColorIDX(1);
             SlowSort(i, m);
@@ -1968,10 +1880,6 @@ namespace Ordenar
             int y;
 
             ChecaSegmentos();
-            piv1.Visible = true;
-            piv1.Maximum = max;
-            piv2.Visible = true;
-            piv2.Maximum = vetor.Length;
 
             abacus = new Array[vetor.Length];
             for (i = 0; i < abacus.Length; i++)
@@ -1983,13 +1891,10 @@ namespace Ordenar
                 for (j = 0; j < vetor[i].Valor; j++)
                 {
                     abacus[i].SetValue(1, abacus[0].Length - j - 1);
-                    piv1.Value = abacus[0].Length - j;
                     Dispara(abacus);
                     externos++;
                 }
-                piv2.Value = i + 1;
             }
-            piv1.Maximum = abacus[0].Length;
             for (i = 0; i < abacus[0].Length; i++)
             {
                 for (j = 0; j < abacus.Length; j++)
@@ -2020,79 +1925,57 @@ namespace Ordenar
                     }
                     vetor[x].Valor = count;
                 }
-                piv1.Value = i + 1;
                 ChecaSegmentos();//Pausa();
             }
         }
         // //////////////////////////////////////////////////////
-        private int[] tmp;
 
-        private int vencedor(int pos1, int pos2)
+        private static ArrayItem CompareItens(ArrayItem p1, ArrayItem p2)
         {
-            int u = pos1 >= vetor.Length ? pos1 : tmp[pos1];
-            int v = pos2 >= vetor.Length ? pos2 : tmp[pos2];
-            if (tmp[u] <= tmp[v]) return u;
-            return v;
+            return p1.Valor >p2.Valor ? p1 : p2;
         }
 
-        private void criaArvore(ref int valor)
+        private ArrayItem RunTournament(List<ArrayItem> tournament)
         {
-            for (int i = 0; i < vetor.Length; i++) tmp[vetor.Length + i] = vetor[i].Valor;
-            for (int i = 2 * vetor.Length - 1; i > 1; i -= 2)
+            while (tournament.Count > 1)
             {
-                int k = i / 2;
-                int j = i - 1;
-                tmp[k] = vencedor(i, j);
-                Dispara(tmp);
-                externos++;
-                piv2.Value = tmp[k];
-                ChecaSegmentos();//Pausa();
-            }
-            valor = tmp[tmp[1]];
-            tmp[tmp[1]] = int.MaxValue;
-        }
+                List<ArrayItem> nextRound = new List<ArrayItem>();
 
-        private void recriar(ref int valor)
-        {
-            int i = tmp[1];
-            while (i > 1)
-            {
-                int j, k = i / 2;
-                if (i % 2 == 0 && i < 2 * vetor.Length - 1)
-                    j = i + 1;
-                else
-                    j = i - 1;
-                tmp[k] = vencedor(i, j);
-                externos++;
-                i = k;
-                piv2.Value = tmp[k];
-                Dispara(tmp);
-                ChecaSegmentos();//Pausa();
+                for (int i = 0; i < tournament.Count; i += 2)
+                {
+                    if (i + 1 < tournament.Count)
+                    {
+                        ContaComparacao();
+                        ArrayItem winner = CompareItens(tournament[i], tournament[i + 1]);
+                        nextRound.Add(winner);
+                    }
+                    else
+                    {
+                        nextRound.Add(tournament[i]);
+                    }
+                }
+
+                tournament = nextRound;
             }
-            valor = tmp[tmp[1]];
-            tmp[tmp[1]] = int.MaxValue;
+            return tournament[0];
         }
 
         public void tournamentSort()
         {
-            int valor = 0;
-            int max = vetor.Length;
-
-            ChecaSegmentos();
-            piv1.Visible = true;
-            piv1.Maximum = max;
-            piv2.Visible = true;
-            piv2.Maximum = 2 * vetor.Length - 1;
-
-            tmp = new int[vetor.Length << 1];
-            criaArvore(ref valor);
-            for (int i = 0; i < vetor.Length; i++)
+            int n = vetor.Length;
+            ArrayItem[] sortedArray = new ArrayItem[n];
+            List<ArrayItem> tournament = new List<ArrayItem>(vetor);
+            for (int i = 0; i < n; i++)
             {
-                vetor[i].Valor = valor;
-                recriar(ref valor);
-                piv1.Value = i + 1;
-                ChecaSegmentos();//Pausa();
+                ArrayItem winner = RunTournament(tournament);
+                sortedArray[i] = winner;
+                vetor[i] = sortedArray[i];
+                vetor[i].Mudou = true;
+                ChecaSegmentos();
+                tournament.Remove(winner);
             }
+            Array.Reverse(sortedArray);
+            Array.Copy(sortedArray, vetor, n);
         }
 
         // //////////////////////////////////////////////////////
@@ -2124,8 +2007,6 @@ namespace Ordenar
             ChecaSegmentos();
             AdRecursao();
             //passo 1
-            piv1.Value = 1;
-            piv1.Maximum = tam;
             for (int i = inicio; i < tam; i++)
             {
                 int d = vetor[i].Valor;
@@ -2133,17 +2014,13 @@ namespace Ordenar
                 contagem[digitos]++;
                 Dispara(contagem);
                 externos++;
-                piv1.Value = i + 1;
             }
             offset[0] = inicio;
-            piv2.Value = 1;
-            piv2.Maximum = NUMBER_OF_BUCKETS;
             for (int i = 1; i < NUMBER_OF_BUCKETS; i++)
             {
                 offset[i] = contagem[i - 1] + offset[i - 1];
                 Dispara(offset);
                 externos++;
-                piv2.Value = i;
             }
             //passo 2
             for (int b = 0; b < NUMBER_OF_BUCKETS; b++)
@@ -2152,22 +2029,24 @@ namespace Ordenar
                 {
                     int origem = offset[b];
                     int fonte = origem;
-                    int num = vetor[fonte].Valor;
+                    ArrayItem num = vetor[fonte];
+                    //int rl = vetor[fonte].Real;
                     do
                     {
-                        digitos = Digitos(num, divisor);
+                        digitos = Digitos(num.Valor, divisor);
                         int destino = offset[digitos];
                         offset[digitos]++;
                         contagem[digitos]--;
-                        int temp = vetor[destino].Valor;
-                        vetor[destino].Valor = num;
+                        ArrayItem temp = vetor[destino];
+                        vetor[destino] = num;
+                        vetor[destino].Mudou = true;
+                        //vetor[destino].Real = rl;
                         num = temp;
                         fonte = destino;
                         Dispara(contagem);
                         ChecaSegmentos();//Pausa();
                     } while (fonte != origem);
                 }
-                piv2.Value = b + 1;
             }
             if (divisor > 1)
             {
@@ -2184,8 +2063,6 @@ namespace Ordenar
         public void AmericanSort()
         {
             ChecaSegmentos();
-            piv1.Visible = true;
-            piv2.Visible = true;
             int digitos = MaximoDigitos();
             int max = 1;
             for (int i = 0; i < digitos - 1; i++)
@@ -2194,48 +2071,6 @@ namespace Ordenar
             }
             AmericanSort(0, vetor.Length, max);
             ChecaSegmentos();
-        }
-        // //////////////////////////////////////////////////////
-        public void SimplisticGravitySort()
-        {
-            int[] aux;
-            int min = vetor[0].Valor;
-            int max = min;
-            int pointer;
-            int index;
-            int fator = vetor.Length / 10;
-            for (int mainPointer = 1; mainPointer < vetor.Length; mainPointer++)
-            {
-                min = Math.Min(vetor[mainPointer].Valor, min);
-                max = Math.Max(vetor[mainPointer].Valor, max);
-            }
-            aux = new int[max - min];
-            for (int mainPointer = 0; mainPointer < vetor.Length; mainPointer++)
-            {
-                index = mainPointer;
-                for (pointer = 0; vetor[index].Valor > min; pointer++)
-                {
-                    vetor[index].Valor = --vetor[index].Valor;
-                    aux[pointer] = ++aux[pointer];
-                    externos++;
-                    //if (((float)pointer % (float)fator) == 0) ChecaSegmentos();//Pausa();
-                    //vetor[index].som = false;
-                }
-                Dispara(aux);
-            }
-            for (int mainPointer = vetor.Length - 1; mainPointer >= 0; mainPointer--)
-            {
-                index = mainPointer;
-                for (pointer = 0; pointer < aux.Length && aux[pointer] != 0; pointer++)
-                {
-                    vetor[index].Valor = ++vetor[index].Valor;
-                    aux[pointer] = --aux[pointer];
-                    externos++;
-                    //if ((pointer % fator) == 0) ChecaSegmentos();//Pausa();
-                    //vetor[index].som = false;
-                }
-                Dispara(aux);
-            }
         }
         // //////////////////////////////////////////////////////
         public void SandpaperSort()

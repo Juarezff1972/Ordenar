@@ -308,7 +308,8 @@ namespace Ordenar {
         ///			Se (vetor[i].ComparaCom(vetor[i + fenda]) == 1)
         ///			inicio
         ///				Troca(i, i + fenda);
-        ///				Trocado = VERDADEIRO;        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///				Trocado = VERDADEIRO;
+        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string CombSortString {
             get {
@@ -796,7 +797,8 @@ namespace Ordenar {
         ///		inicio
         ///			copia[i] = vetor[i].Valor;
         ///			Inteiro r = copia[i] / base1 % RADIX;
-        ///			contagem[r]++;        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///			contagem[r]++;
+        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string RadixSortLSDString {
             get {
@@ -994,7 +996,8 @@ namespace Ordenar {
         ///	para (Inteiro i = 2 * vetor.Tamanho - 1; i &gt; 1; i -= 2)
         ///	inicio
         ///		Inteiro k = i / 2;
-        ///		Inteiro j = i - 1;        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///		Inteiro j = i - 1;
+        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string TournamentSortString {
             get {

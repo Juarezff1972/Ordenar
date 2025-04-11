@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -45,9 +48,15 @@ namespace Ordenar
         const string SLOWSORT = "SlowSort";
         const string TOURNAMENTSORT = "TournamentSort";
         const string AMERICANSORT = "AmericanFlagSort";
-        const string SIMPLISTICGRAVITYSORT = "SimplisticGravitySort";
         const string SANDPAPERSORT = "SandpaperSort";
         const string DIAMONDSORT = "DiamondSort";
+
+        const string TIPO_BARRA = "Barras";
+        const string TIPO_BOLAS = "Bolas";
+        const string TIPO_LINHASV = "Linhas Verticais";
+        const string TIPO_TRIANGULO = "Triângulo";
+        const string TIPO_ESPIRAL = "Espiral";
+        //const string TIPO_CIRCULO = "Círculo";
 
         const string GRAFICO_NENHUM = "Nenhum";
         const string GRAFICO_LINHA = "Gráfico de Linha";
@@ -58,8 +67,6 @@ namespace Ordenar
         private PointF[] points;
         private long[] auxVetor;
         private int maxPoint = 0;
-        //Graphics auxGr;
-        //GraphicsState auxGrState;
 
         private int[] m_array;
         private int maximo;
@@ -69,6 +76,8 @@ namespace Ordenar
 
         private bool fim;
 
+        public Som Som1;
+
         public Form1()
         {
             InitializeComponent();
@@ -77,20 +86,25 @@ namespace Ordenar
             fim = false;
             ordem = 1;
 
+            tipoVisual.Items.Clear();
+            tipoVisual.Items.Add(TIPO_BARRA);
+            tipoVisual.Items.Add(TIPO_BOLAS);
+            tipoVisual.Items.Add(TIPO_LINHASV);
+            tipoVisual.Items.Add(TIPO_TRIANGULO);
+            tipoVisual.Items.Add(TIPO_ESPIRAL);
+            //tipoVisual.Items.Add(TIPO_CIRCULO);
+
             tipoVisual2.Items.Clear();
             tipoVisual2.Items.Add(GRAFICO_NENHUM);
             tipoVisual2.Items.Add(GRAFICO_LINHA);
             tipoVisual2.Items.Add(GRAFICO_CURVA);
+
+            Som1 = new Som();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             string x;
-
-            pivot1.Maximum = (int)numericUpDown2.Value;
-            pivot2.Maximum = (int)numericUpDown2.Value;
-            pivot1.Visible = false;
-            pivot2.Visible = false;
 
             AuxEventHandler d = new AuxEventHandler(OnAuxVetor);
 
@@ -108,8 +122,6 @@ namespace Ordenar
             algo.SetDelay((int)Math.Pow(2, (int)numericUpDown1.Value));
             //algo.SetPictureBox(area1);
             algo.SetProgress(progressBar1);
-            algo.SetPivot(pivot1, 1);
-            algo.SetPivot(pivot2, 2);
             algo.auxVetor += d;
 
             button1.Enabled = false;
@@ -242,10 +254,6 @@ namespace Ordenar
                     algo.AmericanSort();
                     break;
 
-                case SIMPLISTICGRAVITYSORT:
-                    algo.SimplisticGravitySort();
-                    break;
-
                 case SANDPAPERSORT:
                     algo.SandpaperSort();
                     break;
@@ -325,7 +333,6 @@ namespace Ordenar
             this.comboBox1.Items.Add(SLOWSORT);
             this.comboBox1.Items.Add(TOURNAMENTSORT);
             this.comboBox1.Items.Add(AMERICANSORT);
-            this.comboBox1.Items.Add(SIMPLISTICGRAVITYSORT);
             this.comboBox1.Items.Add(SANDPAPERSORT);
             this.comboBox1.Items.Add(DIAMONDSORT);
             this.comboBox1.Sorted = true;
@@ -354,10 +361,6 @@ namespace Ordenar
             area1.Refresh();
         }
 
-        private void qsPivotSel1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
         private void ordemInicial_SelectedIndexChanged(object sender, EventArgs e)
         {
             ordem = (byte)(ordemInicial.SelectedIndex + 1);
@@ -376,13 +379,15 @@ namespace Ordenar
 
         public virtual void OnLer(object sender, VetorEventArgs e)
         {
-
+            int i = e.indice;
+            Som1.play(i, false);
         }
 
         private void Pausa()
         {
             int delay = (int)Math.Pow(2, (int)numericUpDown1.Value);
-            if (fim) delay = 1;
+            if (fim)
+                delay = 1;
             switch (delay)
             {
                 case 0:
@@ -404,29 +409,29 @@ namespace Ordenar
         {
 
             if (barras == null) return;
-            decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
-            float itens = area1.Width / (float)m_array.Length;
-            int tam;
+            //decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
+            //float itens = area1.Width / (float)m_array.Length;
+            //int tam;
             int i = e.indice;
             if (barras[i] != null)
             {
-                tam = (int)Math.Round(ratio * vetor[i].Valor);
+                /*tam = (int)Math.Round(ratio * vetor[i].Valor);
                 barras[i].Top = area1.Height - tam;
                 barras[i].Altura = tam;
                 barras[i].Left = (int)(i * itens);
-                barras[i].Largura = (int)itens;
+                barras[i].Largura = (int)itens;*/
                 barras[i].CorFundo = vetor[i].GetColor(1);
                 barras[i].CorFrente = vetor[i].GetColor(2);
                 barras[i].txt = vetor[i].Valor.ToString();
-                if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
-                if (tipoVisual.Text == "Bolas")
+                //if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
+                /*if (tipoVisual.Text == TIPO_BOLAS)
                 {
                     points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top + (barras[i].Largura / 2));
                 }
                 else
                 {
                     points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                }
+                }*/
                 Pausa();
             }
         }
@@ -437,7 +442,9 @@ namespace Ordenar
             int i;
             int j;
             int k;
-            int max;
+            //int[] n_array;
+            double ang;
+            //int max;
             Form3 f;
 
             //auxGr.Clear(Color.DarkGray);
@@ -450,74 +457,70 @@ namespace Ordenar
             label6.Refresh();
             f.Show();
             m_array = Enumerable.Range(1, nums).ToArray();
-            if (ordem == 3)
-            {
-                m_array = m_array.Reverse().ToArray();
-            }
-            if (ordem == 1)
-            {
-                Random rnd = new();
-                m_array = m_array.OrderBy(c => rnd.Next()).ToArray();
-            }
-            if (ordem == 4)
-            {
-                max = m_array.Max();
-                f.max = m_array.Length;
-                double ang;
-                for (i = 0; i < m_array.Length; i++)
-                {
-                    ang = ((float)m_array[i] / max) * Math.PI * 2;
-                    m_array[i] = (int)Math.Round((Math.Sin(ang) * max / 2) + (max / 2));
-                    f.pb = i;
-                }
-            }
-            if (ordem == 5)
-            {
-                max = m_array.Max();
-                f.max = m_array.Length;
-                double ang;
-                for (i = 0; i < m_array.Length; i++)
-                {
-                    ang = ((float)m_array[i] / max) * Math.PI * 2;
-                    m_array[i] = (int)Math.Round((Math.Cos(ang) * max / 2) + (max / 2));
-                    f.pb = i;
-                }
-            }
-            if (ordem == 6)
-            {
-                max = m_array.Max();
-                i = 0;
-                j = m_array.Length - 1;
-                k = max;
-                f.max = j;
-                while (i < j)
-                {
-                    m_array[i] = max - k + 1;
-                    m_array[j] = (max - k) + 2;
-                    i++;
-                    j--;
-                    k -= 2;
-                    f.pb = i;
-                }
-
-            }
             maximo = m_array.Max();
-
             vetor = new ArrayItem[m_array.Length];
-            vetor.Initialize();
+            if (Som1 != null)
+            {
+                Som1.Limpar();
+                Som1 = null;
+            }
+            Som1 = new Som();
+            Som1.MaxValue = maximo;
 
-            area1.Refresh();
+            switch (ordem)
+            {
+                case 1:
+                    Random rnd = new Random();
+                    m_array = m_array.OrderBy(c => rnd.Next()).ToArray();
+
+                    break;
+                case 3:
+                    m_array = m_array.Reverse().ToArray();
+                    break;
+                case 4:
+                    f.max = m_array.Length;
+                    for (i = 0; i < m_array.Length; i++)
+                    {
+                        ang = ((float)m_array[i] / maximo) * Math.PI * 2;
+                        m_array[i] = (int)Math.Round((Math.Sin(ang) * maximo / 2) + (maximo / 2));
+                        f.pb = i;
+                    }
+                    break;
+                case 5:
+                    f.max = m_array.Length;
+                    for (i = 0; i < m_array.Length; i++)
+                    {
+                        ang = ((float)m_array[i] / maximo) * Math.PI * 2;
+                        m_array[i] = (int)Math.Round((Math.Cos(ang) * maximo / 2) + (maximo / 2));
+                        f.pb = i;
+                    }
+                    break;
+                case 6:
+                    i = 0;
+                    j = m_array.Length - 1;
+                    k = maximo;
+                    f.max = j;
+                    while (i < j)
+                    {
+                        m_array[i] = maximo - k + 1;
+                        m_array[j] = (maximo - k) + 2;
+                        i++;
+                        j--;
+                        k -= 2;
+                        f.pb = i;
+                    }
+                    break;
+            }
+
+            //n_array = presort(m_array);
 
             barras = new VisualControl[m_array.Length];
-            float itens = area1.Width / (float)m_array.Length;
 
-            decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
-            int tam;
 
             int l1;
             l1 = vetor.Length;
 
-            points = new PointF[l1];
+            
             f.max = l1;
             for (i = 0; i < l1; i++)
             {
@@ -525,60 +528,43 @@ namespace Ordenar
                 {
                     Indice = i,
                     Valor = m_array[i]
+                    /*Originalidx = n_array[i],*/
+                    /*Angle = ((double)m_array[i] / (double)maximo) * 2.0 * Math.PI*/
                 };
-                //vetor[i].Valor = m_array[i];
+                Som1.AdicionaSom(i);
                 vetor[i].SetColorIDX(0);
-
-
-                tam = (int)Math.Round(ratio * m_array[i]);
+                //Console.WriteLine("V==>" + i + "-" + n_array[i] + "|" + m_array[i]);
+                
                 byte m = 0;
-                if (tipoVisual.Text == "Barras") m = VisualControl.BARRA;
-                if (tipoVisual.Text == "Bolas") m = VisualControl.BOLA;
-                if (tipoVisual.Text == "Linhas Verticais") m = VisualControl.LINHA;
-                if (tipoVisual.Text == "Triângulo") m = VisualControl.TRIANGULO;
+                if (tipoVisual.Text == TIPO_BARRA)
+                    m = VisualControl.BARRA;
+                if (tipoVisual.Text == TIPO_BOLAS)
+                    m = VisualControl.BOLA;
+                if (tipoVisual.Text == TIPO_LINHASV)
+                    m = VisualControl.LINHA;
+                if (tipoVisual.Text == TIPO_TRIANGULO)
+                    m = VisualControl.TRIANGULO;
+                //if (tipoVisual.Text == TIPO_CIRCULO) m = VisualControl.CIRCULO;
                 barras[i] = new VisualControl
                 {
-                    Left = (int)(i * itens),
-                    Largura = (int)itens,
-                    Top = area1.Height - tam,
-                    Altura = tam,
                     modo = m,
                     CorFundo = Color.Blue,
                     CorFrente = Color.Red,
-                    txt = m_array[i].ToString(),
+                    txt = m_array[i].ToString()
+                    /*OriginalIdx = vetor[i].Originalidx,*/
+                    /*Angle = vetor[i].Angle*/
                 };
 
                 EscritaEventHandler d1 = new EscritaEventHandler(OnEscreveu);
                 MudarEventHandler d2 = new MudarEventHandler(OnMudar);
-                LerEventHandler d3 = new LerEventHandler(OnLer);
+                LerEventHandler  d3 = new LerEventHandler(OnLer);
 
-                vetor[i].Escreveu += d1;
                 vetor[i].Mudar += d2;
                 vetor[i].Ler += d3;
 
-                if (maxPoint < barras[i].Top) maxPoint = barras[i].Top;
-
-                switch (tipoVisual.Text)
-                {
-                    case "Barras":
-                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                        break;
-                    case "Bolas":
-                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top + (barras[i].Largura / 2));
-                        break;
-                    case "Linhas Verticais":
-                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                        break;
-                    case "Triângulo":
-                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                        break;
-                    case "Espiral":
-                        points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
-                        break;
-
-                }
                 f.pb = i;
             }
+            area1.Refresh();
 
             ArrayItem zzz = vetor.Max();
             f.Close();
@@ -600,7 +586,7 @@ namespace Ordenar
             switch (tipoVisual2.Text)
             {
                 case GRAFICO_LINHA:
-                    pen = new(Color.White)
+                    pen = new Pen(Color.White)
                     {
                         Width = 1
                     };
@@ -615,16 +601,18 @@ namespace Ordenar
                     //pen.EndCap = LineCap.DiamondAnchor;
                     //pen.StartCap=LineCap.DiamondAnchor;
 
-                    if (points != null) e.Graphics.DrawLines(pen, points);
+                    if (points != null)
+                        e.Graphics.DrawLines(pen, points);
 
                     break;
                 case GRAFICO_CURVA:
-                    pen = new(Color.White)
+                    pen = new Pen(Color.White)
                     {
                         Width = 1
                     };
 
-                    if (points != null) e.Graphics.DrawCurve(pen, points);
+                    if (points != null)
+                        e.Graphics.DrawCurve(pen, points);
 
                     break;
                 default:
@@ -661,196 +649,265 @@ namespace Ordenar
             Brush _brush1;
             Brush _brush2;
             Brush _brushtxt;
-            float itens;
+            //float itens;
             Font font;
             PointF[] p;
+            PointF ponto;
 
-            rw = e.ClipRectangle.Width;
+            float itens = area1.Width / (float)vetor.Length;
+
+            decimal ratio = (decimal)(area1.Height - 1) / (decimal)maximo;
+            int tam;
+
+            //rw = e.ClipRectangle.Width;
+            rw = area1.Width;
             rh = e.ClipRectangle.Height;
+
+            //Debug.WriteLine("rw: " + rw);
 
             switch (tipoVisual.Text)
             {
-                case "Barras":
-                    if (points != null)
+                case TIPO_BARRA:
+                    l = vetor.Length;
+                    itens = rw / l;
+                    points = new PointF[l];
+                    //SetStyle(ControlStyles.Opaque, false);
+
+                    rw = (int)itens - 2;
+                    apx = rw / 2;
+
+                    rh = e.ClipRectangle.Height;
+                    font = new Font(FontFamily.GenericSerif, itens / 2);
+                    _brushtxt = new SolidBrush(Color.White);
+
+                    for (i = 0; i < l; i++)
                     {
-                        l = points.Length;
-                        itens = rw / l;
+                        tam = (int)Math.Round(ratio * vetor[i].Valor);
+
+                        int Left = (int)(i * itens);
+                        int Largura = (int)itens;
+                        int Top = area1.Height - tam;
+                        int Altura = tam;
+                        if (maxPoint < Top)
+                            maxPoint = Top;
+
+
+                        /*switch (tipoVisual.Text)
+                        {
+                            case TIPO_BOLAS:
+                                points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top + (barras[i].Largura / 2));
+                                break;
+                            default:
+                                points[i] = new PointF(barras[i].Left + (barras[i].Largura / 2), barras[i].Top);
+                                break;
+                        }*/
+
+
+                        ponto = new PointF(Left + (Largura / 2), Top);
+
+                        _brush1 = new SolidBrush(barras[i].CorFrente);
+                        _pen1 = new Pen(_brush1);
+                        _brush2 = new SolidBrush(barras[i].CorFundo);
+                        /*pen = new(barras[i].CorFrente);
+                        {
+                            Width = 1;
+                        };*/
+                        px = (double)/*(i * itens);*/(double)ponto.X;
+                        py = (double)ponto.Y;
+                        e.Graphics.FillRectangle(_brush2, (float)(px - apx), (float)py, (float)(rw), (float)rh);
+                        e.Graphics.DrawRectangle(_pen1, (float)(px - apx), (float)py, (float)(rw), (float)rh);
+                        if (itens >= 16)
+                            e.Graphics.DrawString(barras[i].txt, font, _brushtxt, (float)(px - apx), (float)py);
+                        points[i].X = ponto.X;
+                        points[i].Y = ponto.Y;
+                    }
+                    grafico(e);
+
+                    break;
+                case TIPO_LINHASV:
+                    l = vetor.Length;
+                    points = new PointF[l];
+                    itens = rw / l;
+                    for (i = 0; i < l; i++)
+                    {
+                        tam = (int)Math.Round(ratio * vetor[i].Valor);
+                        int Left = (int)(i * itens);
+                        int Largura = (int)itens;
+                        int Top = area1.Height - tam;
+                        int Altura = tam;
+
+                        ponto = new PointF(Left + (Largura / 2), Top);
+                        pen = new Pen(barras[i].CorFundo);
+                        {
+                            Width = 1;
+                        }
+                        ;
+                        px = (double)/*(i * itens);*/(double)ponto.X;
+                        py = (double)ponto.Y;
+                        e.Graphics.DrawLine(pen, (float)px, (float)py, (float)px, (float)rh);
+                        points[i].X = ponto.X;
+                        points[i].Y = ponto.Y;
+
+                    }
+                    grafico(e);
+
+                    break;
+                case TIPO_BOLAS:
+                    l = points.Length;
+                    itens = rw / l;
+                    points = new PointF[l];
+
+                    rw = (int)itens - 2;
+                    rh = e.ClipRectangle.Height;
+                    font = new Font(FontFamily.GenericSerif, itens / 2);
+                    _brushtxt = new SolidBrush(Color.White);
+
+                    for (i = 0; i < l; i++)
+                    {
+                        tam = (int)Math.Round(ratio * vetor[i].Valor);
+                        int Left = (int)(i * itens);
+                        int Largura = (int)itens;
+                        int Top = area1.Height - tam;
+                        int Altura = tam;
+                        ponto = new PointF(Left + (Largura / 2), Top + (Largura / 2));
+                        pen = new Pen(barras[i].CorFundo);
+                        {
+                            Width = 1;
+                        }
+                        ;
+                        px = (double)(double)ponto.X - rw / 2;
+                        py = (double)ponto.Y - rw / 2;
                         //SetStyle(ControlStyles.Opaque, false);
-
-                        rw = (int)itens - 2;
-                        apx = rw / 2;
-
-                        rh = e.ClipRectangle.Height;
-                        font = new(FontFamily.GenericSerif, itens / 2);
-                        _brushtxt = new SolidBrush(Color.White);
-
-                        for (i = 0; i < l; i++)
-                        {
-                            _brush1 = new SolidBrush(barras[i].CorFrente);
-                            _pen1 = new Pen(_brush1);
-                            _brush2 = new SolidBrush(barras[i].CorFundo);
-                            /*pen = new(barras[i].CorFrente);
-                            {
-                                Width = 1;
-                            };*/
-                            px = (double)points[i].X;
-                            py = (double)points[i].Y;
-                            e.Graphics.FillRectangle(_brush2, (float)(px - apx), (float)py, (float)(rw), (float)rh);
-                            e.Graphics.DrawRectangle(_pen1, (float)(px - apx), (float)py, (float)(rw), (float)rh);
-                            if (itens >= 16) e.Graphics.DrawString(barras[i].txt, font, _brushtxt, (float)(px-apx), (float)py);
-                        }
-                        grafico(e);
+                        _brush1 = new SolidBrush(barras[i].CorFrente);
+                        _pen1 = new Pen(_brush1);
+                        _brush2 = new SolidBrush(barras[i].CorFundo);
+                        e.Graphics.FillEllipse(_brush2, (float)px, (float)py, rw, rw);
+                        e.Graphics.DrawEllipse(_pen1, (float)px, (float)py, rw, rw);
+                        if (itens >= 16)
+                            e.Graphics.DrawString(barras[i].txt, font, _brushtxt, (float)px, (float)py);
+                        points[i].X = ponto.X;
+                        points[i].Y = ponto.Y;
                     }
+                    grafico(e);
+
                     break;
-                case "Linhas Verticais":
-                    if (points != null)
+                case TIPO_TRIANGULO:
+                    l = points.Length;
+                    itens = rw / l;
+                    points = new PointF[l];
+
+                    rw = (int)itens - 2;
+                    rh = e.ClipRectangle.Height;
+                    font = new Font(FontFamily.GenericSerif, itens / 2);
+
+                    for (i = 0; i < l; i++)
                     {
-                        l = points.Length;
-                        for (i = 0; i < l; i++)
+                        tam = (int)Math.Round(ratio * vetor[i].Valor);
+                        int Left = (int)(i * itens);
+                        int Largura = (int)itens;
+                        int Top = area1.Height - tam;
+                        int Altura = tam;
+                        ponto = new PointF(Left + (Largura / 2), Top);
+                        pen = new Pen(barras[i].CorFundo);
                         {
-                            pen = new(barras[i].CorFundo);
-                            {
-                                Width = 1;
-                            };
-                            px = (double)points[i].X;
-                            py = (double)points[i].Y;
-                            e.Graphics.DrawLine(pen, (float)px, (float)py, (float)px, (float)rh);
+                            Width = 1;
                         }
-                        grafico(e);
+                        ;
+                        px = (double)ponto.X;// - rw / 2;
+                        py = (double)ponto.Y;// - rw / 2;
+                                             //SetStyle(ControlStyles.Opaque, false);
+                        _brush1 = new SolidBrush(barras[i].CorFrente);
+                        _pen1 = new Pen(_brush1);
+                        _brush2 = new SolidBrush(barras[i].CorFundo);
+                        p = new PointF[3];
+                        apx = rw / 3;
+                        apy = rw / 2;
+                        p[0].X = (float)px;
+                        p[0].Y = (float)py;
+                        p[1].X = (float)px - (float)apx;
+                        p[1].Y = (float)py + (float)apy;
+                        p[2].X = (float)px + (float)apx;
+                        p[2].Y = (float)py + (float)apy;
+                        e.Graphics.FillPolygon(_brush2, p);
+                        e.Graphics.DrawPolygon(_pen1, p);
+                        points[i].X = ponto.X;
+                        points[i].Y = ponto.Y;
                     }
+                    grafico(e);
+
                     break;
-                case "Bolas":
-                    if (points != null)
+                case TIPO_ESPIRAL:
+                    max = (int)numericUpDown2.Value;
+                    l = vetor.Length;
+                    points = new PointF[l];
+                    apx = 0;
+                    apy = 0;
+                    pa1 = 0;
+                    pr1 = 0;
+                    rw = e.ClipRectangle.Width / 2;
+                    rh = e.ClipRectangle.Height / 2;
+                    for (i = 0; i < l; i++)
                     {
-                        l = points.Length;
-                        itens = rw / l;
+                        tam = (int)Math.Round(ratio * vetor[i].Valor);
+                        int Left = (int)(i * itens);
+                        int Largura = (int)itens;
+                        int Top = area1.Height - tam;
+                        int Altura = tam;
+                        ponto = new PointF(Left + (Largura / 2), Top);
 
-                        rw = (int)itens - 2;
-                        rh = e.ClipRectangle.Height;
-                        font = new(FontFamily.GenericSerif, itens/2);
-                        _brushtxt = new SolidBrush(Color.White);
+                        pa = ((double)i / (double)max) * 2.0 * Math.PI;
+                        pr = (double)ponto.Y / 2.0;
 
-                        for (i = 0; i < l; i++)
+                        //e.ClipRectangle.X
+                        px = rw + pr * Math.Cos(pa); // calculate x-coordinate
+                        py = rh + pr * Math.Sin(pa); // calculate y-coordinate
+                        pen = new Pen(barras[i].CorFundo);
                         {
-                            pen = new(barras[i].CorFundo);
-                            {
-                                Width = 1;
-                            };
-                            px = (double)points[i].X - rw / 2;
-                            py = (double)points[i].Y - rw / 2;
-                            //SetStyle(ControlStyles.Opaque, false);
-                            _brush1 = new SolidBrush(barras[i].CorFrente);
-                            _pen1 = new Pen(_brush1);
-                            _brush2 = new SolidBrush(barras[i].CorFundo);
-                            e.Graphics.FillEllipse(_brush2, (float)px, (float)py, rw, rw);
-                            e.Graphics.DrawEllipse(_pen1, (float)px, (float)py, rw, rw);
-                            if (itens >= 16) e.Graphics.DrawString(barras[i].txt, font, _brushtxt, (float)px, (float)py);
+                            Width = 1;
                         }
-                        grafico(e);
-                    }
-                    break;
-                case "Triângulo":
-                    if (points != null)
-                    {
-                        l = points.Length;
-                        itens = rw / l;
-
-                        rw = (int)itens - 2;
-                        rh = e.ClipRectangle.Height;
-                        font = new(FontFamily.GenericSerif, itens / 2);
-
-                        for (i = 0; i < l; i++)
+                        ;
+                        if (tipoVisual2.Text == GRAFICO_LINHA)
                         {
-                            pen = new(barras[i].CorFundo);
+                            if (i > 0)
                             {
-                                Width = 1;
-                            };
-                            px = (double)points[i].X;// - rw / 2;
-                            py = (double)points[i].Y;// - rw / 2;
-                            //SetStyle(ControlStyles.Opaque, false);
-                            _brush1 = new SolidBrush(barras[i].CorFrente);
-                            _pen1 = new Pen(_brush1);
-                            _brush2 = new SolidBrush(barras[i].CorFundo);
-                            p = new PointF[3];
-                            apx = rw / 3;
-                            apy = rw / 2;
-                            p[0].X = (float)px;
-                            p[0].Y = (float)py;
-                            p[1].X = (float)px - (float)apx;
-                            p[1].Y = (float)py + (float)apy;
-                            p[2].X = (float)px + (float)apx;
-                            p[2].Y = (float)py + (float)apy;
-                            e.Graphics.FillPolygon(_brush2, p);
-                            e.Graphics.DrawPolygon(_pen1, p);
-                        }
-                        grafico(e);
-                    }
-                    break;
-                case "Espiral":
-                    if (points != null)
-                    {
-                        max = (int)numericUpDown2.Value;
-                        l = points.Length;
-                        apx = 0;
-                        apy = 0;
-                        pa1 = 0;
-                        pr1 = 0;
-                        rw = e.ClipRectangle.Width / 2;
-                        rh = e.ClipRectangle.Height / 2;
-                        for (i = 0; i < l; i++)
-                        {
-                            pa = ((double)i / (double)max) * 2.0 * Math.PI;
-                            pr = (double)points[i].Y / 2.0;
-
-                            //e.ClipRectangle.X
-                            px = rw + pr * Math.Cos(pa); // calculate x-coordinate
-                            py = rh + pr * Math.Sin(pa); // calculate y-coordinate
-                            pen = new(barras[i].CorFundo);
-                            {
-                                Width = 1;
-                            };
-                            if (tipoVisual2.Text == GRAFICO_LINHA)
-                            {
-                                if (i > 0)
-                                {
-                                    e.Graphics.DrawLine(pen, (float)apx, (float)apy, (float)px, (float)py);
-                                }
-                                apx = px;
-                                apy = py;
+                                e.Graphics.DrawLine(pen, (float)apx, (float)apy, (float)px, (float)py);
                             }
-                            if (tipoVisual2.Text == GRAFICO_CURVA)
+                            apx = px;
+                            apy = py;
+                        }
+                        if (tipoVisual2.Text == GRAFICO_CURVA)
+                        {
+                            if (i == 0)
                             {
-                                if (i == 0)
-                                {
-                                    pa1 = pa;
-                                    pr1 = pr;
-                                }
-                                if (i > 0)
-                                {
-                                    pr1 = (pr + pr1) / 2;
-                                    ag1 = (pa + pa1) / 2;
-                                    ag2 = (ag1 + pa) / 2;
-                                    px1 = rw + pr1 * Math.Cos(ag1);
-                                    py1 = rh + pr1 * Math.Sin(ag1);
-                                    px2 = rw + pr1 * Math.Cos(ag2);
-                                    py2 = rh + pr1 * Math.Sin(ag2);
-
-                                    e.Graphics.DrawBezier(pen, (float)apx, (float)apy, (float)px1, (float)py1, (float)px2, (float)py2, (float)px, (float)py);
-                                }
-                                apx = px;
-                                apy = py;
                                 pa1 = pa;
                                 pr1 = pr;
                             }
+                            if (i > 0)
+                            {
+                                pr1 = (pr + pr1) / 2;
+                                ag1 = (pa + pa1) / 2;
+                                ag2 = (ag1 + pa) / 2;
+                                px1 = rw + pr1 * Math.Cos(ag1);
+                                py1 = rh + pr1 * Math.Sin(ag1);
+                                px2 = rw + pr1 * Math.Cos(ag2);
+                                py2 = rh + pr1 * Math.Sin(ag2);
 
-                            b = new SolidBrush(barras[i].CorFrente);
-                            e.Graphics.FillEllipse(b, (float)px - 2, (float)py - 2, 5, 5);
-                            e.Graphics.DrawEllipse(pen, (float)px - 2, (float)py - 2, 6, 6);
+                                e.Graphics.DrawBezier(pen, (float)apx, (float)apy, (float)px1, (float)py1, (float)px2, (float)py2, (float)px, (float)py);
+                            }
+                            apx = px;
+                            apy = py;
+                            pa1 = pa;
+                            pr1 = pr;
                         }
+
+                        b = new SolidBrush(barras[i].CorFrente);
+                        e.Graphics.FillEllipse(b, (float)px - 2, (float)py - 2, 5, 5);
+                        e.Graphics.DrawEllipse(pen, (float)px - 2, (float)py - 2, 6, 6);
                     }
+
                     break;
                 default:
-                    grafico(e);
+                    //grafico(e);
 
                     break;
             }
@@ -879,9 +936,11 @@ namespace Ordenar
                     p = new Pen(cc);
                     p.Width = w;
                     t = (int)(((float)auxVetor[i] / (float)max) * (float)(AuxVetor1.Width - 10));
-                    if (t < 0) t = 0;
+                    if (t < 0)
+                        t = 0;
                     y = (int)(((float)i / (float)l) * (float)(AuxVetor1.Height)) + w / 2;
-                    if (y < 0) y = 0;
+                    if (y < 0)
+                        y = 0;
                     try
                     {
                         e.Graphics.DrawLine(p, 0, y, t, y);
@@ -1001,9 +1060,6 @@ namespace Ordenar
                         return;
                     case SHELLSORT:
                         f.txt = Resource1.ShellSortString;
-                        return;
-                    case SIMPLISTICGRAVITYSORT:
-                        f.txt = Resource1.SimplisticGravitySortString;
                         return;
                     case SLOWSORT:
                         f.txt = Resource1.SlowSortString;

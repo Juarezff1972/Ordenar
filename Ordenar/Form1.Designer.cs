@@ -44,8 +44,6 @@
             label8 = new System.Windows.Forms.Label();
             progressBar1 = new System.Windows.Forms.ProgressBar();
             label9 = new System.Windows.Forms.Label();
-            pivot1 = new System.Windows.Forms.TrackBar();
-            pivot2 = new System.Windows.Forms.TrackBar();
             label10 = new System.Windows.Forms.Label();
             tipoVisual = new System.Windows.Forms.ComboBox();
             area1 = new System.Windows.Forms.PictureBox();
@@ -57,8 +55,6 @@
             button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pivot1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pivot2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)area1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AuxVetor1).BeginInit();
             SuspendLayout();
@@ -96,7 +92,6 @@
             qsPivotSel1.FormattingEnabled = true;
             qsPivotSel1.Items.AddRange(new object[] { resources.GetString("qsPivotSel1.Items"), resources.GetString("qsPivotSel1.Items1"), resources.GetString("qsPivotSel1.Items2"), resources.GetString("qsPivotSel1.Items3"), resources.GetString("qsPivotSel1.Items4") });
             qsPivotSel1.Name = "qsPivotSel1";
-            qsPivotSel1.SelectedIndexChanged += qsPivotSel1_SelectedIndexChanged;
             // 
             // numericUpDown1
             // 
@@ -162,28 +157,6 @@
             resources.ApplyResources(label9, "label9");
             label9.Name = "label9";
             // 
-            // pivot1
-            // 
-            resources.ApplyResources(pivot1, "pivot1");
-            pivot1.CausesValidation = false;
-            pivot1.LargeChange = 1;
-            pivot1.Minimum = 1;
-            pivot1.Name = "pivot1";
-            pivot1.TabStop = false;
-            pivot1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            pivot1.Value = 1;
-            // 
-            // pivot2
-            // 
-            resources.ApplyResources(pivot2, "pivot2");
-            pivot2.CausesValidation = false;
-            pivot2.LargeChange = 1;
-            pivot2.Minimum = 1;
-            pivot2.Name = "pivot2";
-            pivot2.TabStop = false;
-            pivot2.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            pivot2.Value = 1;
-            // 
             // label10
             // 
             resources.ApplyResources(label10, "label10");
@@ -194,7 +167,7 @@
             resources.ApplyResources(tipoVisual, "tipoVisual");
             tipoVisual.CausesValidation = false;
             tipoVisual.FormattingEnabled = true;
-            tipoVisual.Items.AddRange(new object[] { resources.GetString("tipoVisual.Items"), resources.GetString("tipoVisual.Items1"), resources.GetString("tipoVisual.Items2"), resources.GetString("tipoVisual.Items3"), resources.GetString("tipoVisual.Items4") });
+            tipoVisual.Items.AddRange(new object[] { resources.GetString("tipoVisual.Items") });
             tipoVisual.Name = "tipoVisual";
             // 
             // area1
@@ -210,7 +183,7 @@
             // 
             resources.ApplyResources(tipoVisual2, "tipoVisual2");
             tipoVisual2.FormattingEnabled = true;
-            tipoVisual2.Items.AddRange(new object[] { resources.GetString("tipoVisual2.Items"), resources.GetString("tipoVisual2.Items1"), resources.GetString("tipoVisual2.Items2") });
+            tipoVisual2.Items.AddRange(new object[] { resources.GetString("tipoVisual2.Items") });
             tipoVisual2.Name = "tipoVisual2";
             // 
             // ordemInicial
@@ -262,8 +235,6 @@
             Controls.Add(area1);
             Controls.Add(tipoVisual);
             Controls.Add(label10);
-            Controls.Add(pivot2);
-            Controls.Add(pivot1);
             Controls.Add(label9);
             Controls.Add(progressBar1);
             Controls.Add(label8);
@@ -283,16 +254,15 @@
             Name = "Form1";
             FormClosed += Form1_FormClosed;
             Load += Form1_Load;
-            Resize += Form1_ResizeEnd;
-            StyleChanged += Form1_Resize;
+            ResizeEnd += Form1_ResizeEnd;
+            Resize += Form1_Resize;
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pivot1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pivot2).EndInit();
             ((System.ComponentModel.ISupportInitialize)area1).EndInit();
             ((System.ComponentModel.ISupportInitialize)AuxVetor1).EndInit();
             ResumeLayout(false);
             PerformLayout();
+
         }
 
         #endregion
@@ -312,8 +282,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TrackBar pivot1;
-        private System.Windows.Forms.TrackBar pivot2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox tipoVisual;
         private System.Windows.Forms.PictureBox area1;
